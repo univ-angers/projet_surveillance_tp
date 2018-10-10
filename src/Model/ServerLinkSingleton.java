@@ -11,7 +11,7 @@ public class ServerLinkSingleton {
 	private String ip;
 
 	public void send(JsonObject datas) {
-		System.out.println("ServerLink sent an event");
+		System.out.println("ServerLink sent an event : \n" +datas);
 	}
 
 	// GENERATION
