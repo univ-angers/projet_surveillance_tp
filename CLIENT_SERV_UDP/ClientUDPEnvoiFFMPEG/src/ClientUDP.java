@@ -13,12 +13,14 @@ import java.net.UnknownHostException;
  *
  */
 public class ClientUDP {
+	
+	
 
 	public final static int port = 2345;
 
 	static String addIp = "127.0.0.1";
 	static String name = "C1";
-	static int tempsFilm = 5;	//Temporaire
+	static int tempsFilm = 10;	//Temporaire
 
 	//Dans le cas où l'on doit envoyer des informations supplémentaires par rapport à qui envoie
 	public ClientUDP(String pName){
