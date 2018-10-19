@@ -24,27 +24,14 @@ public class recorderFFMPEG extends Thread{
 
 	public void run()
 	{				
-		try {
-			//Chaine de commande pour filmer l'écran et l'envoyer au serveur
-			//CMD A REVOIR POUR L'ENVOYER VERS UN PIPE
-			String cmdCreationPipe = "mkfifo /tmp/pipeReception";
-			ProcessBuilder procPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
-			try {
-				procPipe.start();
-				System.out.println("Pipe créé.");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-			//String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -t 10 -f avi pipe:1 > /tmp/pipeReception";
-			String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -t 10 -f avi pipe:1 > /tmp/pipeReception";
-			
-			//Console pour envoi sur PC: ffmpeg -f x11grab -r 25 -s 1000x700 -framerate 25 -f x11grab -i :0.0+0 -vcodec libx264 -tune zerolatency -t 3 ~/superTest.mp4";
-			
+		try {			
+			String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -t " + tempsTemporaire +" -f mpegts pipe:1";
+		
 			//Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
+			
+			//On envoie tout sur le pipe créé
+			procFF.redirectOutput(new File("/tmp/pipeReception"));
 			
 			
 			try {
@@ -60,6 +47,7 @@ public class recorderFFMPEG extends Thread{
 			e.printStackTrace();
 		} finally {
 			System.out.println("Fin de l'enregistrement");
+			
 		}
 	}
 
