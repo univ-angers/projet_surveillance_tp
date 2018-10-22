@@ -21,39 +21,34 @@ public class ServeurUDP {
 	{				
 		
 		/** A FAIRE
-		 * Créer un objet qui contient un fileOutputStream et le nom du client par ex
+		 * -- Créer un objet Java qui contient un fileOutputStream et le nom du client par ex (?)
 		 * Par rapport à l'origine du client, on envvera les paquets vers ces objets
 		 * qui rajouteront les éléments aux stream de ces objets
+		 * -- Gérer plusieurs client
 		 */
 		Thread t = new Thread(new Runnable(){
 			public void run(){
 				int i = 0;
 				try
 				{
-					//Fichier qui contiendra la vidéo en cours de création
-					FileOutputStream sortieVideo = new FileOutputStream("testStream" + ++numVid + ".ts", true);
-
 					// Construct the socket
 					DatagramSocket socket = new DatagramSocket( port ) ;
 
 					System.out.println( "Le serveur est prêt." ) ;
 
 
-					byte[] donneesRecues = new byte[8192];
+					byte[] donneesRecues = new byte[4096];
 					DatagramPacket paquetReception = new DatagramPacket( donneesRecues, donneesRecues.length ) ;
 					while(true)
 					{
 						//Si on reçoit un paquet
 						socket.receive( paquetReception );
-						try {
-							System.out.println("DEBUG: Port entrée = " + paquetReception.getAddress() + ", Port entrée = " + paquetReception.getPort());
-							//On l'écrit dans la flux
-							sortieVideo.write(paquetReception.getData());
-							i++;
-							System.out.println("Paquet "+i+" reçu.");
-						} finally {
-							//output.close();
-						}
+						
+						//CAS 1: Les données sont de la forme NOUVEAU:X:Y où X est une nom, Y une matière
+						//todo
+						//CAS 2: Les données sont celles d'une vidéo dun client existant déjà
+						//todo
+						
 					}  
 				}catch (IOException exception) {
 					exception.printStackTrace();
