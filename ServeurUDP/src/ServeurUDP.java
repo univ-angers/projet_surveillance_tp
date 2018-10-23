@@ -7,12 +7,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 /**
- * Ce serveur ne prend pour le moment en charge QU'UN SEUL flux d'entrée et UN SEUL 
- * fichier en sortie
- * Trouver comment convertir le flux en temps réel pour la sortie
- * A faire: permettre de séparer chaque entrée UDP en une vidéo de sortie chacune
  * @author Base: Anais & Bastien
- *
  */
 public class ServeurUDP {
 
