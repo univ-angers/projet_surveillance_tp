@@ -65,20 +65,31 @@ public class pipe extends Thread {
 
 				System.out.println("Le pipe est prêt à réceptionner des informations");
 
-				while  (true){
+				while (recorderFFMPEG.running){
 					try {
 						if (recuPipe.available() > taillePaquet)	//Si on a des données de la taille d'un paquet dans le pipe
 						{	
-							byte[] donnees = new byte[taillePaquet];
-							recuPipe.read(donnees, 0, taillePaquet);
-
-							// Créer une méthode pour envoyer les données au reste du programme
-							envoiPaquet(donnees,taillePaquet);
+							byte[] donneesVideo = new byte[taillePaquet];
+							recuPipe.read(donneesVideo, 0, taillePaquet);
+														
+							envoiPaquet(donneesVideo,taillePaquet);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
+				
+				try {
+					if (recuPipe.available() != 0)
+					{
+						int sizeData = recuPipe.available();
+						byte[] donneesVideo = new byte[sizeData];
+						recuPipe.read(donneesVideo, 0, sizeData);	
+						envoiPaquet(donneesVideo, sizeData);
+					}
+				} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

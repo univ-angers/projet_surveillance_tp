@@ -11,7 +11,7 @@ public class recorderFFMPEG extends Thread{
 	private String addresseDestinataire;
 	private int portDest;
 	private Process ffmpeg;		
-	private boolean running;
+	public static boolean running;
 	private int largeur, hauteur;
 
 	public recorderFFMPEG(int w, int h, int temps, String adresseDest, int port){
