@@ -32,12 +32,13 @@ public class pipe extends Thread {
 
 		//On envoie au serveur
 		client.send(packet);		
+		
+		client.close();
 	}
 
 	@Override
 	public void run() {
-		//Chaine de commande pour filmer l'écran et l'envoyer au serveur
-		//CMD A REVOIR POUR L'ENVOYER VERS UN PIPE
+		//Chaine de commande pour créer le pipe
 		String cmdCreationPipe = "mkfifo /tmp/pipeReception";
 		
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
