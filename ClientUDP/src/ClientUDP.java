@@ -11,52 +11,25 @@ import java.util.Scanner;
  * 
  * A FAIRE: 
  * -- Faire en sorte qu'une vidéo ai une longueur indéfinie
- * 
+ * -- Mettre le name en private, il est pour l'instant nécessaire de l'avoir en public pour créer un pipe
+ * propre à chaque client SUR LE MEME PC
  * 
  * @author Base: Anaïs & Bastien
  *
  */
 public class ClientUDP {
 
-	// On choisit un port aléatoire pour discuter avec le serveur
-	public static int port = 1024 + (int)(Math.random() * (65000-1024));
+	// On choisit un port aléatoire pour discuter avec le serveur pour l'envoi futur
+	public static int port = 1024 + (int)(Math.random() * (20000-1024));
 
 	static String addIp = "127.0.0.1";
-	static String name;
+	public static String name;
 	static String session;
 	static boolean connexionEtablie = false;
 	static Scanner saisieInfo = new Scanner(System.in);
-	static int tempsFilm = 10;	//Temporaire
+	static int tempsFilm = 50;	//Temporaire
 
-	//Dans le cas où l'on doit envoyer des informations supplémentaires par rapport à qui envoie
-	public ClientUDP(String pName, String sess){
-		name = pName;
-		session = sess;
-	}
 
-	public static void main(String[] args) throws IOException{
-		//Création du client et envoi des infos du client au serveur
-		System.out.println("Veuillez entrer votre nom : ");
-		name = saisieInfo.next();
-		System.out.println("Veuillez entrer la session pour laquelle vous allez composer : ");
-		session = saisieInfo.next();
-		
-		while (connexionEtablie == false)
-		{
-			envoiServ();
-		}
-
-		//création du pipe
-		pipe pip = new pipe();
-		//On lance le pipe
-		pip.start();
-
-		//Création de l'objet qui va gérer la capture et l'envoi vers le serveur
-		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm, addIp, port);
-		//On lance la capture et l'envoi
-		rec.start();
-	}
-	
 	public static void envoiServ() throws IOException
 	{
 		//On initialise la connexion côté client
@@ -72,26 +45,47 @@ public class ClientUDP {
 		packet.setData(donnee);
 
 		//On envoie au serveur
-		client.send(packet);	
-		client.close();
-		
+		client.send(packet);
+
 		// Récupération de la réponse du serveur
 		byte[] buffer = new byte[2048];
-		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, port);
+		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, 2345);
 		client.receive(packet2);
-		
+
 		System.out.println(name + " a reçu une réponse du serveur : ");
 		System.out.println(new String(packet2.getData()));
-		
+
 		String reponseServ = new String(packet2.getData());
-		
+		reponseServ = reponseServ.trim();
+
 		if (reponseServ.equals("OK"))
 		{
 			connexionEtablie = true;
 		}
-		else
+		
+		client.close();
+	}
+
+	public static void main(String[] args) throws IOException{
+		//Création du client et envoi des infos du client au serveur
+		System.out.println("Veuillez entrer votre nom : ");
+		name = saisieInfo.next();
+		System.out.println("Veuillez entrer la session pour laquelle vous allez composer : ");
+		session = saisieInfo.next();
+
+		while (connexionEtablie == false)
 		{
-			connexionEtablie = false;
+			envoiServ();
 		}
+		
+		//création du pipe
+		pipe pip = new pipe(port); //name temporaire pour les test sur un seul PC
+		//On lance le pipe
+		pip.start();
+
+		//Création de l'objet qui va gérer la capture et l'envoi vers le serveur
+		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm);
+		//On lance la capture et l'envoi
+		rec.start();
 	}
 }

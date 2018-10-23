@@ -8,22 +8,18 @@ public class recorderFFMPEG extends Thread{
 
 	////////
 	private int tempsTemporaire;
-	private String addresseDestinataire;
-	private int portDest;
 	private Process ffmpeg;		
 	public static boolean running;
 	private int largeur, hauteur;
 
-	public recorderFFMPEG(int w, int h, int temps, String adresseDest, int port){
+	public recorderFFMPEG(int w, int h, int temps)
+	{
 		ffmpeg = null;
 		largeur = w;
 		hauteur = h;
-		//tempsTemporaire = temps;	//sera supprimé à terme
-		addresseDestinataire = adresseDest;
-		portDest = port;
+		tempsTemporaire = temps;	//sera supprimé à terme
 	}
-	//////////////
-
+	
 	/**
 	 * Fonction se chargeant de lancer la commande ffmpeg depuis l'appli Java puis de l'envoie dans le Pipe
 	 * @author Bastien et Anaïs
@@ -37,7 +33,7 @@ public class recorderFFMPEG extends Thread{
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
 			
 			//On envoie tout sur le pipe créé
-			procFF.redirectOutput(new File("/tmp/pipeReception"));
+			procFF.redirectOutput(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
 					
 			try {
 				System.out.println("Démarrage de l'enregistrement");
@@ -45,6 +41,8 @@ public class recorderFFMPEG extends Thread{
 				running = true;
 				System.out.println("Enregistrement en cours");
 				ffmpeg.waitFor();
+				System.out.println("Arret de l'enregistrement");
+				running = false;
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

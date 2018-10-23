@@ -10,12 +10,14 @@ import java.net.InetAddress;
 public class pipe extends Thread {
 
 	private final int taillePaquet = 2048;
+	private final int portVideo;
 	private Process pPipe;
 	private boolean pipePret;
 
-	public pipe()
+	public pipe(int port)
 	{
 		pPipe = null;
+		portVideo = port;
 	}
 	
 	public void envoiPaquet(byte[] donnees, int taillePaquet) throws IOException
@@ -25,7 +27,7 @@ public class pipe extends Thread {
 
 		//On crée notre datagramme
 		InetAddress adresse = InetAddress.getByName("127.0.0.1");
-		DatagramPacket packet = new DatagramPacket(donnees, taillePaquet, adresse, 2345);
+		DatagramPacket packet = new DatagramPacket(donnees, taillePaquet, adresse, portVideo);
 
 		//On lui affecte les données à envoyer
 		packet.setData(donnees);
@@ -39,7 +41,7 @@ public class pipe extends Thread {
 	@Override
 	public void run() {
 		//Chaine de commande pour créer le pipe
-		String cmdCreationPipe = "mkfifo /tmp/pipeReception";
+		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + ClientUDP.name.toUpperCase();
 		
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
@@ -61,7 +63,7 @@ public class pipe extends Thread {
 		{
 			FileInputStream recuPipe;
 			try {
-				recuPipe = new FileInputStream(new File("/tmp/pipeReception"));
+				recuPipe = new FileInputStream(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
 
 				System.out.println("Le pipe est prêt à réceptionner des informations");
 
@@ -98,7 +100,7 @@ public class pipe extends Thread {
 			{
 				System.out.println("Le pipe est maintenant fermé.");
 				//Suppresion du fichier
-				File f = new File("/tmp/videopipe");
+				File f = new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase());
 				f.delete();
 			}
 		}
