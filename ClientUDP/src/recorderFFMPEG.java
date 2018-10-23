@@ -18,19 +18,21 @@ public class recorderFFMPEG extends Thread{
 		ffmpeg = null;
 		largeur = w;
 		hauteur = h;
-		tempsTemporaire = temps;	//sera supprimé à terme
+		//tempsTemporaire = temps;	//sera supprimé à terme
 		addresseDestinataire = adresseDest;
 		portDest = port;
 	}
 	//////////////
 
-
+	/**
+	 * Fonction se chargeant de lancer la commande ffmpeg depuis l'appli Java puis de l'envoie dans le Pipe
+	 * @author Bastien et Anaïs
+	 */
 	public void run()
 	{				
 		try {			
 			String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -t " + tempsTemporaire +" -f mpegts pipe:1";
-			//String cmd = "ffmpeg -framerate 5 -f x11grab -i :0 -t " + tempsTemporaire +" -f mpegts pipe:1";
-			
+
 			//Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
 			
@@ -55,8 +57,8 @@ public class recorderFFMPEG extends Thread{
 	}
 	
 	/**
-	 * ATTENTION ON NE SAIT PAS ENCORE CE QUE FAIT CETTE FONCTION, A REVOIR DONC
-	 * C'EST UN TEST POUR PLUS TARD
+	 * Envoie la lettre q dans le pipe afin d'ordonner l'arrêt de ffmpeg
+	 * @author Anaïs
 	 */
 	public void stopRecord()
 	{
