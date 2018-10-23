@@ -10,21 +10,21 @@ import java.util.Scanner;
  * Cette classe permet d'envoyer via le protocole UDP le record de l'écran du PC client
  * 
  * A FAIRE: 
- * -- Donner une information basique (a déterminer) pour pouvoir récupérer le flux
- * que l'on veut plus tard depuis le serveur UDP
  * -- Faire en sorte qu'une vidéo ai une longueur indéfinie
  * 
  * 
- * @author Base: Anais & Bastien
+ * @author Base: Anaïs & Bastien
  *
  */
 public class ClientUDP {
 
-	public final static int port = 2345;
+	// On choisit un port aléatoire pour discuter avec le serveur
+	public static int port = 1024 + (int)(Math.random() * (65000-1024));
 
 	static String addIp = "127.0.0.1";
 	static String name;
 	static String session;
+	static boolean connexionEtablie = false;
 	static Scanner saisieInfo = new Scanner(System.in);
 	static int tempsFilm = 10;	//Temporaire
 
@@ -34,35 +34,17 @@ public class ClientUDP {
 		session = sess;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 		//Création du client et envoi des infos du client au serveur
 		System.out.println("Veuillez entrer votre nom : ");
 		name = saisieInfo.next();
 		System.out.println("Veuillez entrer la session pour laquelle vous allez composer : ");
 		session = saisieInfo.next();
 		
-		try {
-			//On initialise la connexion côté client
-			DatagramSocket client = new DatagramSocket();
-
-			//On crée notre datagramme
-			InetAddress adresse = InetAddress.getByName("127.0.0.1");
-			String donneeSt = "NOUVEAU:" + name + ":" + session;
-			byte[] donnee = donneeSt.getBytes();
-			DatagramPacket packet = new DatagramPacket(donnee, donnee.length, adresse, 2345);
-
-			//On lui affecte les données à envoyer
-			packet.setData(donnee);
-
-			//On envoie au serveur
-			client.send(packet);	
-			client.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (connexionEtablie == false)
+		{
+			envoiServ();
 		}
-		finally
-		{}
 
 		//création du pipe
 		pipe pip = new pipe();
@@ -73,5 +55,43 @@ public class ClientUDP {
 		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm, addIp, port);
 		//On lance la capture et l'envoi
 		rec.start();
+	}
+	
+	public static void envoiServ() throws IOException
+	{
+		//On initialise la connexion côté client
+		DatagramSocket client = new DatagramSocket();
+
+		//On crée notre datagramme
+		InetAddress adresse = InetAddress.getByName("127.0.0.1");
+		String donneeSt = "NOUVEAU:" + name + ":" + session + ":" + port;
+		byte[] donnee = donneeSt.getBytes();
+		DatagramPacket packet = new DatagramPacket(donnee, donnee.length, adresse, 2345);
+
+		//On lui affecte les données à envoyer
+		packet.setData(donnee);
+
+		//On envoie au serveur
+		client.send(packet);	
+		client.close();
+		
+		// Récupération de la réponse du serveur
+		byte[] buffer = new byte[2048];
+		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, port);
+		client.receive(packet2);
+		
+		System.out.println(name + " a reçu une réponse du serveur : ");
+		System.out.println(new String(packet2.getData()));
+		
+		String reponseServ = new String(packet2.getData());
+		
+		if (reponseServ.equals("OK"))
+		{
+			connexionEtablie = true;
+		}
+		else
+		{
+			connexionEtablie = false;
+		}
 	}
 }
