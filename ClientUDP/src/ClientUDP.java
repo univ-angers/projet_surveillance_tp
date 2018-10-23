@@ -4,6 +4,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 /**
  * Cette classe permet d'envoyer via le protocole UDP le record de l'écran du PC client
@@ -22,8 +23,9 @@ public class ClientUDP {
 	public final static int port = 2345;
 
 	static String addIp = "127.0.0.1";
-	static String name = "C1";
-	static String session = "maths";
+	static String name;
+	static String session;
+	static Scanner saisieInfo = new Scanner(System.in);
 	static int tempsFilm = 10;	//Temporaire
 
 	//Dans le cas où l'on doit envoyer des informations supplémentaires par rapport à qui envoie
@@ -34,7 +36,11 @@ public class ClientUDP {
 
 	public static void main(String[] args){
 		//Création du client et envoi des infos du client au serveur
-
+		System.out.println("Veuillez entrer votre nom : ");
+		name = saisieInfo.next();
+		System.out.println("Veuillez entrer la session pour laquelle vous allez composer : ");
+		session = saisieInfo.next();
+		
 		try {
 			//On initialise la connexion côté client
 			DatagramSocket client = new DatagramSocket();
@@ -64,7 +70,7 @@ public class ClientUDP {
 		pip.start();
 
 		//Création de l'objet qui va gérer la capture et l'envoi vers le serveur
-		recorderFFMPEG rec = new recorderFFMPEG(1920,1080,tempsFilm,addIp,port);
+		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm, addIp, port);
 		//On lance la capture et l'envoi
 		rec.start();
 	}
