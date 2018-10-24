@@ -5,16 +5,19 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Map.Entry;
 
 /**
+ * -- Creer un arrêt propore, à voir avec la reception de paquet qui bloque le while
  * @author Base: Anais & Bastien
  */
 public class ServeurUDP {
 
+	private static boolean arretServeurDemande = false;
 	public final static int port = 2345;
-
-	private static HashMap<Integer,ClientHandler> listeClient;
+	private static HashMap<Integer,ClientHandler> listeClient;	
+	static Scanner saisieInfo = new Scanner(System.in);
 
 	public static void main( String args[] )
 	{				
@@ -23,14 +26,15 @@ public class ServeurUDP {
 		Thread t = new Thread(new Runnable(){
 			public void run(){
 				try
-				{
+				{					
 					// Socket du serveur
 					DatagramSocket socketServeur = new DatagramSocket( port ) ;
 
 					System.out.println( "Le serveur est prêt." ) ;
 
-					while(true)
+					while()
 					{
+						System.out.println("EN COURS");
 						byte[] donneesRecues = new byte[4096];
 						DatagramPacket paquetReception = new DatagramPacket( donneesRecues, donneesRecues.length );
 
@@ -38,14 +42,14 @@ public class ServeurUDP {
 						socketServeur.receive( paquetReception );
 
 						String donnees = new String(paquetReception.getData());
-						System.out.println("DEBUG: Données recues = " + donnees);
+						//System.out.println("DEBUG: Données recues = " + donnees);
 						//NOUVEAU:name:session si nouveau client
 						//FIN:name
 						String[] resultat = donnees.split(":");
 
 						if (resultat[0].trim().equals("NOUVEAU"))
 						{
-							System.out.println("Un nouveau client s'est connecté");
+							//System.out.println("DEBUG: Un nouveau client s'est connecté");
 							int portPropose = 1024 + (int)(Math.random() * (20000-1024));
 
 							int cle;
@@ -80,21 +84,12 @@ public class ServeurUDP {
 								DatagramPacket reponse = new DatagramPacket(reponsePositive, reponsePositive.length,paquetReception.getAddress(),paquetReception.getPort());
 
 								//Et on envoie vers l'émetteur du datagramme reçu précédemment
-								socketServeur.send(reponse);	
-
-								//AFFICHAGE DE DEBUG
-								System.out.println("DEBUG: TABLE DE HASE");
-								for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
-								{
-									System.out.print(entry.getKey() + " | ");
-								}
-								System.out.println();
-
+								socketServeur.send(reponse);
 							}	
 						}
 						if (resultat[0].trim().equals("FIN"))
 						{
-							System.out.println("Un client s'est terminé.");
+							//System.out.println("DEBUG: Un client s'est terminé.");
 							int portArret = Integer.parseInt(resultat[1].trim());
 
 							//On supprime le client au port indiqué
@@ -107,13 +102,6 @@ public class ServeurUDP {
 									break;
 								}
 							}
-							//AFFICHAGE DE DEBUG
-							System.out.println("DEBUG: TABLE DE HASE");
-							for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
-							{
-								System.out.print(entry.getKey() + " | ");
-							}
-							System.out.println();
 						}
 					} 
 				}catch (IOException exception) {
@@ -124,6 +112,5 @@ public class ServeurUDP {
 
 		//Lancement du serveur
 		t.start();
-
 	}
 }
