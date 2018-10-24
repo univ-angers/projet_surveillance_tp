@@ -4,6 +4,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
@@ -21,7 +22,6 @@ public class ServeurUDP {
 
 		Thread t = new Thread(new Runnable(){
 			public void run(){
-				int i = 0;
 				try
 				{
 					// Socket du serveur
@@ -37,55 +37,85 @@ public class ServeurUDP {
 						//Si on reçoit un paquet
 						socketServeur.receive( paquetReception );
 
-						System.out.println("Un nouveau client s'est connecté");
-
 						String donnees = new String(paquetReception.getData());
-						//NOUVEAU:name:session:port
+						System.out.println("DEBUG: Données recues = " + donnees);
+						//NOUVEAU:name:session si nouveau client
+						//FIN:name
 						String[] resultat = donnees.split(":");
 
-						int portPropose = Integer.parseInt(resultat[3].trim());
-						int cle;
-						boolean portDispo = true;
-						
-						if (portPropose == 2345)	//Port d'écoute principal
-							portDispo = false;
-						else
-						{	//Verification que le port proposé n'est pas déjà utilisé
+						if (resultat[0].trim().equals("NOUVEAU"))
+						{
+							System.out.println("Un nouveau client s'est connecté");
+							int portPropose = 1024 + (int)(Math.random() * (20000-1024));
+
+							int cle;
+							boolean portDispo = true;
+
+							do
+							{
+								if (portPropose == 2345)	//Port d'écoute principal
+									portDispo = false;
+								else
+								{	//Verification que le port proposé n'est pas déjà utilisé
+									for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
+									{
+										cle = entry.getKey();
+										if (cle == portPropose)
+										{
+											portDispo = false;
+											break;
+										}
+									}
+								}
+							}while (portDispo == false);
+
+							if (portDispo)	//Creation d'un client avec le port et renvoi que c'est OK
+							{
+								ClientHandler client = new ClientHandler(resultat[1].trim(),resultat[2].trim(),portPropose);
+								listeClient.put(portPropose, client);
+
+								client.start();
+
+								byte[] reponsePositive = new String("OK:" + portPropose).getBytes();
+								DatagramPacket reponse = new DatagramPacket(reponsePositive, reponsePositive.length,paquetReception.getAddress(),paquetReception.getPort());
+
+								//Et on envoie vers l'émetteur du datagramme reçu précédemment
+								socketServeur.send(reponse);	
+
+								//AFFICHAGE DE DEBUG
+								System.out.println("DEBUG: TABLE DE HASE");
+								for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
+								{
+									System.out.print(entry.getKey() + " | ");
+								}
+								System.out.println();
+
+							}	
+						}
+						if (resultat[0].trim().equals("FIN"))
+						{
+							System.out.println("Un client s'est terminé.");
+							int portArret = Integer.parseInt(resultat[1].trim());
+
+							//On supprime le client au port indiqué
 							for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
 							{
-								cle = entry.getKey();
-								if (cle == portPropose)
+								int cle = entry.getKey();
+								if (cle == portArret)
 								{
-									portDispo = false;
+									listeClient.remove(cle);
 									break;
 								}
 							}
+							//AFFICHAGE DE DEBUG
+							System.out.println("DEBUG: TABLE DE HASE");
+							for (Entry<Integer, ClientHandler> entry : listeClient.entrySet())
+							{
+								System.out.print(entry.getKey() + " | ");
+							}
+							System.out.println();
 						}
-
-						if (portDispo)	//Creation d'un client avec le port et renvoi que c'est OK
-						{
-							ClientHandler client = new ClientHandler(resultat[1],resultat[2],portPropose);
-							listeClient.put(portPropose, client);
-
-							client.start();
-							
-							byte[] reponsePositive = new String("OK").getBytes();
-							DatagramPacket reponse = new DatagramPacket(reponsePositive, reponsePositive.length,paquetReception.getAddress(),paquetReception.getPort());
-
-							//Et on envoie vers l'émetteur du datagramme reçu précédemment
-							socketServeur.send(reponse);							
-						}
-						else	//Renvoi que le port est déjà utilsé, besoin d'une nouvelle possibilité de port
-						{
-							byte[] reponseNegative = new String("Port déjà utilisé. Nouvel essai.").getBytes();
-							DatagramPacket reponse = new DatagramPacket(reponseNegative, reponseNegative.length,paquetReception.getAddress(),paquetReception.getPort());
-
-							//Et on envoie vers l'émetteur du datagramme reçu précédemment
-							socketServeur.send(reponse);
-						}	
-						//
-						i++;
-					}  
+					} 
 				}catch (IOException exception) {
 					exception.printStackTrace();
 				}

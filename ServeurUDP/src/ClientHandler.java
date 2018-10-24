@@ -31,20 +31,18 @@ public class ClientHandler extends Thread{
 	{
 		// Socket du serveur
 		try {
-			System.out.println( "Le serveur écoute le client " + nomClient + "sur le port " + port + "." ) ;
+			System.out.println( "Le serveur écoute le client " + nomClient + " sur le port " + port + "." ) ;
 
 			DatagramSocket socketSpecialClient = new DatagramSocket( port ) ;
 			byte[] receptionVideo = new byte[2048];
-			
+
 			while(true){                 				
 				DatagramPacket paquetVideo = new DatagramPacket(receptionVideo, receptionVideo.length);
 				try {
 					socketSpecialClient.receive(paquetVideo);
 
-					//System.out.println("DEBUG: Client: " + nomClient + ", Port ecoute: "+ port + ", Port reception: " + paquetVideo.getPort());
-					
-					ajoutElementVideo(paquetVideo);
-
+						//System.out.println("DEBUG: Client: " + nomClient + ", Port ecoute: "+ port + ", Port reception: " + paquetVideo.getPort());
+						ajoutElementVideo(paquetVideo);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
