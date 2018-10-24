@@ -25,10 +25,9 @@ public class ClientUDP {
 	static String addIp = "127.0.0.1";						//Adresse du serveur
 	public static String name;								//Nom du client
 	static String session;									//Matiere
+	static boolean arretDemande = false;
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
-	static int tempsFilm = 10;	//Temporaire
-
 
 	public static void envoiServ() throws IOException
 	{
@@ -52,22 +51,22 @@ public class ClientUDP {
 		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, 2345);
 		client.receive(packet2);
 
-		System.out.println("DEBUG: " + name + " a reçu une réponse du serveur : " + packet2.getData().toString());
+		//System.out.println("DEBUG: " + name + " a reçu une réponse du serveur : " + packet2.getData().toString());
 
 		String reponseServ = new String(packet2.getData());
 		reponseServ = reponseServ.trim();
-		
+
 		//OK:port
 		String[] resultatReponse = reponseServ.split(":");
 		String avis = resultatReponse[0].trim();
-		
+
 		if (avis.equals("OK"))
 		{
 			connexionEtablie = true;
 			String portSt = resultatReponse[1].trim();
 			port = Integer.parseInt(portSt);
 		}
-		
+
 		client.close();
 	}
 
@@ -82,15 +81,32 @@ public class ClientUDP {
 		{
 			envoiServ();
 		}
-		
+
 		//création du pipe
 		pipe pip = new pipe(port); //name temporaire pour les test sur un seul PC
 		//On lance le pipe
 		pip.start();
 
 		//Création de l'objet qui va gérer la capture et l'envoi vers le serveur
-		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm);
+		recorderFFMPEG rec = new recorderFFMPEG(1920,1080);
 		//On lance la capture et l'envoi
-		rec.start();				
+		rec.start();	
+
+		//Arret du record temporaire, à voir de quelle manière on arrête à terme
+		while (arretDemande == false)
+		{
+			System.out.println("Entrez \"Stop\" pour arrêter le record.");
+			String receptionConsole = saisieInfo.next();
+
+			if (receptionConsole.equals("Stop"))
+			{
+				rec.stopRecord();
+				arretDemande=true;
+			}
+			else
+			{
+				System.out.println("Texte non reconnu.");
+			}
+		}
 	}
 }

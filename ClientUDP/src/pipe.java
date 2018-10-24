@@ -40,7 +40,7 @@ public class pipe extends Thread {
 	
 	public void envoiPaquetFinClient() throws IOException
 	{
-		System.out.println("DEBUG: Envoi paquet pour terminer.");
+		//System.out.println("DEBUG: Envoi paquet pour terminer.");
 		String fin = "FIN:"+ ClientUDP.port;
 		byte[] donnees = fin.getBytes();		
 		int taillePaquet = donnees.length;
@@ -69,7 +69,7 @@ public class pipe extends Thread {
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
 			pPipe = pbPipe.start();
-			System.out.println("DEBUG: Pipe créé.");
+			//System.out.println("DEBUG: Pipe créé.");
 			pPipe.waitFor();
 			pipePret = true;
 		} catch (IOException e) {
@@ -88,7 +88,7 @@ public class pipe extends Thread {
 			try {
 				recuPipe = new FileInputStream(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
 
-				System.out.println("DEBUG: Le pipe est prêt à réceptionner des informations");
+				//System.out.println("DEBUG: Le pipe est prêt à réceptionner des informations");
 
 				while (!recorderFFMPEG.running)
 				{}
@@ -123,7 +123,7 @@ public class pipe extends Thread {
 			}
 			finally
 			{
-				System.out.println("DEBUG: Le pipe est maintenant fermé.");
+				//System.out.println("DEBUG: Le pipe est maintenant fermé.");
 				//Suppresion du fichier
 				File f = new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase());
 				f.delete();
@@ -131,7 +131,7 @@ public class pipe extends Thread {
 				//qu'on peut supprimer ce client
 				try {
 					envoiPaquetFinClient();
-					System.out.println("DEBUG: Fin d'activité du client.");
+					//System.out.println("DEBUG: Fin d'activité du client.");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

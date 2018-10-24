@@ -5,21 +5,17 @@ import java.io.UnsupportedEncodingException;
 
 
 public class recorderFFMPEG extends Thread{
-
-	////////
-	private int tempsTemporaire;
 	private Process ffmpeg;		
 	public static boolean running;
 	private int largeur, hauteur;
 
-	public recorderFFMPEG(int w, int h, int temps)
+	public recorderFFMPEG(int w, int h)
 	{
 		ffmpeg = null;
 		largeur = w;
 		hauteur = h;
-		tempsTemporaire = temps;	//sera supprimé à terme
 	}
-	
+
 	/**
 	 * Fonction se chargeant de lancer la commande ffmpeg depuis l'appli Java puis de l'envoie dans le Pipe
 	 * @author Bastien et Anaïs
@@ -27,21 +23,21 @@ public class recorderFFMPEG extends Thread{
 	public void run()
 	{				
 		try {			
-			String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -t " + tempsTemporaire +" -f mpegts pipe:1";
+			String cmd = "ffmpeg -video_size " + largeur + "x" + hauteur + " -framerate 5 -f x11grab -i :0 -f mpegts pipe:1";
 
 			//Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
-			
+
 			//On envoie tout sur le pipe créé
 			procFF.redirectOutput(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
-					
+
 			try {
-				System.out.println("DEBUG: Démarrage de l'enregistrement");
+				//System.out.println("DEBUG: Démarrage de l'enregistrement");
 				ffmpeg = procFF.start();
 				running = true;
-				System.out.println("DEBUG: Enregistrement en cours");
+				//System.out.println("DEBUG: Enregistrement en cours");
 				ffmpeg.waitFor();
-				System.out.println("DEBUG: Arret de l'enregistrement");
+				//System.out.println("DEBUG: Arret de l'enregistrement");
 				running = false;
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -49,13 +45,12 @@ public class recorderFFMPEG extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("DEBUG: Fin de l'enregistrement");
-			
+			//System.out.println("DEBUG: Fin de l'enregistrement");
 		}
 	}
-	
+
 	/**
-	 * Envoie la lettre q dans le pipe afin d'ordonner l'arrêt de ffmpeg
+	 * Envoie la lettre q au processus afin d'ordonner l'arrêt de ffmpeg par l'utilisateur
 	 * @author Anaïs
 	 */
 	public void stopRecord()
@@ -65,12 +60,12 @@ public class recorderFFMPEG extends Thread{
 			BufferedOutputStream bos = new BufferedOutputStream(ffmpeg.getOutputStream());
 			try
 			{
-				System.out.println("DEBUG: Envoi de la commande d'arrêt (q) de stream à ffmpeg");
+				//System.out.println("DEBUG: Envoi de la commande d'arrêt à ffmpeg");
 				bos.write(new String("q").getBytes());
 				bos.flush();
-				
+
 				bos.close();
-				System.out.println("dEBUG: ffmpeg s'est correctement arrêté");
+				//System.out.println("DEBUG: ffmpeg s'est correctement arrêté");
 			}
 			catch (UnsupportedEncodingException e){
 				e.printStackTrace();
@@ -81,7 +76,7 @@ public class recorderFFMPEG extends Thread{
 			finally {
 				running = false;
 			}
-			
+
 		}
 	}
 
