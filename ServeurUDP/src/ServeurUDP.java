@@ -13,8 +13,6 @@ import java.util.Map.Entry;
  * @author Base: Anais & Bastien
  */
 public class ServeurUDP {
-
-	private static boolean arretServeurDemande = false;
 	public final static int port = 2345;
 	private static HashMap<Integer,ClientHandler> listeClient;	
 	static Scanner saisieInfo = new Scanner(System.in);
@@ -32,7 +30,7 @@ public class ServeurUDP {
 
 					System.out.println( "Le serveur est prêt." ) ;
 
-					while()
+					while(true)
 					{
 						System.out.println("EN COURS");
 						byte[] donneesRecues = new byte[4096];
