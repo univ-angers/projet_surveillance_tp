@@ -20,14 +20,14 @@ import java.util.Scanner;
 public class ClientUDP {
 
 	// On choisit un port aléatoire pour discuter avec le serveur pour l'envoi futur
-	public static int port = 1024 + (int)(Math.random() * (20000-1024));
+	public static int port;
 
-	static String addIp = "127.0.0.1";
-	public static String name;
-	static String session;
-	static boolean connexionEtablie = false;
+	static String addIp = "127.0.0.1";						//Adresse du serveur
+	public static String name;								//Nom du client
+	static String session;									//Matiere
+	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
-	static int tempsFilm = 50;	//Temporaire
+	static int tempsFilm = 10;	//Temporaire
 
 
 	public static void envoiServ() throws IOException
@@ -37,7 +37,7 @@ public class ClientUDP {
 
 		//On crée notre datagramme
 		InetAddress adresse = InetAddress.getByName("127.0.0.1");
-		String donneeSt = "NOUVEAU:" + name + ":" + session + ":" + port;
+		String donneeSt = "NOUVEAU:" + name + ":" + session;
 		byte[] donnee = donneeSt.getBytes();
 		DatagramPacket packet = new DatagramPacket(donnee, donnee.length, adresse, 2345);
 
@@ -52,15 +52,20 @@ public class ClientUDP {
 		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, 2345);
 		client.receive(packet2);
 
-		System.out.println(name + " a reçu une réponse du serveur : ");
-		System.out.println(new String(packet2.getData()));
+		System.out.println("DEBUG: " + name + " a reçu une réponse du serveur : " + packet2.getData().toString());
 
 		String reponseServ = new String(packet2.getData());
 		reponseServ = reponseServ.trim();
-
-		if (reponseServ.equals("OK"))
+		
+		//OK:port
+		String[] resultatReponse = reponseServ.split(":");
+		String avis = resultatReponse[0].trim();
+		
+		if (avis.equals("OK"))
 		{
 			connexionEtablie = true;
+			String portSt = resultatReponse[1].trim();
+			port = Integer.parseInt(portSt);
 		}
 		
 		client.close();
@@ -86,6 +91,6 @@ public class ClientUDP {
 		//Création de l'objet qui va gérer la capture et l'envoi vers le serveur
 		recorderFFMPEG rec = new recorderFFMPEG(1920,1080, tempsFilm);
 		//On lance la capture et l'envoi
-		rec.start();
+		rec.start();				
 	}
 }

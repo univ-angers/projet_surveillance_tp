@@ -37,6 +37,29 @@ public class pipe extends Thread {
 		
 		client.close();
 	}
+	
+	public void envoiPaquetFinClient() throws IOException
+	{
+		System.out.println("DEBUG: Envoi paquet pour terminer.");
+		String fin = "FIN:"+ ClientUDP.port;
+		byte[] donnees = fin.getBytes();		
+		int taillePaquet = donnees.length;
+				
+		//On initialise la connexion côté client
+		DatagramSocket client = new DatagramSocket();
+
+		//On crée notre datagramme
+		InetAddress adresse = InetAddress.getByName("127.0.0.1");
+		DatagramPacket packet = new DatagramPacket(donnees, taillePaquet, adresse, 2345);
+
+		//On lui affecte les données à envoyer
+		packet.setData(donnees);
+
+		//On envoie au serveur
+		client.send(packet);		
+		
+		client.close();
+	}
 
 	@Override
 	public void run() {
@@ -46,7 +69,7 @@ public class pipe extends Thread {
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
 			pPipe = pbPipe.start();
-			System.out.println("Pipe créé.");
+			System.out.println("DEBUG: Pipe créé.");
 			pPipe.waitFor();
 			pipePret = true;
 		} catch (IOException e) {
@@ -65,8 +88,10 @@ public class pipe extends Thread {
 			try {
 				recuPipe = new FileInputStream(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
 
-				System.out.println("Le pipe est prêt à réceptionner des informations");
+				System.out.println("DEBUG: Le pipe est prêt à réceptionner des informations");
 
+				while (!recorderFFMPEG.running)
+				{}
 				while (recorderFFMPEG.running){
 					try {
 						if (recuPipe.available() > taillePaquet)	//Si on a des données de la taille d'un paquet dans le pipe
@@ -98,10 +123,19 @@ public class pipe extends Thread {
 			}
 			finally
 			{
-				System.out.println("Le pipe est maintenant fermé.");
+				System.out.println("DEBUG: Le pipe est maintenant fermé.");
 				//Suppresion du fichier
 				File f = new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase());
 				f.delete();
+				//Toutes les actions du client sont terminées, on envoie un message au serveur pour lui dire
+				//qu'on peut supprimer ce client
+				try {
+					envoiPaquetFinClient();
+					System.out.println("DEBUG: Fin d'activité du client.");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
 			}
 		}
 	}

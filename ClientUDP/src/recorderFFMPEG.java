@@ -36,12 +36,12 @@ public class recorderFFMPEG extends Thread{
 			procFF.redirectOutput(new File("/tmp/pipeReception"+ClientUDP.name.toUpperCase()));
 					
 			try {
-				System.out.println("Démarrage de l'enregistrement");
+				System.out.println("DEBUG: Démarrage de l'enregistrement");
 				ffmpeg = procFF.start();
 				running = true;
-				System.out.println("Enregistrement en cours");
+				System.out.println("DEBUG: Enregistrement en cours");
 				ffmpeg.waitFor();
-				System.out.println("Arret de l'enregistrement");
+				System.out.println("DEBUG: Arret de l'enregistrement");
 				running = false;
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -49,7 +49,7 @@ public class recorderFFMPEG extends Thread{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
-			System.out.println("Fin de l'enregistrement");
+			System.out.println("DEBUG: Fin de l'enregistrement");
 			
 		}
 	}
@@ -65,12 +65,12 @@ public class recorderFFMPEG extends Thread{
 			BufferedOutputStream bos = new BufferedOutputStream(ffmpeg.getOutputStream());
 			try
 			{
-				System.out.println("Envoie de la commande d'arrêt (q) de stream à ffmpeg...");
+				System.out.println("DEBUG: Envoi de la commande d'arrêt (q) de stream à ffmpeg");
 				bos.write(new String("q").getBytes());
 				bos.flush();
 				
 				bos.close();
-				System.out.println("ffmpeg s'est correctement arrêté");
+				System.out.println("dEBUG: ffmpeg s'est correctement arrêté");
 			}
 			catch (UnsupportedEncodingException e){
 				e.printStackTrace();
