@@ -2,7 +2,8 @@ package Model.Watcher;
 
 import Model.EtudiantExamenInfo;
 import Model.ServerLinkSingleton;
-import org.json.simple.JsonObject;
+
+import org.json.simple.JSONObject;
 
 
 public abstract class Watcher extends Thread {
@@ -27,6 +28,6 @@ public abstract class Watcher extends Thread {
 	/**
 	 * Méthode qui sera défini dans les classes filles pour traiter et construire l'objet JSON qui sera envoyé
 	 */
-	protected abstract JsonObject createDataBeforeSendEvent(EtudiantExamenInfo etudiantExamenInfo);
+	protected abstract JSONObject createDataBeforeSendEvent(EtudiantExamenInfo etudiantExamenInfo);
 
 }

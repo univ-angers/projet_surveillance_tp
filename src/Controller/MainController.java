@@ -1,5 +1,9 @@
 package Controller;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import Model.EtudiantExamenInfo;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
@@ -14,9 +18,19 @@ public class MainController {
 	 */
 	public static void main(String[] args) {
 
-		// On créer les watchers
+		// On créer les watchers et on les lance
 		UsbWatcher usbWatcher = new UsbWatcher();
-		FileWatcher fileWatcher = new FileWatcher();
+		usbWatcher.start();
+				
+		Path p = Paths.get(System.getProperty("user.home"));
+		try {
+			FileWatcher fileWatcher = new FileWatcher(Paths.get(System.getProperty("user.home")));
+			// On démarre le thread du FileWatcher
+			fileWatcher.start();
+		} catch (IOException e) {
+			System.out.println("Impossible de créer le FileWatcher");
+			e.printStackTrace();
+		}
 
 		// On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("127.0.0.1");
@@ -30,12 +44,9 @@ public class MainController {
 
 		// On envoit un evenement en passant par le lien serverLink
 		usbWatcher.sendEvent(serverLink, etudiantExamenInfo);
-
-		// On démarre le thread du FileWatcher
-		fileWatcher.start();
+		
 
 		// On créer la fenêtre
 		new Window();
 	}
-
 }

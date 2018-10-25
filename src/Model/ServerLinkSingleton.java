@@ -1,6 +1,6 @@
 package Model;
 
-import org.json.simple.JsonObject;
+import org.json.simple.JSONObject;
 
 public class ServerLinkSingleton {
 
@@ -10,7 +10,7 @@ public class ServerLinkSingleton {
 	// L'ip du serveur auquel va communiquer l'objet
 	private String ip;
 
-	public void send(JsonObject datas) {
+	public void send(JSONObject datas) {
 		System.out.println("ServerLink sent an event : \n" +datas);
 	}
 
