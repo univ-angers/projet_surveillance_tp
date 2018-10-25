@@ -21,7 +21,8 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 
-import Model.EtudiantExamenInfo;
+import Model.EtudiantExamenInfoSingleton;
+import Model.ServerLinkSingleton;
 
 /**
  * A FAIRE
@@ -35,17 +36,20 @@ public class FileWatcher extends Watcher {
     private final WatchService watcher;
     private final Map<WatchKey,Path> keys;
 
-	public FileWatcher(Path cheminInitial) throws IOException {
+	public FileWatcher(EtudiantExamenInfoSingleton etud, Path cheminInitial) throws IOException {
 		super(TYPE);
 		this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey,Path>();
         registerAll(cheminInitial);
 	}
 
-	protected JSONObject createDataBeforeSendEvent(EtudiantExamenInfo etudiantExamenInfo) {
+	protected void createDataBeforeSendEvent(String information) {
 		JSONObject datas = new JSONObject();
-		datas.put("type", "ajout");
-		return datas;
+		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
+		datas.put("info", information);
+		
+		ServerLinkSingleton SLS = ServerLinkSingleton.getInstance("localhost");
+		this.sendEvent(SLS, datas);
 	}
 
 	/**
@@ -82,12 +86,18 @@ public class FileWatcher extends Watcher {
 				for (WatchEvent event : events) {
 					if (event.kind() == ENTRY_CREATE) {
 						System.out.println("Créé: " + event.context().toString());
+						String information = "Creation fichier: " + event.context().toString();
+						createDataBeforeSendEvent(information);
 					}
 					if (event.kind() == ENTRY_DELETE) {
 						System.out.println("Supprimé: " + event.context().toString());
+						String information = "Suppression fichier: " + event.context().toString();
+						createDataBeforeSendEvent(information);
 					}
 					if (event.kind() == ENTRY_MODIFY) {
 						System.out.println("Modifié: " + event.context().toString());
+						String information = "Modification fichier: " + event.context().toString();
+						createDataBeforeSendEvent(information);
 					}
 				}          
 			} catch (Exception e) {

@@ -1,14 +1,35 @@
 package Model;
 
 
-public class EtudiantExamenInfo {
+public class EtudiantExamenInfoSingleton {
 
 	private String prenomEtudiant;
 	private String nomEtudiant;
 	private String numeroEtudiant;
 	private int numeroExamen;
+	
+	// L'instance unique de la classe
+	static EtudiantExamenInfoSingleton instance = null;
 
+	private EtudiantExamenInfoSingleton(String pren, String nom, String numEt, int numExa)
+	{
+		prenomEtudiant = pren;
+		nomEtudiant = nom;
+		numeroEtudiant = numEt;
+		numeroExamen = numExa;
+	}
 
+	static public EtudiantExamenInfoSingleton getInstance(String pren, String nom, String numEt, int numExa) {
+		if (instance == null) {
+			instance = new EtudiantExamenInfoSingleton(pren, nom, numEt, numExa);
+		}
+		return instance;
+	}
+	
+	static public EtudiantExamenInfoSingleton getInstanceExistante() {
+		return instance;
+	}
+	
 	// GETTERS & SETTERS
 
 	public String getPrenomEtudiant() {

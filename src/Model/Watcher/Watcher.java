@@ -1,6 +1,5 @@
 package Model.Watcher;
 
-import Model.EtudiantExamenInfo;
 import Model.ServerLinkSingleton;
 
 import org.json.simple.JSONObject;
@@ -20,14 +19,14 @@ public abstract class Watcher extends Thread {
 	/**
 	 * Envoie l'évènement à l'objet qui se charge de communiquer avec le serveur
 	 */
-	public void sendEvent(ServerLinkSingleton serverLink, EtudiantExamenInfo etudiantExamenInfo) {
+	public void sendEvent(ServerLinkSingleton serverLink, JSONObject infos) {
 		// Envoie de l'évènement avec les données créées spécifiquement
-		serverLink.send(createDataBeforeSendEvent(etudiantExamenInfo));
+		serverLink.send(infos);
 	}
 
 	/**
 	 * Méthode qui sera défini dans les classes filles pour traiter et construire l'objet JSON qui sera envoyé
 	 */
-	protected abstract JSONObject createDataBeforeSendEvent(EtudiantExamenInfo etudiantExamenInfo);
+	protected abstract void createDataBeforeSendEvent(String information);
 
 }

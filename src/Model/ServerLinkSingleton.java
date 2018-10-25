@@ -1,5 +1,11 @@
 package Model;
 
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.json.simple.JSONObject;
 
 public class ServerLinkSingleton {
@@ -11,7 +17,35 @@ public class ServerLinkSingleton {
 	private String ip;
 
 	public void send(JSONObject datas) {
-		System.out.println("ServerLink sent an event : \n" +datas);
+		System.out.println("DEBUG: Envoi des données: " + datas);
+		
+		URL url;
+	    HttpURLConnection connection = null;
+	    
+	    //Temporaire ?
+	    try {
+	        url = new URL("http://localhost:8080/ServeurJEE/receptionJSON");     //Creating the URL.
+	        connection = (HttpURLConnection) url.openConnection();
+	        connection.setRequestMethod("POST");
+	        connection.setRequestProperty("Content-Type", "application/json");
+	        connection.setUseCaches(false);
+	        connection.setDoInput(true);
+	        connection.setDoOutput(true);
+	        //Send request
+	        OutputStream os = connection.getOutputStream();
+	        OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+	        System.out.println(datas.toString());
+	        osw.write(datas.toString());
+	        osw.flush();
+	        osw.close();
+	        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	            System.out.println("Ok response");
+	        } else {
+	            System.out.println("Bad response");
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
 	}
 
 	// GENERATION

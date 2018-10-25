@@ -15,53 +15,62 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
-import Model.EtudiantExamenInfo;
+import Model.EtudiantExamenInfoSingleton;
+import Model.ServerLinkSingleton;
 
 public class UsbWatcher extends Watcher {
 
 	static String TYPE = "USB";
 
-	public UsbWatcher() {
+	public UsbWatcher(EtudiantExamenInfoSingleton etud) {
 		super(TYPE);
 	}
 
-	protected JSONObject createDataBeforeSendEvent(EtudiantExamenInfo etudiantExamenInfo) {
+	protected void createDataBeforeSendEvent(String information) {
 		JSONObject datas = new JSONObject();
-		datas.put("prenom", etudiantExamenInfo.getPrenomEtudiant());
-		return datas;
+		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
+		datas.put("info", information);
+		
+		ServerLinkSingleton SLS = ServerLinkSingleton.getInstance("localhost");
+		this.sendEvent(SLS, datas);
 	}
-	
+
 	@Override
 	public void run() {
 		// Ligne de commande qui renvoie le nombre de clés usb de type mass branchées 
 		String cmd = "lsusb -t | grep Class=Mass | wc -l";
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
-		
+
 		int n_usb = -1;
 		while (true) {
 			try {
 				Process usb = pb.start();
-				
+
 				usb.waitFor();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(usb.getInputStream()));
 				StringBuilder builder = new StringBuilder();
 				String line = null;
-				while ( (line = reader.readLine()) != null) {
-				   builder.append(line);
-				   
+				while ( (line = reader.readLine()) != null) 
+				{
+					builder.append(line);
 				}
 				int result = Integer.parseInt(builder.toString());
-				
-				if (n_usb == -1){
+
+				if (n_usb == -1)
+				{
 					n_usb = result;
-					
+
 				} else {
-					if (n_usb < result){
+					if (n_usb < result)
+					{
 						System.out.println("Connexion d'une clé USB");
-						
-					} else if (n_usb > result) {
+						String information = "Connexion d'une clé USB";
+						createDataBeforeSendEvent(information);						
+					} else if (n_usb > result) 
+					{
 						System.out.println("Deconnexion d'une clé USB");
-						
+						String information = "Déconnexion d'une clé USB";
+						createDataBeforeSendEvent(information);	
 					}
 					n_usb = result;
 				}
