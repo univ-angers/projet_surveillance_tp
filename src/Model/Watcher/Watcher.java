@@ -1,5 +1,6 @@
 package Model.Watcher;
 
+import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 
 import org.json.simple.JSONObject;
@@ -27,6 +28,15 @@ public abstract class Watcher extends Thread {
 	/**
 	 * Méthode qui sera défini dans les classes filles pour traiter et construire l'objet JSON qui sera envoyé
 	 */
-	protected abstract void createDataBeforeSendEvent(String information);
+	@SuppressWarnings("unchecked")
+	protected  void createDataBeforeSendEvent(String information)
+	{
+		JSONObject datas = new JSONObject();
+		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
+		datas.put("info", information);
+		
+		ServerLinkSingleton SLS = ServerLinkSingleton.getInstance("localhost");
+		this.sendEvent(SLS, datas);
+	}
 
 }

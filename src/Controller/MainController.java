@@ -8,6 +8,7 @@ import java.util.Scanner;
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
+import Model.Watcher.NetworkWatcher;
 import Model.Watcher.UsbWatcher;
 import Vue.Window;
 
@@ -17,7 +18,7 @@ public class MainController {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//TEMPORAIRE			
+		//TEMPORAIRE: On les récupèrera via la fenètre
 		Scanner saisieInfo = new Scanner(System.in);
 		System.out.println("Saisissez votre prénom");
 		String prenomClient = saisieInfo.next();
@@ -35,9 +36,10 @@ public class MainController {
 		/////////////
 				
 		// On créer les watchers et on les lance
+		//USB
 		UsbWatcher usbWatcher = new UsbWatcher(etudiantCourant);
 		usbWatcher.start();
-				
+		//FILE
 		Path p = Paths.get(System.getProperty("user.home"));
 		try {
 			FileWatcher fileWatcher = new FileWatcher(etudiantCourant,Paths.get(System.getProperty("user.home")));
@@ -47,10 +49,14 @@ public class MainController {
 			System.out.println("Impossible de créer le FileWatcher");
 			e.printStackTrace();
 		}
-
+		//NETWORK
+		NetworkWatcher netWatcher = new NetworkWatcher(etudiantCourant);
+		netWatcher.start();
+		
 		// On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
 
+		
 
 		// On créer la fenêtre
 		new Window();

@@ -19,10 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-
 import Model.EtudiantExamenInfoSingleton;
-import Model.ServerLinkSingleton;
 
 /**
  * A FAIRE
@@ -43,17 +40,8 @@ public class FileWatcher extends Watcher {
         registerAll(cheminInitial);
 	}
 
-	protected void createDataBeforeSendEvent(String information) {
-		JSONObject datas = new JSONObject();
-		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
-		datas.put("info", information);
-		
-		ServerLinkSingleton SLS = ServerLinkSingleton.getInstance("localhost");
-		this.sendEvent(SLS, datas);
-	}
-
 	/**
-	 * Met le dossier et tous ses sous dossiers dans la watcher
+	 * Met le dossier et tous ses sous dossiers dans le watcher
 	 * Source1: https://stackoverflow.com/questions/16611426/monitor-subfolders-with-a-java-watch-service
 	 * Source2: https://stackoverflow.com/questions/49803363/how-to-ignore-accessdeniedexceptions-when-using-files-walkfiletree
 	 */
@@ -85,17 +73,17 @@ public class FileWatcher extends Watcher {
 				List<WatchEvent<?>> events = watckKey.pollEvents();
 				for (WatchEvent event : events) {
 					if (event.kind() == ENTRY_CREATE) {
-						System.out.println("Créé: " + event.context().toString());
+						//System.out.println("DEBUG: Créé: " + event.context().toString());
 						String information = "Creation fichier: " + event.context().toString();
 						createDataBeforeSendEvent(information);
 					}
 					if (event.kind() == ENTRY_DELETE) {
-						System.out.println("Supprimé: " + event.context().toString());
+						//System.out.println("DEBUG: Supprimé: " + event.context().toString());
 						String information = "Suppression fichier: " + event.context().toString();
 						createDataBeforeSendEvent(information);
 					}
 					if (event.kind() == ENTRY_MODIFY) {
-						System.out.println("Modifié: " + event.context().toString());
+						//System.out.println("DEBUG: Modifié: " + event.context().toString());
 						String information = "Modification fichier: " + event.context().toString();
 						createDataBeforeSendEvent(information);
 					}

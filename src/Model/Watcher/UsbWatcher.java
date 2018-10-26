@@ -1,22 +1,8 @@
 package Model.Watcher;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
-import java.util.List;
-
-import org.json.simple.JSONObject;
-
 import Model.EtudiantExamenInfoSingleton;
-import Model.ServerLinkSingleton;
 
 public class UsbWatcher extends Watcher {
 
@@ -24,15 +10,6 @@ public class UsbWatcher extends Watcher {
 
 	public UsbWatcher(EtudiantExamenInfoSingleton etud) {
 		super(TYPE);
-	}
-
-	protected void createDataBeforeSendEvent(String information) {
-		JSONObject datas = new JSONObject();
-		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
-		datas.put("info", information);
-		
-		ServerLinkSingleton SLS = ServerLinkSingleton.getInstance("localhost");
-		this.sendEvent(SLS, datas);
 	}
 
 	@Override

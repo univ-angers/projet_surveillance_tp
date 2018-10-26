@@ -8,6 +8,9 @@ import java.net.URL;
 
 import org.json.simple.JSONObject;
 
+/**
+ * A VOIR AU NIVEAU DE L'IP
+ */
 public class ServerLinkSingleton {
 
 	// L'instance unique de la classe
@@ -17,14 +20,14 @@ public class ServerLinkSingleton {
 	private String ip;
 
 	public void send(JSONObject datas) {
-		System.out.println("DEBUG: Envoi des données: " + datas);
+		//System.out.println("DEBUG: Envoi des données: " + datas);
 		
 		URL url;
 	    HttpURLConnection connection = null;
 	    
 	    //Temporaire ?
 	    try {
-	        url = new URL("http://localhost:8080/ServeurJEE/receptionJSON");     //Creating the URL.
+	        url = new URL("http://" + ip + ":8080/ServeurJEE/receptionJSON");     //Creating the URL.
 	        connection = (HttpURLConnection) url.openConnection();
 	        connection.setRequestMethod("POST");
 	        connection.setRequestProperty("Content-Type", "application/json");
@@ -38,11 +41,12 @@ public class ServerLinkSingleton {
 	        osw.write(datas.toString());
 	        osw.flush();
 	        osw.close();
+	        /* DEBUG
 	        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	            System.out.println("Ok response");
+	            System.out.println("DEBUG: OK");
 	        } else {
-	            System.out.println("Bad response");
-	        }
+	            System.out.println("DEBUG: FAIL");
+	        }*/
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
