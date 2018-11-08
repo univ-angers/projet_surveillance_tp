@@ -32,7 +32,7 @@ public class Configuration extends JFrame
 	
 	private void build()
 	{
-		setSize(420, 250);
+		setSize(420, 210);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -100,69 +100,47 @@ public class Configuration extends JFrame
 				tf_adrServ.setText(etudiant.getAdresseServeur());
 
 		
-		JLabel l_nomEtud = new JLabel("Nom étudiant");
+		JLabel l_identifiant = new JLabel("Identifiant");
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.3;
 			c.gridx = 1;
 			c.gridy = 2;
 			c.gridwidth = 1;
 			c.insets = new Insets(0, -30, 20, 20);
-			panel.add(l_nomEtud, c);
+			panel.add(l_identifiant, c);
 			
 			
-		JTextField tf_nomEtud = new JTextField();
+		JTextField tf_identifiant = new JTextField();
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.7;
 			c.gridx = 2;
 			c.gridy = 2;
 			c.gridwidth = 2;
 			c.insets = new Insets(0, 0, 20, 20);
-			panel.add(tf_nomEtud, c);
+			panel.add(tf_identifiant, c);
 			if (etudiant != null)
-				tf_nomEtud.setText(etudiant.getNomEtudiant());
+				tf_identifiant.setText(etudiant.getIdentifiant());
 			
 			
-		JLabel l_prenomEtud = new JLabel("Prénom étudiant");
+		JLabel l_mdp = new JLabel("Mot de passe");
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.3;
 			c.gridx = 1;
 			c.gridy = 3;
 			c.gridwidth = 1;
 			c.insets = new Insets(0, -30, 20, 20);
-			panel.add(l_prenomEtud, c);
+			panel.add(l_mdp, c);
 			
-		JTextField tf_prenomEtud = new JTextField();
+		JPasswordField tf_mdp = new JPasswordField();
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.7;
 			c.gridx = 2;
 			c.gridy = 3;
 			c.gridwidth = 2;
 			c.insets = new Insets(0, 0, 20, 20);
-			panel.add(tf_prenomEtud, c);
-			if (etudiant != null)
-				tf_prenomEtud.setText(etudiant.getPrenomEtudiant());
-		
+			panel.add(tf_mdp, c);
 			
-		JLabel l_INE = new JLabel("N° INE");
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weightx = 0.5;
-			c.gridx = 1;
-			c.gridy = 4;
-			c.gridwidth = 1;
-			c.insets = new Insets(0, -30, 20, 20);
-			panel.add(l_INE, c);
-		
-		JTextField tf_INE = new JTextField();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.weightx = 0.5;
-			c.gridx = 2;
-			c.gridy = 4;
-			c.gridwidth = 2;
-			c.insets = new Insets(0, 0, 20, 20);
-			panel.add(tf_INE, c);
-			if (etudiant != null)
-				tf_INE.setText(etudiant.getNumeroEtudiant());
-		
+
 		
 		JButton b_valider = new JButton("Valider");
 		b_valider.addActionListener(new ActionListener() {
@@ -170,14 +148,13 @@ public class Configuration extends JFrame
 			{
 				if(e.getSource() == b_valider)
 				   {
-					   String nomEtud = tf_nomEtud.getText();
-					   String prenomEtud = tf_prenomEtud.getText();
-					   String INE = tf_INE.getText();
+					   String identifiant = tf_identifiant.getText();
+					   char[] mdp = tf_mdp.getPassword();
 					   String adrServ = tf_adrServ.getText();
 					   
-					   if (!nomEtud.isEmpty() && !prenomEtud.isEmpty() && !INE.isEmpty() && !adrServ.isEmpty())
+					   if (!identifiant.isEmpty() && mdp.length != 0 && !adrServ.isEmpty())
 					   {
-						   controller.receptionEtudiant(prenomEtud, nomEtud, INE, adrServ);
+						   controller.receptionEtudiant(identifiant, mdp, adrServ);
 						   instance.dispose();
 					   }
 					   else 
@@ -188,7 +165,7 @@ public class Configuration extends JFrame
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.2;
 			c.gridx = 3;
-			c.gridy = 5;
+			c.gridy = 4;
 			c.gridwidth = 1;
 			c.insets = new Insets(0, 100, 15, 35);
 			panel.add(b_valider, c);

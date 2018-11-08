@@ -114,7 +114,7 @@ public class Connexion extends JFrame
 		                if (etudiant != null && !idExam.isEmpty() && idExam.length() < 11)
 						{
 							controller.receptionIdExamen(idExam);
-							
+							controller.logIn();
 							controller.lancementSurveillance();
 							
 							Examen fenetre = new Examen();

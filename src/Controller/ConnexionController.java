@@ -71,4 +71,19 @@ public class ConnexionController
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
 	}
 
+	public void logIn() 
+	{
+		ServerLinkSingleton server;
+		server = ServerLinkSingleton.getInstanceExistante();
+		
+		JSONObject datas = new JSONObject();
+		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
+		datas.put("IDetudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
+		datas.put("info", "Connexion client réussie");
+		
+		server.send(datas);
+	}
+}
+
 }

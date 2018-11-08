@@ -13,23 +13,22 @@ public class ConfigController
 		fenConfig = fenetre;
 	}
 
-	public void receptionEtudiant(String pren, String nom, String numEt, String adrServ)
+	public void receptionEtudiant(String id, char[] mdp, String adrServ)
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		
 		/* Si l'étudiant veut modifier les infos le concernant / l'adresse du serveur */
-		if (etudiant != null && (!nom.equals(etudiant.getNomEtudiant())  || !pren.equals(etudiant.getPrenomEtudiant()) || !numEt.equals(etudiant.getNumeroEtudiant()) || !adrServ.equals(etudiant.getAdresseServeur())))
+		if (etudiant != null && (!id.equals(etudiant.getIdentifiant())  || !mdp.equals(etudiant.getMotDePasse()) || !adrServ.equals(etudiant.getAdresseServeur())))
 		{
-			etudiant.setNomEtudiant(nom);
-			etudiant.setPrenomEtudiant(pren);
-			etudiant.setNumeroEtudiant(numEt);
+			etudiant.setIdentifiant(id);
+			etudiant.setMotDePasse(mdp);
 			etudiant.setAdresseServeur(adrServ);
 		}	
 		
 		/* Si l'étudiant n'a rentré encore aucune information */
 		if (etudiant == null)
 		{
-			etudiant = EtudiantExamenInfoSingleton.getInstance(pren, nom, numEt, adrServ);	
+			etudiant = EtudiantExamenInfoSingleton.getInstance(id, mdp, adrServ);	
 		}
 	}
 }

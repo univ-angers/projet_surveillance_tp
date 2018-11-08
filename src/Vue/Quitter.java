@@ -45,44 +45,13 @@ public class Quitter extends JFrame
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		JButton b_option = new JButton();
-		Image img;
-		try 
-		{
-			img = ImageIO.read(getClass().getResource("o.png"));
-			b_option.setIcon(new ImageIcon(img));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		
-		b_option.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(e.getSource() == b_option)
-				   {
-						Configuration fenetre = new Configuration();
-						fenetre.setVisible(true);
-				   }
-			}
-		});
-		
-			c.fill = GridBagConstraints.NONE;
-			c.weightx = 0;
-			c.gridx = 0;
-			c.gridy = 0;
-			c.gridwidth = 1;
-			c.insets = new Insets(10, -110, 20, 10);
-			panel.add(b_option, c);
-
-
 		JLabel l_quitter = new JLabel("Voulez-vous vraiment quitter l'examen ?");
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.3;
 			c.gridx = 1;
 			c.gridy = 0;
 			c.gridwidth = 1;
-			c.insets = new Insets(10, -110, 20, 40);
+			c.insets = new Insets(10, -150, 20, 40);
 			panel.add(l_quitter, c);
 
 

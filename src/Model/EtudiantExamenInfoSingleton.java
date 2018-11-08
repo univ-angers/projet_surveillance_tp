@@ -2,9 +2,8 @@ package Model;
 
 public class EtudiantExamenInfoSingleton {
 
-	private String prenomEtudiant;
-	private String nomEtudiant;
-	private String numeroEtudiant;
+	private String identifiant;
+	private char[] motDePasse;
 	private String adrServeur;
 	
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
@@ -15,20 +14,19 @@ public class EtudiantExamenInfoSingleton {
 	// L'instance unique de la classe
 	static EtudiantExamenInfoSingleton instance = null;
 
-	private EtudiantExamenInfoSingleton(String pren, String nom, String numEt, String adrServ)
+	private EtudiantExamenInfoSingleton(String id, char[] mdp, String adrServ)
 	{
-		prenomEtudiant = pren;
-		nomEtudiant = nom;
-		numeroEtudiant = numEt;
+		identifiant = id;
+		motDePasse = mdp;
 		adrServeur = adrServ;
 		
 		//Il manque le numero d'examen
 		toutesLesInfos = false;
 	}
 
-	static public EtudiantExamenInfoSingleton getInstance(String pren, String nom, String numEt, String adrServ) {
+	static public EtudiantExamenInfoSingleton getInstance(String id, char[] mdp, String adrServ) {
 		if (instance == null) {
-			instance = new EtudiantExamenInfoSingleton(pren, nom, numEt, adrServ);
+			instance = new EtudiantExamenInfoSingleton(id, mdp, adrServ);
 		}
 		return instance;
 	}
@@ -37,28 +35,18 @@ public class EtudiantExamenInfoSingleton {
 		return instance;
 	}
 
-	public void affichageEtudiant()
-	{
-		System.out.println(prenomEtudiant + "\n" + nomEtudiant + "\n" + numeroEtudiant + "\n" + adrServeur + "\n");
-}
 	// GETTERS & SETTERS
-	public String getPrenomEtudiant() {
-		return prenomEtudiant;
+	public String getIdentifiant() {
+		return identifiant;
 	}
-	public void setPrenomEtudiant(String prenomEtudiant) {
-		this.prenomEtudiant = prenomEtudiant;
+	public void setIdentifiant(String id) {
+		this.identifiant = id;
 	}
-	public String getNomEtudiant() {
-		return nomEtudiant;
+	public char[] getMotDePasse() {
+		return motDePasse;
 	}
-	public void setNomEtudiant(String nomEtudiant) {
-		this.nomEtudiant = nomEtudiant;
-	}
-	public String getNumeroEtudiant() {
-		return numeroEtudiant;
-	}
-	public void setNumeroEtudiant(String numeroEtudiant) {
-		this.numeroEtudiant = numeroEtudiant;
+	public void setMotDePasse(char[] mdp) {
+		this.motDePasse = mdp;
 	}
 	public String getAdresseServeur() {
 		return adrServeur;
@@ -76,7 +64,7 @@ public class EtudiantExamenInfoSingleton {
 		return toutesLesInfos;
 	}
 	public void setToutesLesInfosEtud()	{
-		if (!(prenomEtudiant.isEmpty() && nomEtudiant.isEmpty() && numeroEtudiant.isEmpty() && adrServeur.isEmpty() && numeroExamen.isEmpty()))
+		if (!(identifiant.isEmpty() && motDePasse.length == 0 && adrServeur.isEmpty() && numeroExamen.isEmpty()))
 			toutesLesInfos = true;
 		else
 			System.out.println("TOUT N'EST PAS COMPLET");
