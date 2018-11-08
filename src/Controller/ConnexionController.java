@@ -49,7 +49,9 @@ public class ConnexionController
 
 	public void lancementSurveillance() 
 	{
-		//
+		//Variable qui permet de faire boucler les Watchers
+		Main.surveillanceEnCours = true;
+		
 		// On créer les watchers et on les lance
 		//USB
 		UsbWatcher usbWatcher = new UsbWatcher();
@@ -69,8 +71,8 @@ public class ConnexionController
 		vidWatcher.start();
 		//
 		//NETWORK
-		NetworkWatcher netWatcher = new NetworkWatcher();
-		netWatcher.start();
+		//NetworkWatcher netWatcher = new NetworkWatcher();
+		//netWatcher.start();
 
 		//On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
