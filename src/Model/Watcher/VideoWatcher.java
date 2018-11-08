@@ -86,7 +86,7 @@ public class VideoWatcher extends Watcher{
 	public void run(){
 		EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		//Création du client et envoi des infos du client au serveur
-		name = etudiant.getNomEtudiant();
+		name = etudiant.getIdentifiant();
 		session = etudiant.getNumeroExamen();
 
 		while (connexionEtablie == false)

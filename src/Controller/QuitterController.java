@@ -23,9 +23,8 @@ public class QuitterController
 		JSONObject datas = new JSONObject();
 		datas.put("Niveau", "critique");
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("INE", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroEtudiant());
-		datas.put("nom", EtudiantExamenInfoSingleton.getInstanceExistante().getNomEtudiant());
-		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
+		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
 		datas.put("info", "L'appplication a été fermée");
 		
 		server.send(datas);

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.json.simple.JSONObject;
+
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
@@ -84,6 +86,4 @@ public class ConnexionController
 		
 		server.send(datas);
 	}
-}
-
 }

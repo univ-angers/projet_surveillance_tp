@@ -35,9 +35,8 @@ public abstract class Watcher extends Thread {
 		JSONObject datas = new JSONObject();
 		datas.put("Niveau", nivAlerte);
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("INE", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroEtudiant());
-		datas.put("nom", EtudiantExamenInfoSingleton.getInstanceExistante().getNomEtudiant());
-		datas.put("prenom", EtudiantExamenInfoSingleton.getInstanceExistante().getPrenomEtudiant());
+		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
 		datas.put("info", information);
 		
 		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();
