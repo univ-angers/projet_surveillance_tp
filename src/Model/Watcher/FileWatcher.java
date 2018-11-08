@@ -75,17 +75,17 @@ public class FileWatcher extends Watcher {
 					if (event.kind() == ENTRY_CREATE) {
 						//System.out.println("DEBUG: Créé: " + event.context().toString());
 						String information = "Creation fichier: " + event.context().toString();
-						createDataBeforeSendEvent(information);
+						createDataBeforeSendEvent(information,"normal");
 					}
 					if (event.kind() == ENTRY_DELETE) {
 						//System.out.println("DEBUG: Supprimé: " + event.context().toString());
 						String information = "Suppression fichier: " + event.context().toString();
-						createDataBeforeSendEvent(information);
+						createDataBeforeSendEvent(information,"normal");
 					}
 					if (event.kind() == ENTRY_MODIFY) {
 						//System.out.println("DEBUG: Modifié: " + event.context().toString());
 						String information = "Modification fichier: " + event.context().toString();
-						createDataBeforeSendEvent(information);
+						createDataBeforeSendEvent(information,"normal");
 					}
 				}          
 			} catch (Exception e) {

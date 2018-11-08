@@ -1,6 +1,5 @@
 package Model;
 
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -62,6 +61,10 @@ public class ServerLinkSingleton {
 		if (instance == null) {
 			instance = new ServerLinkSingleton(ip);
 		}
+		return instance;
+	}
+	
+	static public ServerLinkSingleton getInstanceExistante() {
 		return instance;
 	}
 
