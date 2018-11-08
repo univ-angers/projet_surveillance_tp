@@ -1,17 +1,7 @@
 package Controller;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
-
 import javax.swing.SwingUtilities;
 
-import Model.EtudiantExamenInfoSingleton;
-import Model.ServerLinkSingleton;
-import Model.Watcher.FileWatcher;
-import Model.Watcher.NetworkWatcher;
-import Model.Watcher.UsbWatcher;
 import Vue.Connexion;
 
 

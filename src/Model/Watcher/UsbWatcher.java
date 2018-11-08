@@ -2,13 +2,12 @@ package Model.Watcher;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import Model.EtudiantExamenInfoSingleton;
 
 public class UsbWatcher extends Watcher {
 
 	static String TYPE = "USB";
 
-	public UsbWatcher(EtudiantExamenInfoSingleton etud) {
+	public UsbWatcher() {
 		super(TYPE);
 	}
 

@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 
 
 public abstract class Watcher extends Thread {
-
+	
 	// Le nom du type du Watcher
 	protected String type;
 

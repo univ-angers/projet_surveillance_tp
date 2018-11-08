@@ -8,6 +8,7 @@ import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
 import Model.Watcher.UsbWatcher;
+import Model.Watcher.VideoWatcher;
 import Vue.Connexion;
 
 public class ConnexionController 
@@ -30,6 +31,7 @@ public class ConnexionController
 			idExam = "0" + idExam;
 		}
 
+		/* A FAIRE AU NIVEAU DU SERVEUR POUR POUVOIR NOMMER LES VIDEOS CORRECTEMENT 
 		char[] tmp = idExam.toCharArray();
 		idExam = "";
 
@@ -37,6 +39,7 @@ public class ConnexionController
 		{
 			idExam = idExam + "/" + tmp[i];
 		}
+		*/
 
 		etudiant.setNumeroExamen(idExam);
 	}
@@ -45,18 +48,21 @@ public class ConnexionController
 	{
 		// On créer les watchers et on les lance
 		//USB
-		UsbWatcher usbWatcher = new UsbWatcher(etudiant);
+		UsbWatcher usbWatcher = new UsbWatcher();
 		usbWatcher.start();
 		//FILE
 		Path p = Paths.get(System.getProperty("user.home"));
 		try {
-			FileWatcher fileWatcher = new FileWatcher(etudiant, Paths.get(System.getProperty("user.home")));
+			FileWatcher fileWatcher = new FileWatcher(Paths.get(System.getProperty("user.home")));
 			// On démarre le thread du FileWatcher
 			fileWatcher.start();
 		} catch (IOException e) {
 			System.out.println("Impossible de créer le FileWatcher");
 			e.printStackTrace();
 		}
+		//VIDEO
+		VideoWatcher vidWatcher = new VideoWatcher();
+		vidWatcher.start();
 		//NETWORK
 		//NetworkWatcher netWatcher = new NetworkWatcher(etudiantCourant);
 		//netWatcher.start();

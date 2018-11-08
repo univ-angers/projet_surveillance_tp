@@ -40,12 +40,12 @@ public class ServerLinkSingleton {
 	        osw.write(datas.toString());
 	        osw.flush();
 	        osw.close();
-	        /* DEBUG
+	        /* DEBUG */
 	        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 	            System.out.println("DEBUG: OK");
 	        } else {
 	            System.out.println("DEBUG: FAIL");
-	        }*/
+	        }//
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }

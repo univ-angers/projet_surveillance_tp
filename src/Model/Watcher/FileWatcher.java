@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Model.EtudiantExamenInfoSingleton;
 
 /**
  * A FAIRE
@@ -33,7 +32,7 @@ public class FileWatcher extends Watcher {
     private final WatchService watcher;
     private final Map<WatchKey,Path> keys;
 
-	public FileWatcher(EtudiantExamenInfoSingleton etud, Path cheminInitial) throws IOException {
+	public FileWatcher(Path cheminInitial) throws IOException {
 		super(TYPE);
 		this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey,Path>();

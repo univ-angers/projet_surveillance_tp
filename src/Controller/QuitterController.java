@@ -29,5 +29,7 @@ public class QuitterController
 		datas.put("info", "L'appplication a été fermée");
 		
 		server.send(datas);
+		
+		
 	}
 }
