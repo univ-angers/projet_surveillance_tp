@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
+import Model.Watcher.NetworkWatcher;
 import Model.Watcher.UsbWatcher;
 import Model.Watcher.VideoWatcher;
 import Vue.Connexion;
@@ -48,6 +49,7 @@ public class ConnexionController
 
 	public void lancementSurveillance() 
 	{
+		//
 		// On créer les watchers et on les lance
 		//USB
 		UsbWatcher usbWatcher = new UsbWatcher();
@@ -65,14 +67,16 @@ public class ConnexionController
 		//VIDEO
 		VideoWatcher vidWatcher = new VideoWatcher();
 		vidWatcher.start();
+		//
 		//NETWORK
-		//NetworkWatcher netWatcher = new NetworkWatcher(etudiantCourant);
-		//netWatcher.start();
+		NetworkWatcher netWatcher = new NetworkWatcher();
+		netWatcher.start();
 
-		// On créer un lien vers le server
+		//On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
 	}
 
+	@SuppressWarnings("unchecked")
 	public void logIn() 
 	{
 		ServerLinkSingleton server;

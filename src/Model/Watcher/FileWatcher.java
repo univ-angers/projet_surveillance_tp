@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Controller.Main;
+
 
 /**
  * A FAIRE
@@ -66,7 +68,7 @@ public class FileWatcher extends Watcher {
 	
 	@Override
 	public void run() {
-		while (true) {        
+		while (Main.surveillanceEnCours) {        
 			try {				
 				WatchKey watckKey = watcher.take();       
 				List<WatchEvent<?>> events = watckKey.pollEvents();

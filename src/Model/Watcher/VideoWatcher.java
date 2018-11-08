@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import Controller.Main;
 import Model.EtudiantExamenInfoSingleton;
 import Model.Pipe;
 import Model.RecorderFFMPEG;
@@ -33,7 +34,6 @@ public class VideoWatcher extends Watcher{
 	static String addIp = "127.0.0.1";						//Adresse du serveur
 	public static String name;								//Nom du client
 	static String session;									//Matiere
-	static boolean arretDemande = false;
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
 	
@@ -109,21 +109,11 @@ public class VideoWatcher extends Watcher{
 		//On lance la capture et l'envoi
 		rec.start();	
 
-		//Arret du record temporaire, à voir de quelle manière on arrête à terme
-		while (arretDemande == false)
-		{
-			System.out.println("Entrez \"Stop\" pour arrêter le record.");
-			String receptionConsole = saisieInfo.next();
-
-			if (receptionConsole.equals("Stop"))
-			{
-				rec.stopRecord();
-				arretDemande=true;
-			}
-			else
-			{
-				System.out.println("Texte non reconnu.");
-			}
-		}
+		//On arrête pas tant que la surveillance est active
+		while (Main.surveillanceEnCours == false)
+		{}
+		
+		//La surveillance n'est plus active, on arrête
+		rec.stopRecord();
 	}
 }

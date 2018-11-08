@@ -29,6 +29,7 @@ public class QuitterController
 		
 		server.send(datas);
 		
-		
+		Main.surveillanceEnCours = false;
+		//Cela va arrêter les watchers en même temps
 	}
 }

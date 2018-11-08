@@ -3,6 +3,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import Controller.Main;
+
 public class UsbWatcher extends Watcher {
 
 	static String TYPE = "USB";
@@ -18,7 +20,7 @@ public class UsbWatcher extends Watcher {
 		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", cmd);
 
 		int n_usb = -1;
-		while (true) {
+		while (Main.surveillanceEnCours) {
 			try {
 				Process usb = pb.start();
 
