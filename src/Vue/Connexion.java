@@ -19,6 +19,11 @@ public class Connexion extends JFrame
 	Connexion instance = this;
 	ConnexionController controller;
 	EtudiantExamenInfoSingleton etudiant;
+	
+	JButton b_option;
+	JButton b_valider;
+	JTextField tf_idExam;
+	
 
 	public Connexion()
 	{
@@ -47,7 +52,7 @@ public class Connexion extends JFrame
 
 		
 		
-		JButton b_option = new JButton(); 
+		b_option = new JButton(); 
 		Image img;
 		try 
 		{
@@ -89,7 +94,7 @@ public class Connexion extends JFrame
 			c.insets = new Insets(0, -30, 20, 20);
 			panel.add(l_idExam, c);
 
-		JTextField tf_idExam = new JTextField();
+		tf_idExam = new JTextField();
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.7;
 			c.gridx = 2;
@@ -99,7 +104,7 @@ public class Connexion extends JFrame
 			panel.add(tf_idExam, c);
 			
 
-		JButton b_valider = new JButton("Ok");
+		b_valider = new JButton("Ok");
 		b_valider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{

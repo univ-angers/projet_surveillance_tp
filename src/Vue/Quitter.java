@@ -3,13 +3,9 @@ package Vue;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Controller.QuitterController;
@@ -18,6 +14,9 @@ public class Quitter extends JFrame
 {	
 	Quitter instance = this;
 	QuitterController controller;
+	
+	JButton b_valider;
+	JButton b_refuser;
 	
 	public Quitter()
 	{
@@ -55,7 +54,7 @@ public class Quitter extends JFrame
 			panel.add(l_quitter, c);
 
 
-		JButton b_valider = new JButton("Oui");
+		b_valider = new JButton("Oui");
 		b_valider.setBackground(new Color(225, 65, 54));
 		b_valider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -79,7 +78,7 @@ public class Quitter extends JFrame
 			c.insets = new Insets(0, 100, 15, 35);
 			panel.add(b_valider, c);
 		
-		JButton b_refuser = new JButton("Non");
+		b_refuser = new JButton("Non");
 		b_refuser.setBackground(new Color(161, 225, 88));
 		b_refuser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 

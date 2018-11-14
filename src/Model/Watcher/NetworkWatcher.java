@@ -108,7 +108,7 @@ public class NetworkWatcher extends Watcher{
 										{
 											String lienACheck = lignes[i].substring(6);
 											//Check du lien
-											System.out.println("Lien à check: " + lienACheck);	
+											//System.out.println("Lien à check: " + lienACheck);	
 											verifierLien(lienACheck);
 										}
 									}

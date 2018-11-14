@@ -3,9 +3,9 @@ package Model;
 public class EtudiantExamenInfoSingleton {
 
 	private String identifiant;
-	private char[] motDePasse;
+	private String motDePasse;
 	private String adrServeur;
-	
+
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
 	private String numeroExamen;
 
@@ -14,17 +14,17 @@ public class EtudiantExamenInfoSingleton {
 	// L'instance unique de la classe
 	static EtudiantExamenInfoSingleton instance = null;
 
-	private EtudiantExamenInfoSingleton(String id, char[] mdp, String adrServ)
+	private EtudiantExamenInfoSingleton(String id, String mdp, String adrServ)
 	{
 		identifiant = id;
 		motDePasse = mdp;
 		adrServeur = adrServ;
-		
+
 		//Il manque le numero d'examen
 		toutesLesInfos = false;
 	}
 
-	static public EtudiantExamenInfoSingleton getInstance(String id, char[] mdp, String adrServ) {
+	static public EtudiantExamenInfoSingleton getInstance(String id, String mdp, String adrServ) {
 		if (instance == null) {
 			instance = new EtudiantExamenInfoSingleton(id, mdp, adrServ);
 		}
@@ -42,10 +42,10 @@ public class EtudiantExamenInfoSingleton {
 	public void setIdentifiant(String id) {
 		this.identifiant = id;
 	}
-	public char[] getMotDePasse() {
+	public String getMotDePasse() {
 		return motDePasse;
 	}
-	public void setMotDePasse(char[] mdp) {
+	public void setMotDePasse(String mdp) {
 		this.motDePasse = mdp;
 	}
 	public String getAdresseServeur() {
@@ -64,7 +64,7 @@ public class EtudiantExamenInfoSingleton {
 		return toutesLesInfos;
 	}
 	public void setToutesLesInfosEtud()	{
-		if (!(identifiant.isEmpty() && motDePasse.length == 0 && adrServeur.isEmpty() && numeroExamen.isEmpty()))
+		if (!(identifiant.isEmpty() && motDePasse.length() == 0 && adrServeur.isEmpty() && numeroExamen.isEmpty()))
 			toutesLesInfos = true;
 		else
 			System.out.println("TOUT N'EST PAS COMPLET");

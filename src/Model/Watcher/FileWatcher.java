@@ -15,10 +15,7 @@ import java.nio.file.WatchService;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import Controller.Main;
 
 
@@ -32,12 +29,12 @@ public class FileWatcher extends Watcher {
 
 	static String TYPE = "FILE";
     private final WatchService watcher;
-    private final Map<WatchKey,Path> keys;
+   // private final Map<WatchKey,Path> keys;
 
 	public FileWatcher(Path cheminInitial) throws IOException {
 		super(TYPE);
 		this.watcher = FileSystems.getDefault().newWatchService();
-        this.keys = new HashMap<WatchKey,Path>();
+        //this.keys = new HashMap<WatchKey,Path>();
         registerAll(cheminInitial);
 	}
 

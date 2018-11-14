@@ -13,7 +13,7 @@ public class ConfigController
 		fenConfig = fenetre;
 	}
 
-	public void receptionEtudiant(String id, char[] mdp, String adrServ)
+	public void receptionEtudiant(String id, String mdp, String adrServ)
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		
