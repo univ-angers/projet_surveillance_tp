@@ -14,16 +14,18 @@ import java.net.SocketException;
 public class ClientHandler extends Thread{
 
 	//A déterminer ce que l'on prendra exactement
-	String nomClient;
-	String matiere;
-	int port;
-	FileOutputStream sortieVideo;
+	private String nomClient;
+	private String matiere;
+	private int port;
+	private FileOutputStream sortieVideo;
+	private DatagramSocket socketSpecialClient;
 
 	public ClientHandler(String NC, String M, int P) throws FileNotFoundException
 	{
 		nomClient = NC;
 		matiere = M;
 		port = P;
+		//Changer le chemin
 		sortieVideo = new FileOutputStream("streamClient" + nomClient.toUpperCase() + matiere.toUpperCase() + ".surv");
 	}
 
@@ -33,22 +35,21 @@ public class ClientHandler extends Thread{
 		try {
 			System.out.println( "Le serveur écoute le client " + nomClient + " sur le port " + port + "." ) ;
 
-			DatagramSocket socketSpecialClient = new DatagramSocket( port ) ;
+			socketSpecialClient = new DatagramSocket( port ) ;
 			byte[] receptionVideo = new byte[2048];
 
 			while(true){                 				
 				DatagramPacket paquetVideo = new DatagramPacket(receptionVideo, receptionVideo.length);
-				try {
-					socketSpecialClient.receive(paquetVideo);
 
-						//System.out.println("DEBUG: Client: " + nomClient + ", Port ecoute: "+ port + ", Port reception: " + paquetVideo.getPort());
-						ajoutElementVideo(paquetVideo);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				socketSpecialClient.receive(paquetVideo);
+
+				//System.out.println("DEBUG: Client: " + nomClient + ", Port ecoute: "+ port + ", Port reception: " + paquetVideo.getPort());
+				ajoutElementVideo(paquetVideo);
 			}
 		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
@@ -62,17 +63,22 @@ public class ClientHandler extends Thread{
 		try
 		{
 			//On l'écrit dans la flux
-			try {
-				sortieVideo.write(paquet.getData());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sortieVideo.write(paquet.getData());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally
 		{
 			//?
 		}
+	}
 
+	/**
+	 * Ferme le socket serveur
+	 */
+	public void stopSocket(){
+		System.out.println("Fermeture du client " + nomClient);
+		socketSpecialClient.close();
 	}
 }

@@ -1,10 +1,7 @@
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Map.Entry;
 
@@ -15,7 +12,7 @@ import java.util.Map.Entry;
 public class ServeurUDP {
 	public final static int port = 2345;
 	private static HashMap<Integer,ClientHandler> listeClient;	
-	static Scanner saisieInfo = new Scanner(System.in);
+	private Scanner saisieInfo = new Scanner(System.in);
 
 	public static void main( String args[] )
 	{				
@@ -32,7 +29,6 @@ public class ServeurUDP {
 
 					while(true)
 					{
-						System.out.println("EN COURS");
 						byte[] donneesRecues = new byte[4096];
 						DatagramPacket paquetReception = new DatagramPacket( donneesRecues, donneesRecues.length );
 
@@ -96,6 +92,7 @@ public class ServeurUDP {
 								int cle = entry.getKey();
 								if (cle == portArret)
 								{
+									listeClient.get(cle).stopSocket();
 									listeClient.remove(cle);
 									break;
 								}
