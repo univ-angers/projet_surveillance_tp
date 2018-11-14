@@ -10,6 +10,12 @@ import javax.swing.JPanel;
 
 public class Examen extends JFrame
 {
+	private JPanel panel;
+	private GridBagConstraints c;
+	private JLabel l_enCours;
+	private JLabel l_tempsRestant;
+	private JLabel l_decompte;
+	
 	public Examen()
 	{
 		super();
@@ -32,11 +38,11 @@ public class Examen extends JFrame
 
 	private JPanel buildContentPane()
 	{
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 
-		JLabel l_enCours = new JLabel("Examen en cours");
+		l_enCours = new JLabel("Examen en cours");
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.;
 			c.gridx = 0;
@@ -45,7 +51,7 @@ public class Examen extends JFrame
 			c.insets = new Insets(0, 0, 20, 0);
 			panel.add(l_enCours, c);
 
-		JLabel l_tempsRestant = new JLabel("Temps restant : ");
+		l_tempsRestant = new JLabel("Temps restant : ");
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.;
 			c.gridx = 0;
@@ -54,7 +60,7 @@ public class Examen extends JFrame
 			c.insets = new Insets(0, 0, 0, 0);
 			panel.add(l_tempsRestant, c);
 	
-		JLabel l_decompte = new JLabel("En attendant un vrai décompte...");
+		l_decompte = new JLabel("En attendant un vrai décompte...");
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.;
 			c.gridx = 1;

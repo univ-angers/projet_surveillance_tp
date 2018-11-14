@@ -2,28 +2,30 @@ package Vue;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Controller.ConfigController;
 import Model.EtudiantExamenInfoSingleton;
 
-public class Configuration extends JFrame
+public class Configuration extends JDialog
 {
-	Configuration instance = this;
-	ConfigController controller;
-	EtudiantExamenInfoSingleton etudiant;
+	private Configuration instance = this;
+	private ConfigController controller;
+	private EtudiantExamenInfoSingleton etudiant;
 
-	JButton b_option;
-	JButton b_valider;
-	JTextField tf_identifiant;
-	JPasswordField tf_mdp;
-	JTextField tf_adrServ;
+	private JPanel panel;
+	private GridBagConstraints c;
+	private JLabel l_adrServ;
+	private JLabel l_identifiant;
+	private JLabel l_mdp;
+	private JButton b_option;
+	private JButton b_valider;
+	private JTextField tf_identifiant;
+	private JPasswordField tf_mdp;
+	private JTextField tf_adrServ;
 	
 	public Configuration()
 	{
@@ -48,24 +50,12 @@ public class Configuration extends JFrame
 
 	private JPanel buildContentPane()
 	{
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 
 
-		b_option = new JButton();
-
-		// On met l'image dans le bouton
-		Image img;
-		try 
-		{
-			img = ImageIO.read(getClass().getResource("o.png"));
-			b_option.setIcon(new ImageIcon(img));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-
+		b_option = new JButton(Connexion.image);
 		b_option.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -85,7 +75,7 @@ public class Configuration extends JFrame
 		panel.add(b_option, c);
 
 
-		JLabel l_adrServ = new JLabel("Adresse serveur");
+		l_adrServ = new JLabel("Adresse serveur");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.3;
 		c.gridx = 1;
@@ -106,7 +96,7 @@ public class Configuration extends JFrame
 			tf_adrServ.setText(etudiant.getAdresseServeur());
 
 
-		JLabel l_identifiant = new JLabel("Identifiant");
+		l_identifiant = new JLabel("Identifiant");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.3;
 		c.gridx = 1;
@@ -128,7 +118,7 @@ public class Configuration extends JFrame
 			tf_identifiant.setText(etudiant.getIdentifiant());
 
 
-		JLabel l_mdp = new JLabel("Mot de passe");
+		l_mdp = new JLabel("Mot de passe");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.3;
 		c.gridx = 1;
@@ -156,7 +146,6 @@ public class Configuration extends JFrame
 				{
 					String identifiant = tf_identifiant.getText();
 					char[] mdpTab = tf_mdp.getPassword();
-					//A voir si on garde un tableau pour des raisons de sécuité
 					String mdp = mdpTab.toString();
 					String adrServ = tf_adrServ.getText();
 

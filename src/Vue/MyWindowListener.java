@@ -8,6 +8,7 @@ class MyWindowListener implements WindowListener
 	public void windowClosing(WindowEvent arg0) 
 	{
 		Quitter quit = new Quitter();
+		quit.setModal(true);
 		quit.show();
 	}
 	

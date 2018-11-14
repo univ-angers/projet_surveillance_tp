@@ -10,13 +10,16 @@ import javax.swing.*;
 
 import Controller.QuitterController;
 
-public class Quitter extends JFrame
-{	
-	Quitter instance = this;
-	QuitterController controller;
+public class Quitter extends JDialog
+{
+	private Quitter instance = this;
+	private QuitterController controller;
 	
-	JButton b_valider;
-	JButton b_refuser;
+	private JPanel panel;
+	private GridBagConstraints c;
+	private JLabel l_quitter;
+	private JButton b_valider;
+	private JButton b_refuser;
 	
 	public Quitter()
 	{
@@ -40,11 +43,11 @@ public class Quitter extends JFrame
 
 	private JPanel buildContentPane()
 	{
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 
-		JLabel l_quitter = new JLabel("Voulez-vous vraiment quitter l'examen ?");
+		l_quitter = new JLabel("Voulez-vous vraiment quitter l'examen ?");
 			c.fill = GridBagConstraints.CENTER;
 			c.weightx = 0.3;
 			c.gridx = 1;

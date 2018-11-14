@@ -2,13 +2,9 @@ package Vue;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Controller.ConnexionController;
@@ -16,13 +12,18 @@ import Model.EtudiantExamenInfoSingleton;
 
 public class Connexion extends JFrame
 {
-	Connexion instance = this;
-	ConnexionController controller;
-	EtudiantExamenInfoSingleton etudiant;
+	public static final ImageIcon image = new ImageIcon("Ressources/o.png");
 	
-	JButton b_option;
-	JButton b_valider;
-	JTextField tf_idExam;
+	private Connexion instance = this;
+	private ConnexionController controller;
+	private EtudiantExamenInfoSingleton etudiant;
+	
+	private JPanel panel;
+	private GridBagConstraints c;
+	private JLabel l_idExam;
+	private JButton b_option;
+	private JButton b_valider;
+	private JTextField tf_idExam;
 	
 
 	public Connexion()
@@ -46,29 +47,20 @@ public class Connexion extends JFrame
 
 	private JPanel buildContentPane()
 	{
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 
 		
 		
-		b_option = new JButton(); 
-		Image img;
-		try 
-		{
-			img = ImageIO.read(getClass().getResource("o.png"));
-			b_option.setIcon(new ImageIcon(img));
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		
+		b_option = new JButton(image); 
 		b_option.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				if(e.getSource() == b_option)
 				   {
 						Configuration fenetre = new Configuration();
+						fenetre.setModal(true);
 						fenetre.setVisible(true);
 				   }
 			}
@@ -85,7 +77,7 @@ public class Connexion extends JFrame
 
 
 			
-		JLabel l_idExam = new JLabel("Identifiant de l'examen");
+		l_idExam = new JLabel("Identifiant de l'examen");
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.weightx = 0.3;
 			c.gridx = 1;

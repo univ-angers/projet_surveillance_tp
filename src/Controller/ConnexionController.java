@@ -47,6 +47,10 @@ public class ConnexionController
 
 		etudiant.setNumeroExamen(idExam);
 	}
+	
+	/** TODO
+	 * 		VERIFIER QUE LE SERVEUR EST DISPO AVANT DE POUVOIR S'Y CO
+	 */
 
 	public void lancementSurveillance() 
 	{

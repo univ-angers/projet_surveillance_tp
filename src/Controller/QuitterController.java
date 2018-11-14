@@ -34,7 +34,6 @@ public class QuitterController
 		datas.put("Niveau", "critique");
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
 		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
-		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
 		datas.put("horodatage", hour+":"+minute+":"+sec);
 		datas.put("info", "L'appplication a été fermée");
 		
