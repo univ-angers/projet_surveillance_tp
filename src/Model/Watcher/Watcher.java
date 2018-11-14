@@ -3,6 +3,8 @@ package Model.Watcher;
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 
+import java.util.Date;
+
 import org.json.simple.JSONObject;
 
 
@@ -31,12 +33,20 @@ public abstract class Watcher extends Thread {
 	@SuppressWarnings("unchecked")
 	protected  void createDataBeforeSendEvent(String information, String nivAlerte)
 	{
+		Date date = new Date();
+		@SuppressWarnings("deprecation")
+		int hour = date.getHours();
+		@SuppressWarnings("deprecation")
+		int minute = date.getMinutes();
+		@SuppressWarnings("deprecation")
+		int sec = date.getSeconds();
+		
 		// Niveau d'alerte à ajouter et autres infos si besoin
 		JSONObject datas = new JSONObject();
-		datas.put("Niveau", nivAlerte);
+		datas.put("niveauAlerte", nivAlerte);
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
-		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
+		datas.put("etudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("horodatage", hour+":"+minute+":"+sec);
 		datas.put("info", information);
 		
 		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();

@@ -9,6 +9,7 @@ import org.json.simple.JSONObject;
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 import Model.Watcher.FileWatcher;
+import Model.Watcher.KeyListenerWatcher;
 import Model.Watcher.NetworkWatcher;
 import Model.Watcher.UsbWatcher;
 import Model.Watcher.VideoWatcher;
@@ -73,6 +74,10 @@ public class ConnexionController
 		//NETWORK
 		NetworkWatcher netWatcher = new NetworkWatcher();
 		netWatcher.start();
+		
+		//KEYBOARD
+		KeyListenerWatcher klWatcher = new KeyListenerWatcher();
+		klWatcher.start();
 
 		//On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
