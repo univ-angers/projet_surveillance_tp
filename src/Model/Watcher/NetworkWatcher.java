@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 
 import Controller.Main;
 
@@ -18,6 +19,8 @@ import Controller.Main;
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * OBLIGATION DE LANCER EN SUDO 
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 
+ * A terminer: Récupérer les liens suspects depuis le serveur
  * Basé sur le tutoriel: https://crunchify.com/how-to-execute-tcpdump-linux-command-using-java-process-class-and-capture-tcpip-packets/
  * @author Bastien
  *
@@ -25,12 +28,27 @@ import Controller.Main;
 public class NetworkWatcher extends Watcher{
 
 	static String TYPE = "NET";
+	
+	ArrayList<String> liensSuspects;
 
 	EtudiantExamenInfoSingleton etudiant;
 
 	public NetworkWatcher() {
 		super(TYPE);
 		// TODO Auto-generated constructor stub
+		liensSuspects = new ArrayList<String>();
+	}
+	
+	public void verifierLien(String lien)
+	{
+		for (int i = 0; i<liensSuspects.size(); i++)
+		{
+			if (liensSuspects.get(i).equals(lien))
+			{
+				String information = "Lien suspect: " + lien;
+				createDataBeforeSendEvent(information, "critique");
+			}
+		}
 	}
 
 
@@ -41,6 +59,12 @@ public class NetworkWatcher extends Watcher{
 	 */
 	public void run()
 	{
+		//Récuperation des liens suspects depuis le serveur
+		//A voir
+		//Temporaire
+		liensSuspects.add("www.facebook.com");
+		liensSuspects.add("lea-linux.org");
+		
 		System.out.println("Net en marche");
 
 		try {			
@@ -66,15 +90,29 @@ public class NetworkWatcher extends Watcher{
 							Reader tcpDumpReader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
 							int count;
 
-							int compteurRetourChariot = 0;
 							while ((count = tcpDumpReader.read(Buffer)) != -1) 
 							{
-								
+
 								resultatTcpDump.write(Buffer, 0, count);
 
-								// ICI ON VA CHECK SI Y A UN TRUC SUSPECT
-								//IL FAUT RECUPERER UNIQUEMENT LA PARTIE APRES HOST
-								System.out.println(resultatTcpDump.toString());
+								String resultat = resultatTcpDump.toString();								
+
+								String[] lignes = resultat.split("\n");
+								
+								// Recherche de la ligne host
+								for (int i = 0; i<lignes.length; i++)
+								{
+									if (lignes[i].length() > 8)	//On cherche au moins Host: a.b, soit 9 caractères
+									{
+										if (lignes[i].substring(0, 4).equals("Host"))
+										{
+											String lienACheck = lignes[i].substring(6);
+											//Check du lien
+											System.out.println("Lien à check: " + lienACheck);	
+											verifierLien(lienACheck);
+										}
+									}
+								}
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block

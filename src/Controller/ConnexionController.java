@@ -69,10 +69,10 @@ public class ConnexionController
 		//VIDEO
 		VideoWatcher vidWatcher = new VideoWatcher();
 		vidWatcher.start();
-		//
+		
 		//NETWORK
-		//NetworkWatcher netWatcher = new NetworkWatcher();
-		//netWatcher.start();
+		NetworkWatcher netWatcher = new NetworkWatcher();
+		netWatcher.start();
 
 		//On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
