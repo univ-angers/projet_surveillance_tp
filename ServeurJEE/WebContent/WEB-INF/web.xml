@@ -19,4 +19,8 @@
     <url-pattern>/receptionJSON</url-pattern>
   </servlet-mapping>
   
+  <listener>
+    <listener-class>com.surveillance.tp.config.InitialisationDAOFactory</listener-class>
+  </listener>
+
 </web-app>
