@@ -31,11 +31,8 @@ public class DAOExamenImpl implements DAOExamen {
 		return examen;
 	}
 
-	//TEST (a mettre dans utilisateur)
-	//private static final String SQL_INSERT_TEST_ETUD = "INSERT INTO Utilisateur (id, prenom, nom, numero_etudiant) VALUES (?, ?, ?, ?)";
 	
-	//TEST
-	private static final String SQL_INSERT_TEST_EXAM = "INSERT INTO Examen (id, id_user, nom) VALUES (?, ?, ?)";
+	private static final String SQL_INSERT_EXAM = "INSERT INTO Examen (id_user, nom) VALUES (?, ?)";
 		
 	@Override
 	public void creer(Examen examen) throws DAOException {
@@ -45,7 +42,7 @@ public class DAOExamenImpl implements DAOExamen {
 	    try {
 	        /* Récupération d'une connexion depuis la Factory */
 	        connexion = daoFactory.getConnection();
-	        preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_TEST_EXAM, true, examen.getIdExam(), examen.getIdProf(), examen.getNomExam());
+	        preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_EXAM, true, examen.getIdProf(), examen.getNomExam());
 	        int statut = preparedStatement.executeUpdate();
 	        /* Analyse du statut retourné par la requête d'insertion */
 	        if ( statut == 0 ) {
@@ -54,8 +51,8 @@ public class DAOExamenImpl implements DAOExamen {
 	        /* Récupération de l'id auto-généré par la requête d'insertion */
 	        valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 	        if ( valeursAutoGenerees.next() ) {
-	            /* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-	            //examen.setIdExam( valeursAutoGenerees.getLong( 1 ) );
+	            /* Puis initialisation de la propriété id du bean Examen avec sa valeur */
+	            examen.setIdExam( valeursAutoGenerees.getInt(1));
 	        } else {
 	            throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
 	        }
@@ -67,10 +64,10 @@ public class DAOExamenImpl implements DAOExamen {
 	}
 	
 	//TMP
-	private static final String SQL_SELECT_TEST_EXAM = "SELECT id, id_user, nom FROM Examen WHERE nom = ?";
+	private static final String SQL_SELECT_EXAM = "SELECT id, id_user, nom FROM Examen WHERE id = ?";
 		
 	@Override
-	public Examen trouver(int nomExam) throws DAOException {
+	public Examen trouver(int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -79,7 +76,7 @@ public class DAOExamenImpl implements DAOExamen {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_TEST_EXAM, false, nomExam );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_EXAM, false, idExam );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
@@ -92,17 +89,55 @@ public class DAOExamenImpl implements DAOExamen {
 		}
 		return examen;
 	}
-
+	
+	private static final String SQL_DELETE_EXAM = "DELETE FROM Examen WHERE id  = ?";
+	
 	@Override
-	public void supprimer(Examen examen) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void supprimer(int idExam) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_EXAM, false, idExam );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				//Doit on faire quelque chose avec l'examen reçu?
+				//examen = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+	}
+	
+	//Requête permettant de mettre à jour un examen
+	private static final String SQL_UPDATE_EXAM = "UPDATE Examen SET id_user = ?, nom = ? WHERE id = ?";
+	
 	@Override
 	public void miseAJour(Examen examen) throws DAOException {
-		// TODO Auto-generated method stub
-		
-	}
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_EXAM, false, examen.getIdProf(), examen.getNomExam(), examen.getIdExam() );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				//Doit on faire quelque chose avec l'examen reçu?
+				//examen = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+	}
 }

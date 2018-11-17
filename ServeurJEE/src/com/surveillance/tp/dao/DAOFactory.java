@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class DAOFactory {
 	
+	//A REVOIR
 	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/dao/dao.properties";
 	private static final String PROPERTY_URL             = "url";
 	private static final String PROPERTY_DRIVER          = "driver";
@@ -38,7 +39,7 @@ public class DAOFactory {
 		String motDePasse;
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		//EN ATTENDANT LE DEBUG
+		//EN ATTENDANT LE DEBUG DU CHARGEMENT DE FICHIER
 		/*InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
 
 		if ( fichierProperties == null ) {
@@ -77,10 +78,13 @@ public class DAOFactory {
 	}
 
 	/*
-	 * Méthodes de récupération de l'implémentation des différents DAO (un seul
-	 * pour le moment)
+	 * Méthodes de récupération de l'implémentation des différents DAO
 	 */
-	public DAOExamen getUtilisateurDao() {
+	public DAOUtilisateur getUtilisateurDao() {
+		return new DAOUtilisateurImpl( this );
+	}
+	
+	public DAOExamen getExamenDao() {
 		return new DAOExamenImpl( this );
 	}
 }

@@ -1,3 +1,5 @@
+nom BDD: projetsurv
+
 CREATE TABLE Utilisateur
 ( id INTEGER,
 prenom VARCHAR(50),

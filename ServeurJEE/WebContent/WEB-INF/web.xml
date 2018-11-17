@@ -19,6 +19,15 @@
     <url-pattern>/receptionJSON</url-pattern>
   </servlet-mapping>
   
+  <servlet>    
+    <servlet-name>formExamen</servlet-name>
+    <servlet-class>com.surveillance.tp.servlets.formExamen</servlet-class>
+  </servlet> 
+  <servlet-mapping>    
+    <servlet-name>formExamen</servlet-name>
+    <url-pattern>/formExamen</url-pattern>
+  </servlet-mapping> 
+   
   <listener>
     <listener-class>com.surveillance.tp.config.InitialisationDAOFactory</listener-class>
   </listener>

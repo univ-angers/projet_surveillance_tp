@@ -6,9 +6,9 @@ public interface DAOUtilisateur {
 
 	void creer(Utilisateur utilisateur) throws DAOException;
 
-	Utilisateur trouver(int id) throws DAOException;
+	Utilisateur trouver(int idUtil) throws DAOException;
 	
-	void supprimer(Utilisateur utilisateur) throws DAOException;
+	void supprimer(int idUtil) throws DAOException;
 	
 	void miseAJour(Utilisateur utilisateur) throws DAOException;
 }
