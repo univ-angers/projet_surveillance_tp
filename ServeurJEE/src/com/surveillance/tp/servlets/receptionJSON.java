@@ -2,8 +2,6 @@ package com.surveillance.tp.servlets;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +15,7 @@ public class receptionJSON extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
+		
         reponseTest rep = reponseTest.getInstance();
         String res = rep.getJSON();
         

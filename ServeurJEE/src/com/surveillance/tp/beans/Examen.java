@@ -6,9 +6,6 @@ public class Examen {
 	private int nomExam;
 	private int idProf;
 	
-	
-	
-	
 	/* Getters */
 	public int getIdExam()
 	{

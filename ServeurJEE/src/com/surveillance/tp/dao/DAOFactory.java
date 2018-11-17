@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DAOFactory {
-
-	private static final String FICHIER_PROPERTIES       = "/com/sdzee/dao/dao.properties";
+	
+	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/dao/dao.properties";
 	private static final String PROPERTY_URL             = "url";
 	private static final String PROPERTY_DRIVER          = "driver";
 	private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
@@ -38,7 +38,8 @@ public class DAOFactory {
 		String motDePasse;
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
+		//EN ATTENDANT LE DEBUG
+		/*InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
 
 		if ( fichierProperties == null ) {
 			throw new DAOConfigurationException( "Le fichier properties " + FICHIER_PROPERTIES + " est introuvable." );
@@ -52,7 +53,13 @@ public class DAOFactory {
 			motDePasse = properties.getProperty( PROPERTY_MOT_DE_PASSE );
 		} catch ( IOException e ) {
 			throw new DAOConfigurationException( "Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e );
-		}
+		}*/
+		//TEMPORAIRE
+		url = "jdbc:mysql://localhost:3306/projetsurv";
+		driver = "com.mysql.jdbc.Driver";
+		nomUtilisateur = "AdminSurv";
+		motDePasse = "mdpAdmin";
+		
 
 		try {
 			Class.forName( driver );
@@ -73,7 +80,7 @@ public class DAOFactory {
 	 * Méthodes de récupération de l'implémentation des différents DAO (un seul
 	 * pour le moment)
 	 */
-	public UtilisateurDao getUtilisateurDao() {
-		return new UtilisateurDaoImpl( this );
+	public DAOExamen getUtilisateurDao() {
+		return new DAOExamenImpl( this );
 	}
 }
