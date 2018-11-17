@@ -1,10 +1,9 @@
-nom BDD: projetsurv
-
 CREATE TABLE Utilisateur
 ( id INTEGER,
 prenom VARCHAR(50),
 nom VARCHAR(50),
-numero_etudiant VARCHAR(30));
+password VARCHAR(255),
+mail VARCHAR(100));
 
 CREATE TABLE Examen
 ( id INTEGER,

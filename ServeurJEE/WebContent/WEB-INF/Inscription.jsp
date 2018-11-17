@@ -44,12 +44,20 @@
                             <!-- Register Form -->
                             <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-register form-horizontal push-50-t push-50" action="" method="post">
+                            <form class="js-validation-register form-horizontal push-50-t push-50" action="" method="post" action="./receptionFormUtilisateur">
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="register-username" name="register-username" placeholder="Please enter a username">
-                                            <label for="register-username">Username</label>
+                                            <input class="form-control" type="text" id="register-userfirstname" name="register-userfirstname" placeholder="Please enter your first name">
+                                            <label for="register-userfirstname">First name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="form-material form-material-success">
+                                            <input class="form-control" type="text" id="register-username" name="register-username" placeholder="Please enter your name">
+                                            <label for="register-username">Name</label>
                                         </div>
                                     </div>
                                 </div>

@@ -19,7 +19,7 @@ public class DAOExamenImpl implements DAOExamen {
 	/*
 	 * Simple méthode utilitaire permettant de faire la correspondance (le
 	 * mapping) entre une ligne issue de la table des utilisateurs (un
-	 * ResultSet) et un bean Utilisateur.
+	 * ResultSet) et un bean Examen.
 	 */
 	private static Examen map( ResultSet resultSet ) throws SQLException {
 		Examen examen = new Examen();

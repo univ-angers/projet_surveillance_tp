@@ -30,13 +30,14 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		utilisateur.setId(resultSet.getInt("id"));
 		utilisateur.setNom(resultSet.getString("nom"));
 		utilisateur.setPrenom(resultSet.getString("prenom"));
-		utilisateur.setNumero_etudiant(resultSet.getString("numero_etudiant"));
+		utilisateur.setPassword(resultSet.getString("password"));
+		utilisateur.setMail(resultSet.getString("mail"));
 
 		return utilisateur;
 	}
 
 	//Requête permettant d'insérer un utilisateur dans la BDD
-	private static final String SQL_INSERT_ETUD = "INSERT INTO Utilisateur (prenom, nom, numero_etudiant) VALUES (?, ?, ?)";
+	private static final String SQL_INSERT_ETUD = "INSERT INTO Utilisateur (prenom, nom, password, mail) VALUES (?, ?, ?, ?)";
 
 	@Override
 	public void creer(Utilisateur utilisateur) throws DAOException {
@@ -46,7 +47,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_ETUD, true, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getNumero_etudiant());
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_ETUD, true, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
@@ -68,7 +69,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
-	private static final String SQL_SELECT_UTILISATEUR = "SELECT id, prenom, nom, numero_etudiant FROM Utilisateur WHERE id = ?";
+	private static final String SQL_SELECT_UTILISATEUR = "SELECT id, prenom, nom, password, mail FROM Utilisateur WHERE id = ?";
 
 	@Override
 	public Utilisateur trouver(int idUtil) throws DAOException {
@@ -120,7 +121,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de mettre à jour un examen
-	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom = ?, numero_etudiant = ? WHERE id = ?";
+	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom = ?, password = ?, mail = ? WHERE id = ?";
 
 	@Override
 	public void miseAJour(Utilisateur utilisateur) throws DAOException {
@@ -131,7 +132,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getNumero_etudiant(), utilisateur.getId() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), utilisateur.getId() );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

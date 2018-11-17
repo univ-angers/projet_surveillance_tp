@@ -4,7 +4,8 @@ public class Utilisateur {
 	private int id;
 	private String prenom;
 	private String nom;
-	private String numero_etudiant;
+	private String password;
+	private String mail;
 	
 	public int getId() {
 		return id;
@@ -27,10 +28,17 @@ public class Utilisateur {
 		this.nom = nom;
 	}
 	
-	public String getNumero_etudiant() {
-		return numero_etudiant;
+	public String getPassword() {
+		return password;
 	}
-	public void setNumero_etudiant(String numero_etudiant) {
-		this.numero_etudiant = numero_etudiant;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getMail() {
+		return mail;
+	}
+	public void setMail(String mail) {
+		this.mail = mail;
 	}	
 }

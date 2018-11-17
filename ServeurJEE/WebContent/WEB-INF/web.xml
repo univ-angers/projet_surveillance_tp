@@ -20,13 +20,22 @@
   </servlet-mapping>
   
   <servlet>    
-    <servlet-name>formExamen</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.formExamen</servlet-class>
+    <servlet-name>formUtilisateur</servlet-name>
+    <servlet-class>com.surveillance.tp.servlets.formUtilisateur</servlet-class>
   </servlet> 
   <servlet-mapping>    
-    <servlet-name>formExamen</servlet-name>
-    <url-pattern>/formExamen</url-pattern>
+    <servlet-name>formUtilisateur</servlet-name>
+    <url-pattern>/formUtilisateur</url-pattern>
   </servlet-mapping> 
+  
+  <servlet>
+    <servlet-name>receptionFormUtilisateur</servlet-name>
+    <servlet-class>com.surveillance.tp.servlets.receptionFormUtilisateur</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>receptionFormUtilisateur</servlet-name>
+    <url-pattern>/receptionFormUtilisateur</url-pattern>
+  </servlet-mapping>
    
   <listener>
     <listener-class>com.surveillance.tp.config.InitialisationDAOFactory</listener-class>
