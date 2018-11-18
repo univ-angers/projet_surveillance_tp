@@ -15,7 +15,7 @@ public class receptionFormUtilisateur extends HttpServlet {
 	public static final String CONF_DAO_FACTORY = "daofactory";
 	public static final String ATT_USER         = "utilisateur";
 	public static final String ATT_FORM         = "form";
-	public static final String VUE              = "/WEB-INF/affichageJSON.jsp";
+	public static final String VUE              = "/WEB-INF/affichageJSON.jsp";	//tmp
 
 	private DAOUtilisateur daoUtilisateur;
 
@@ -25,18 +25,22 @@ public class receptionFormUtilisateur extends HttpServlet {
 	}
 
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+		System.out.println("DEBUG: Reception GET");
+		
 		/* Affichage de la page d'inscription */
 		//this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+		System.out.println("DEBUG: Reception des infos en POST");
+		
 		/* Creation d'un utilisateur si les conditions sont remplies */
 		Utilisateur nouvUtilisateur = ajouterUtilisateur(request);
 
 		/* Stockage du bean dans la request */
 		request.setAttribute("Utilisateur", nouvUtilisateur);
 		
-		/* Stockage du formulaire et du bean dans l'objet request */
+		/* Affichage de la vue qu'on veut */
 		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
