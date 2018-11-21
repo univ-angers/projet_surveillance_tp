@@ -10,7 +10,7 @@ import java.util.Properties;
 public class DAOFactory {
 	
 	//A REVOIR	
-	private static final String FICHIER_PROPERTIES       = "/ServeurJEE/ressources/dao.properties";
+	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/ressources/dao.properties";
 	private static final String PROPERTY_URL             = "url";
 	private static final String PROPERTY_DRIVER          = "driver";
 	private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
@@ -39,7 +39,7 @@ public class DAOFactory {
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		//EN ATTENDANT LE DEBUG DU CHARGEMENT DE FICHIER
-		/*InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
+		InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
 
 		if ( fichierProperties == null ) {
 			throw new DAOConfigurationException( "Le fichier properties " + FICHIER_PROPERTIES + " est introuvable." );
@@ -53,12 +53,12 @@ public class DAOFactory {
 			motDePasse = properties.getProperty( PROPERTY_MOT_DE_PASSE );
 		} catch ( IOException e ) {
 			throw new DAOConfigurationException( "Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e );
-		}*/
+		}
 		//TEMPORAIRE
-		url = "jdbc:mysql://localhost:3306/projetsurv";
+		/*url = "jdbc:mysql://localhost:3306/projetsurv";
 		driver = "com.mysql.jdbc.Driver";
 		nomUtilisateur = "AdminSurv";
-		motDePasse = "mdpAdmin";
+		motDePasse = "mdpAdmin";*/
 		
 
 		try {

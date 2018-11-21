@@ -1,6 +1,9 @@
 package com.surveillance.tp.servlets;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +19,7 @@ public class formUtilisateur extends HttpServlet {
 	public static final String CONF_DAO_FACTORY = "daofactory";
 	public static final String ATT_USER         = "utilisateur";
 	public static final String ATT_FORM         = "form";
-	public static final String VUE              = "/WEB-INF/affichageJSON.jsp";	//tmp
+	//public static final String VUE              = "";	//tmp
 
 	private DAOUtilisateur daoUtilisateur;
 
@@ -30,6 +33,10 @@ public class formUtilisateur extends HttpServlet {
         /* Transmission vers la page en charge de l'affichage des résultats */
         this.getServletContext().getRequestDispatcher( "/WEB-INF/Inscription.jsp" ).forward( request, response );
 	}
+	
+	
+	
+	
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		System.out.println("DEBUG: Reception des infos en POST");
@@ -41,7 +48,7 @@ public class formUtilisateur extends HttpServlet {
 		request.setAttribute("Utilisateur", nouvUtilisateur);
 		
 		/* Affichage de la vue qu'on veut */
-		this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		//this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 	}
 
 	public Utilisateur ajouterUtilisateur(HttpServletRequest request)

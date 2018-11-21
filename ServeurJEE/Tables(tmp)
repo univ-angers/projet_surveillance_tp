@@ -1,11 +1,25 @@
+nom BDD : projetsurv
+
+mysql -u root -p
+
+CREATE USER 'AdminSurv'@'localhost' IDENTIFIED BY 'mdpAdmin';
+CREATE DATABASE projetsurv;
+GRANT ALL PRIVILEGES ON projetsurv.* TO 'AdminSurv'@'localhost';
+exit
+mysql -u AdminSurv -p
+
+USE projetsurv;
+
 CREATE TABLE Utilisateur
-( id INTEGER,
+( id INTEGER NOT NULL AUTO_INCREMENT,
 prenom VARCHAR(50),
 nom VARCHAR(50),
 password VARCHAR(255),
-mail VARCHAR(100));
+mail VARCHAR(100),
+PRIMARY KEY (id));
 
 CREATE TABLE Examen
-( id INTEGER,
+( id INTEGER NOT NULL AUTO_INCREMENT,
 id_user INTEGER,
-nom INTEGER);
+nom INTEGER,
+PRIMARY KEY (id));
