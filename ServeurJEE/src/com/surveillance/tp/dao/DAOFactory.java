@@ -54,12 +54,6 @@ public class DAOFactory {
 		} catch ( IOException e ) {
 			throw new DAOConfigurationException( "Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e );
 		}
-		//TEMPORAIRE
-		/*url = "jdbc:mysql://localhost:3306/projetsurv";
-		driver = "com.mysql.jdbc.Driver";
-		nomUtilisateur = "AdminSurv";
-		motDePasse = "mdpAdmin";*/
-		
 
 		try {
 			Class.forName( driver );

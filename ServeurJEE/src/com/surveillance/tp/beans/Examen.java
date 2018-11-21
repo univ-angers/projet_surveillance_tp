@@ -2,8 +2,8 @@ package com.surveillance.tp.beans;
 
 public class Examen {
 	
-	private int idExam;
-	private int nomExam;
+	private int idExam;		//PRIMARY KEY
+	private int nomExam;	//FOREIGN KEY
 	private int idProf;
 	
 	/* Getters */
