@@ -52,7 +52,7 @@ public class DAOExamenImpl implements DAOExamen {
 	        valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 	        if ( valeursAutoGenerees.next() ) {
 	            /* Puis initialisation de la propriété id du bean Examen avec sa valeur */
-	            examen.setIdExam( valeursAutoGenerees.getInt(1));
+	            examen.setIdExam(valeursAutoGenerees.getInt(1));
 	        } else {
 	            throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
 	        }

@@ -1,6 +1,5 @@
 package com.surveillance.tp.dao;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -10,8 +9,8 @@ import java.util.Properties;
 
 public class DAOFactory {
 	
-	//A REVOIR
-	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/dao/dao.properties";
+	//A REVOIR	
+	private static final String FICHIER_PROPERTIES       = "/ServeurJEE/ressources/dao.properties";
 	private static final String PROPERTY_URL             = "url";
 	private static final String PROPERTY_DRIVER          = "driver";
 	private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
@@ -86,5 +85,5 @@ public class DAOFactory {
 	
 	public DAOExamen getExamenDao() {
 		return new DAOExamenImpl( this );
-	}
+	}	
 }
