@@ -1,41 +1,44 @@
 package com.surveillance.tp.beans;
 
+import java.sql.Date;
+import java.sql.Time;
+
 public class Examen {
 	
 	private int idExam;		//PRIMARY KEY
-	private int nomExam;	//FOREIGN KEY
-	private int idProf;
+	private int idProf;		//FOREIGN KEY
+	private String matiere;
+	private Time duree;
+	private Date heureDebut;
 	
-	/* Getters */
-	public int getIdExam()
-	{
+	public int getIdExam() {
 		return idExam;
 	}
-	
-	public int getNomExam()
-	{
-		return nomExam;
+	public void setIdExam(int idExam) {
+		this.idExam = idExam;
 	}
-	
-	public int getIdProf()
-	{
+	public int getIdProf() {
 		return idProf;
 	}
-	
-	
-	/* Setters */
-	public void setIdExam(int id)
-	{
-		this.idExam = id;
+	public void setIdProf(int idProf) {
+		this.idProf = idProf;
 	}
-	
-	public void setNomExam(int nom)
-	{
-		this.nomExam = nom;
+	public String getMatiere() {
+		return matiere;
 	}
-	
-	public void setIdProf(int id)
-	{
-		this.idProf = id;
+	public void setMatiere(String matiere) {
+		this.matiere = matiere;
+	}
+	public Time getDuree() {
+		return duree;
+	}
+	public void setDuree(Time duree) {
+		this.duree = duree;
+	}
+	public Date getHeureDebut() {
+		return heureDebut;
+	}
+	public void setHeureDebut(Date heureDebut) {
+		this.heureDebut = heureDebut;
 	}
 }

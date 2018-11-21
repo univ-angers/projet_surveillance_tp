@@ -117,49 +117,31 @@
                             <form class="js-validation-register form-horizontal push-50-t push-50" action="formExamen" method="post">
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                    
-                                    
-                                        <div class="form-material form-material-success">
+                                    	<div class="form-material form-material-success">
                                           Heure: 
-                                            <select id="duree-heure" >
-                                            <option value="0" >0</option>
-                                            <option value="1" >1</option>
-                                            <option value="2" >2</option>
-                                            <option value="3" >3</option>
-                                              
-                                            
-                                    
+                                            <select id="duree-heure" name="duree-heure">
+                                            	<option value="0" >0</option>
+                                            	<option value="1" >1</option>
+                                            	<option value="2" >2</option>
+                                            	<option value="3" >3</option>
+                                            	<option value="4" >4</option>
+                                            	<option value="5" >5</option>
                                             </select>
                                             
                                             Minute
-                                                <select id="duree-minute" >
-                                            <option value="10" >10</option>
-                                            <option value="20" >20</option>
-                                            <option value="30" >30</option>
-                                            <option value="40" >40</option>
-                                            <option value="50" >50</option>
-                                            
+                                            <select id="duree-minute" name="duree-minute">
+                                            	<option value="0" >00</option>
+                                            	<option value="10" >10</option>
+                                            	<option value="20" >20</option>
+                                            	<option value="30" >30</option>
+                                            	<option value="40" >40</option>
+                                            	<option value="50" >50</option>
                                             </select>
-                                            
-                                            
-                                            
-                                            
-                                            
-                                        </div>
+                                    	</div>
                                     </div>
                                 </div>
                                 
-                                
-                                
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="duree-minute" name="duree-minute" placeholder="Entrer une durée ">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                                                                
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">

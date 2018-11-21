@@ -26,13 +26,15 @@ public class DAOExamenImpl implements DAOExamen {
 
 		examen.setIdExam(resultSet.getInt("id"));
 		examen.setIdProf(resultSet.getInt("id_user"));
-		examen.setNomExam(resultSet.getInt("nom"));
+		examen.setMatiere(resultSet.getString("matiere"));
+		examen.setDuree(resultSet.getTime("duree"));
+		examen.setHeureDebut(resultSet.getDate("heure_debut"));		
 
 		return examen;
 	}
 
 	
-	private static final String SQL_INSERT_EXAM = "INSERT INTO Examen (id_user, nom) VALUES (?, ?)";
+	private static final String SQL_INSERT_EXAM = "INSERT INTO Examen (id_user, matiere, duree, heure_debut) VALUES (?, ?, ?, NOW())";
 		
 	@Override
 	public void creer(Examen examen) throws DAOException {
@@ -42,7 +44,7 @@ public class DAOExamenImpl implements DAOExamen {
 	    try {
 	        /* Récupération d'une connexion depuis la Factory */
 	        connexion = daoFactory.getConnection();
-	        preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_EXAM, true, examen.getIdProf(), examen.getNomExam());
+	        preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_EXAM, true, examen.getIdProf(), examen.getMatiere(), examen.getDuree());
 	        int statut = preparedStatement.executeUpdate();
 	        /* Analyse du statut retourné par la requête d'insertion */
 	        if ( statut == 0 ) {
@@ -63,8 +65,7 @@ public class DAOExamenImpl implements DAOExamen {
 	    }
 	}
 	
-	//TMP
-	private static final String SQL_SELECT_EXAM = "SELECT id, id_user, nom FROM Examen WHERE id = ?";
+	private static final String SQL_SELECT_EXAM = "SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_examen = ?";
 		
 	@Override
 	public Examen trouver(int idExam) throws DAOException {
@@ -90,7 +91,7 @@ public class DAOExamenImpl implements DAOExamen {
 		return examen;
 	}
 	
-	private static final String SQL_DELETE_EXAM = "DELETE FROM Examen WHERE id  = ?";
+	private static final String SQL_DELETE_EXAM = "DELETE FROM Examen WHERE id_examen  = ?";
 	
 	@Override
 	public void supprimer(int idExam) throws DAOException {
@@ -116,7 +117,7 @@ public class DAOExamenImpl implements DAOExamen {
 	}
 	
 	//Requête permettant de mettre à jour un examen
-	private static final String SQL_UPDATE_EXAM = "UPDATE Examen SET id_user = ?, nom = ? WHERE id = ?";
+	private static final String SQL_UPDATE_EXAM = "UPDATE Examen SET id_user = ?, matiere = ?, duree = ?, heure_debut = ? WHERE id_examen = ?";
 	
 	@Override
 	public void miseAJour(Examen examen) throws DAOException {
@@ -127,7 +128,7 @@ public class DAOExamenImpl implements DAOExamen {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_EXAM, false, examen.getIdProf(), examen.getNomExam(), examen.getIdExam() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_EXAM, false, examen.getIdProf(), examen.getMatiere(),examen.getDuree(), examen.getHeureDebut(), examen.getIdExam() );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

@@ -11,15 +11,39 @@ mysql -u AdminSurv -p
 USE projetsurv;
 
 CREATE TABLE Utilisateur
-( id INTEGER NOT NULL AUTO_INCREMENT,
+( id_user INTEGER NOT NULL AUTO_INCREMENT,
 prenom VARCHAR(50),
-nom VARCHAR(50),
+nom_user VARCHAR(50),
 password VARCHAR(255),
 mail VARCHAR(100),
-PRIMARY KEY (id));
+groupe VARCHAR(50),
+PRIMARY KEY (id_user));
 
 CREATE TABLE Examen
-( id INTEGER NOT NULL AUTO_INCREMENT,
+( id_examen INTEGER NOT NULL AUTO_INCREMENT,
 id_user INTEGER,
-nom INTEGER,
-PRIMARY KEY (id));
+matiere VARCHAR(100),
+duree TIME,
+heure_debut DATE,
+PRIMARY KEY (id_examen),
+FOREIGN KEY (id_user) REFERENCES Utilisateur(id_user));
+
+CREATE TABLE niveau_rule
+( id_niveau_rule INTEGER NOT NULL AUTO_INCREMENT,
+nom VARCHAR(100),
+PRIMARY KEY (id_niveau_rule));
+
+CREATE TABLE Rule
+( id_rule INTEGER NOT NULL AUTO_INCREMENT,
+description VARCHAR(100),
+id_niveau INTEGER,
+PRIMARY KEY (id_rule),
+FOREIGN KEY (id_niveau) REFERENCES niveau_rule(id_niveau_rule));
+
+CREATE TABLE list_of_rule
+( id_rule INTEGER,
+id_examen INTEGER,
+FOREIGN KEY (id_rule) REFERENCES Rule(id_rule),
+FOREIGN KEY (id_examen) REFERENCES Examen(id_examen));
+
+

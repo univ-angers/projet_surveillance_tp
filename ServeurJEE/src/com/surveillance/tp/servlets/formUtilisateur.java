@@ -71,7 +71,7 @@ public class formUtilisateur extends HttpServlet {
 
 				/* Données valides donc ajout dans la BDD grâce à notre DAO */
 				daoUtilisateur.creer(util);
-				System.out.println("Utilisateur ajouté");
+				System.out.println("DEBUG: Utilisateur ajouté");
 			}
 		}
 

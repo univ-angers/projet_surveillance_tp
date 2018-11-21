@@ -6,7 +6,14 @@ public class Utilisateur {
 	private String nom;
 	private String password;
 	private String mail;
+	private String groupe;
 	
+	public String getGroupe() {
+		return groupe;
+	}
+	public void setGroupe(String groupe) {
+		this.groupe = groupe;
+	}
 	public int getId() {
 		return id;
 	}

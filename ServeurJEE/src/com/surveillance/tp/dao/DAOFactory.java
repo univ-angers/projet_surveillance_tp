@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DAOFactory {
-	
-	//A REVOIR	
+
 	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/ressources/dao.properties";
 	private static final String PROPERTY_URL             = "url";
 	private static final String PROPERTY_DRIVER          = "driver";
@@ -80,4 +79,8 @@ public class DAOFactory {
 	public DAOExamen getExamenDao() {
 		return new DAOExamenImpl( this );
 	}	
+	
+	public DAORegle getRegleDao() {
+		return new DAORegleImpl( this );
+	}
 }
