@@ -85,6 +85,11 @@
                                     <i class="fa fa-user"></i>Mon compte
                                 </a>
                             </li>
+                             <li >
+                                <a href="CreerExamen.jsp">
+                                    <i class="fa fa-wrench"></i>Créer un examen
+                                </a>
+                            </li>
                            
                             
                         </ul>
