@@ -79,7 +79,7 @@ public class ConnexionController
 		
 		JSONObject datas = new JSONObject();
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("IDetudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
 		datas.put("type", "connexion_etudiant");
 		

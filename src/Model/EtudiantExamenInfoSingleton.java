@@ -2,7 +2,7 @@ package Model;
 
 public class EtudiantExamenInfoSingleton {
 
-	// l'identifiant du singleton étudiant correspond au numéro étudiant
+	// l'identifiant du singleton étudiant correspond au mail étudiant
 	private String identifiant;
 	private String motDePasse;
 	private String adrServeur;

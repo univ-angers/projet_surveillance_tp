@@ -19,11 +19,11 @@ public class Configuration extends JDialog
 	private JPanel panel;
 	private GridBagConstraints c;
 	private JLabel l_adrServ;
-	private JLabel l_numEt;
+	private JLabel l_mail;
 	private JLabel l_mdp;
 	private JButton b_option;
 	private JButton b_valider;
-	private JTextField tf_numEt;
+	private JTextField tf_mail;
 	private JPasswordField tf_mdp;
 	private JTextField tf_adrServ;
 	
@@ -96,26 +96,26 @@ public class Configuration extends JDialog
 			tf_adrServ.setText(etudiant.getAdresseServeur());
 
 
-		l_numEt = new JLabel("Numéro étudiant");
+		l_mail = new JLabel("Mail");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.3;
 		c.gridx = 1;
 		c.gridy = 2;
 		c.gridwidth = 1;
 		c.insets = new Insets(0, -30, 20, 20);
-		panel.add(l_numEt, c);
+		panel.add(l_mail, c);
 
 
-		tf_numEt = new JTextField();
+		tf_mail = new JTextField();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.7;
 		c.gridx = 2;
 		c.gridy = 2;
 		c.gridwidth = 2;
 		c.insets = new Insets(0, 0, 20, 20);
-		panel.add(tf_numEt, c);
+		panel.add(tf_mail, c);
 		if (etudiant != null)
-			tf_numEt.setText(etudiant.getIdentifiant()); // l'identifiant du singleton étudiant correspond au numéro étudiant
+			tf_mail.setText(etudiant.getIdentifiant()); // l'identifiant du singleton étudiant correspond au mail étudiant
 
 
 		l_mdp = new JLabel("Mot de passe");
@@ -144,7 +144,7 @@ public class Configuration extends JDialog
 			{
 				if(e.getSource() == b_valider)
 				{
-					String identifiant = tf_numEt.getText();
+					String identifiant = tf_mail.getText();
 					String mdp = new String(tf_mdp.getPassword());
 					String adrServ = tf_adrServ.getText();
 

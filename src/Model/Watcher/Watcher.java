@@ -44,7 +44,7 @@ public abstract class Watcher extends Thread {
 		// Niveau d'alerte à ajouter et autres infos si besoin
 		JSONObject datas = new JSONObject();
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("IDetudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("horodatage", hour+":"+minute+":"+sec);
 		datas.put("type", typ);
 		datas.put("info", information);

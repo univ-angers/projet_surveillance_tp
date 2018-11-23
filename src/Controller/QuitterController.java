@@ -34,7 +34,7 @@ public class QuitterController
 		JSONObject datas = new JSONObject();
 		datas.put("type", "etudiant_deconnexion");
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("horodatage", hour+":"+minute+":"+sec);
 		
 		server.send(datas);
