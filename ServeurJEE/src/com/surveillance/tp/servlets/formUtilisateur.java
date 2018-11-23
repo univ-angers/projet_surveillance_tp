@@ -54,8 +54,7 @@ public class formUtilisateur extends HttpServlet {
 		String nom = request.getParameter("register-username");
 		String prenom = request.getParameter("register-userfirstname");
 		String mail = request.getParameter("register-email");
-		String password = request.getParameter("register-email");
-		String numet = request.getParameter("register-num-et");
+		String password = request.getParameter("register-password");
 		/* Création d'un utilisateur et verifications (basiques pour le moment)*/
 		Utilisateur util = new Utilisateur();
 		boolean donneesValides = traiterDonnees(nom,prenom,mail);
@@ -68,7 +67,6 @@ public class formUtilisateur extends HttpServlet {
 				util.setNom(nom);
 				util.setPrenom(prenom);
 				util.setPassword(password);
-				util.setNumet(numet);
 
 				/* Données valides donc ajout dans la BDD grâce à notre DAO */
 				daoUtilisateur.creer(util);

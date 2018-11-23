@@ -23,8 +23,7 @@ nom_user VARCHAR(50),
 password VARCHAR(255),
 mail VARCHAR(100),
 groupe VARCHAR(50),
-numero_etudiant VARCHAR(8),
-PRIMARY KEY (id_user, numero_etudiant));
+PRIMARY KEY (id_user));
 
 CREATE TABLE Examen
 ( id_examen INTEGER NOT NULL AUTO_INCREMENT,

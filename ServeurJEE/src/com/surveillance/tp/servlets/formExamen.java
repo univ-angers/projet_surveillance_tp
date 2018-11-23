@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
+import com.surveillance.tp.utilitaire.directoryManager;
 
 public class formExamen extends HttpServlet {
 
@@ -89,7 +90,7 @@ public class formExamen extends HttpServlet {
 	public void creerDossierExamen(Examen exam)
 	{
 		File examDir;
-		String pathDir = idDbToString(exam);
+		String pathDir = directoryManager.idDbToString(exam.getIdExam());
 
 		System.out.println("DEBUG: CHEMIN SERVLET: " + pathDir);
 
@@ -97,34 +98,5 @@ public class formExamen extends HttpServlet {
 		examDir.mkdirs();
 	}    
 
-	/**
-	 * Modifie un identifiant d'examen pour en faire un chemin valide
-	 * @param exam
-	 * @return
-	 */
-	public String idDbToString(Examen exam)
-	{
-		String idExam = Integer.toString(exam.getIdExam());
-
-
-		// On ajoute les 0 pour avoir une haine de 10 caractères
-		while (idExam.length() != 10)
-		{
-			idExam = "0" + idExam;
-		}
-
-		/* On transforme la chaine en tableau de char pour pouvoir intercaler
-           des / entre chacun des caractères de la chaîne */
-		char[] tmp = idExam.toCharArray();
-		idExam = "";
-
-		for(int i = 0; i < 10; i++)
-		{
-			idExam = idExam + "/" + tmp[i];
-		}
-
-		idExam = "/opt/data_dir" + idExam;
-
-		return idExam;
-	}
+	
 }

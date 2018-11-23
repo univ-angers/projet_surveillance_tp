@@ -7,7 +7,6 @@ public class Utilisateur {
 	private String password;
 	private String mail;
 	private String groupe;
-	private String numet;
 	
 	public String getGroupe() {
 		return groupe;
@@ -49,10 +48,4 @@ public class Utilisateur {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public String getNumet() {
-		return numet;
-	}
-	public void setNumet(String numet) {
-		this.numet = numet;
-	}	
 }

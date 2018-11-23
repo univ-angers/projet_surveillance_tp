@@ -27,19 +27,18 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	private static Utilisateur map( ResultSet resultSet ) throws SQLException {
 		Utilisateur utilisateur = new Utilisateur();
 
-		utilisateur.setId(resultSet.getInt("id"));
-		utilisateur.setNom(resultSet.getString("nom"));
+		utilisateur.setId(resultSet.getInt("id_user"));
+		utilisateur.setNom(resultSet.getString("nom_user"));
 		utilisateur.setPrenom(resultSet.getString("prenom"));
 		utilisateur.setPassword(resultSet.getString("password"));
 		utilisateur.setMail(resultSet.getString("mail"));
 		utilisateur.setGroupe(resultSet.getString("groupe"));
-		utilisateur.setNumet(resultSet.getString("numero-etudiant"));
 
 		return utilisateur;
 	}
 
 	//Requête permettant d'insérer un utilisateur dans la BDD
-	private static final String SQL_INSERT_ETUD = "INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe, numero_etudiant) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT_ETUD = "INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES (?, ?, ?, ?, ?)";
 
 	@Override
 	public void creer(Utilisateur utilisateur) throws DAOException {
@@ -49,7 +48,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_ETUD, true, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), "eleve", utilisateur.getNumet());
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_ETUD, true, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), "eleve");
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
@@ -71,10 +70,10 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
-	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe, numero_etudiant FROM Utilisateur WHERE id_user = ?";
+	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ?";
 
 	@Override
-	public Utilisateur trouver(int idUtil) throws DAOException {
+	public Utilisateur trouver(String mail) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -83,7 +82,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_UTILISATEUR, false, idUtil );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_UTILISATEUR, false, mail );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
@@ -123,7 +122,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de mettre à jour un examen
-	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom_user = ?, password = ?, mail = ?, groupe = ?, numero_etudiant = ? WHERE id_user = ?";
+	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom_user = ?, password = ?, mail = ?, groupe = ? WHERE id_user = ?";
 
 	@Override
 	public void miseAJour(Utilisateur utilisateur) throws DAOException {
@@ -134,7 +133,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), utilisateur.getGroupe(), utilisateur.getNumet(), utilisateur.getId() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), utilisateur.getGroupe(), utilisateur.getId() );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

@@ -64,14 +64,6 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="register-num-et" name="register-num-et" placeholder="Entrez votre numéro étudiant">
-                                            <label for="register-num-et">Numéro étudiant</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-success">
                                             <input class="form-control" type="email" id="register-email" name="register-email" placeholder="Entrez votre email">
                                             <label for="register-email">Email</label>
                                         </div>
