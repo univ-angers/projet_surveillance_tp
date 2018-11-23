@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+
 /**
  * Classe qui correspond à la connexion à un client
  * Chaque client va communiquer avec le serveur par un port précis qui lui est attribué
@@ -15,18 +16,24 @@ public class ClientHandler extends Thread{
 
 	//A déterminer ce que l'on prendra exactement
 	private String nomClient;
-	private String matiere;
+	private String IDexam;
 	private int port;
 	private FileOutputStream sortieVideo;
 	private DatagramSocket socketSpecialClient;
+	private String chemin;
 
 	public ClientHandler(String NC, String M, int P) throws FileNotFoundException
 	{
 		nomClient = NC;
-		matiere = M;
+		IDexam = M;
+		System.out.println("SUPER DEBUG: " + IDexam);
 		port = P;
-		//Changer le chemin
-		sortieVideo = new FileOutputStream("streamClient" + nomClient.toUpperCase() + matiere.toUpperCase() + ".surv");
+		chemin = idVersChemin();
+		
+		System.out.println("DEBUG CHEMIN = " + chemin);
+		//Changer le chemin pour mettre l'id de la matière en dossier	!!!!
+		
+		sortieVideo = new FileOutputStream(chemin + nomClient.toUpperCase() +  ".surv");
 	}
 
 	public void run()
@@ -80,5 +87,31 @@ public class ClientHandler extends Thread{
 	public void stopSocket(){
 		System.out.println("Fermeture du client " + nomClient);
 		socketSpecialClient.close();
+	}
+	
+	public String idVersChemin()
+	{
+		chemin = IDexam.toString();
+
+
+		// On ajoute les 0 pour avoir une haine de 10 caractères
+		while (chemin.length() != 10)
+		{
+			chemin = "0" + chemin;
+		}
+
+		/* On transforme la chaine en tableau de char pour pouvoir intercaler
+           des / entre chacun des caractères de la chaîne */
+		char[] tmp = chemin.toCharArray();
+		chemin = "";
+
+		for(int i = 0; i < 10; i++)
+		{
+			chemin = chemin + "/" + tmp[i];
+		}
+
+		chemin = "/opt/data_dir" + chemin + "/" + nomClient + "/";
+
+		return chemin;
 	}
 }

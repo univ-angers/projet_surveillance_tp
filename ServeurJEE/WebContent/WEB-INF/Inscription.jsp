@@ -48,23 +48,31 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="register-userfirstname" name="register-userfirstname" placeholder="Please enter your first name">
-                                            <label for="register-userfirstname">First name</label>
+                                            <input class="form-control" type="text" id="register-userfirstname" name="register-userfirstname" placeholder="Entrez votre prénom">
+                                            <label for="register-userfirstname">Prénom</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="register-username" name="register-username" placeholder="Please enter your name">
-                                            <label for="register-username">Name</label>
+                                            <input class="form-control" type="text" id="register-username" name="register-username" placeholder="Entrez votre nom">
+                                            <label for="register-username">Nom</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="email" id="register-email" name="register-email" placeholder="Please provide your email">
+                                            <input class="form-control" type="text" id="register-num-et" name="register-num-et" placeholder="Entrez votre numéro étudiant">
+                                            <label for="register-num-et">Numéro étudiant</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="form-material form-material-success">
+                                            <input class="form-control" type="email" id="register-email" name="register-email" placeholder="Entrez votre email">
                                             <label for="register-email">Email</label>
                                         </div>
                                     </div>
@@ -72,16 +80,16 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="password" id="register-password" name="register-password" placeholder="Choose a strong password..">
-                                            <label for="register-password">Password</label>
+                                            <input class="form-control" type="password" id="register-password" name="register-password" placeholder="Choisissez un mot de passe fort..">
+                                            <label for="register-password">Mot de passe</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="password" id="register-password2" name="register-password2" placeholder="..and confirm it">
-                                            <label for="register-password2">Confirm Password</label>
+                                            <input class="form-control" type="password" id="register-password2" name="register-password2" placeholder="..et comfirmez le">
+                                            <label for="register-password2">Comfirmer mot de passe</label>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +102,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-5">
-                                        <button class="btn btn-block btn-success" type="submit"><i class="fa fa-plus pull-right"></i> Sign Up</button>
+                                        <button class="btn btn-block btn-success" type="submit"><i class="fa fa-plus pull-right"></i> Inscription</button>
                                     </div>
                                 </div>
                             </form>

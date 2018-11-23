@@ -31,7 +31,6 @@ public class formExamen extends HttpServlet {
 	}
 
 
-
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		System.out.println("DEBUG: Reception des infos en POST pour examen");
 
@@ -40,14 +39,25 @@ public class formExamen extends HttpServlet {
 
 		//A partir d'ici, nouvExam est l'examen ajouté
 		creerDossierExamen(nouvExam);
+		
+		/*
+		 * 
+		 * AJOUTER LA RECUPERATION DES REGLES
+		 * 
+		 */
 
 		/* Stockage du bean dans la request */
 		request.setAttribute("Examen", nouvExam);
 
 		/* Affichage de la vue qu'on veut */
-		//this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );
 	}
 
+	/**
+	 * Ajoute un examen dans la BDD
+	 * @param request
+	 * @return
+	 */
 	public Examen ajouterExamen(HttpServletRequest request)
 	{
 		/* Récupération des données du formulaire */
@@ -72,17 +82,26 @@ public class formExamen extends HttpServlet {
 		return examen;
 	}
 
+	/**
+	 * Créer le chemin de l'examen et y ajoute le fichier log
+	 * @param exam
+	 */
 	public void creerDossierExamen(Examen exam)
 	{
 		File examDir;
 		String pathDir = idDbToString(exam);
 
+		System.out.println("DEBUG: CHEMIN SERVLET: " + pathDir);
+
 		examDir = new File(pathDir);
 		examDir.mkdirs();
-		System.out.println("DEBUG:" + examDir);
-		System.out.println("PROJET:" + System.getProperty("user.dir"));
 	}    
 
+	/**
+	 * Modifie un identifiant d'examen pour en faire un chemin valide
+	 * @param exam
+	 * @return
+	 */
 	public String idDbToString(Examen exam)
 	{
 		String idExam = Integer.toString(exam.getIdExam());

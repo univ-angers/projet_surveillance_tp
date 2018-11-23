@@ -10,6 +10,12 @@ mysql -u AdminSurv -p
 
 USE projetsurv;
 
+DROP TABLE list_of_rule;
+DROP TABLE Rule;
+DROP TABLE niveau_rule;
+DROP TABLE Examen;
+DROP TABLE Utilisateur;
+
 CREATE TABLE Utilisateur
 ( id_user INTEGER NOT NULL AUTO_INCREMENT,
 prenom VARCHAR(50),
@@ -17,7 +23,8 @@ nom_user VARCHAR(50),
 password VARCHAR(255),
 mail VARCHAR(100),
 groupe VARCHAR(50),
-PRIMARY KEY (id_user));
+numero_etudiant VARCHAR(8),
+PRIMARY KEY (id_user, numero_etudiant));
 
 CREATE TABLE Examen
 ( id_examen INTEGER NOT NULL AUTO_INCREMENT,
