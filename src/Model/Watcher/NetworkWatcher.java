@@ -46,7 +46,7 @@ public class NetworkWatcher extends Watcher{
 			if (liensSuspects.get(i).equals(lien))
 			{
 				String information = "Lien suspect: " + lien;
-				createDataBeforeSendEvent(information, "critique");
+				createDataBeforeSendEvent(TYPE, information);
 			}
 		}
 	}

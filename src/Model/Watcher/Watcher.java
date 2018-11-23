@@ -31,7 +31,7 @@ public abstract class Watcher extends Thread {
 	 * Méthode qui sera défini dans les classes filles pour traiter et construire l'objet JSON qui sera envoyé
 	 */
 	@SuppressWarnings("unchecked")
-	protected  void createDataBeforeSendEvent(String information, String nivAlerte)
+	protected  void createDataBeforeSendEvent(String typ, String information)
 	{
 		Date date = new Date();
 		@SuppressWarnings("deprecation")
@@ -43,10 +43,10 @@ public abstract class Watcher extends Thread {
 		
 		// Niveau d'alerte à ajouter et autres infos si besoin
 		JSONObject datas = new JSONObject();
-		datas.put("niveauAlerte", nivAlerte);
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("etudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("IDetudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("horodatage", hour+":"+minute+":"+sec);
+		datas.put("type", typ);
 		datas.put("info", information);
 		
 		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();

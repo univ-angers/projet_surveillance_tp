@@ -29,22 +29,6 @@ public class ConnexionController
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 
-		//PENSER A COMPLETER L'ID DE L'EXAM POUR QU'IL FASSE 10 CARACTERES ET METTRE DES / ENTRE CHAQUE CARACTERE POUR LE CHEMIN		
-		while (idExam.length() != 10)
-		{
-			idExam = "0" + idExam;
-		}
-
-		/* A FAIRE AU NIVEAU DU SERVEUR POUR POUVOIR NOMMER LES VIDEOS CORRECTEMENT 
-		char[] tmp = idExam.toCharArray();
-		idExam = "";
-
-		for(int i = 0; i < 10; i++)
-		{
-			idExam = idExam + "/" + tmp[i];
-		}
-		*/
-
 		etudiant.setNumeroExamen(idExam);
 	}
 	
@@ -97,7 +81,7 @@ public class ConnexionController
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
 		datas.put("IDetudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
-		datas.put("info", "Connexion client réussie");
+		datas.put("type", "connexion_etudiant");
 		
 		server.send(datas);
 	}

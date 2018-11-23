@@ -43,13 +43,13 @@ public class UsbWatcher extends Watcher {
 					if (n_usb < result)
 					{
 						System.out.println("Connexion d'une clé USB");
-						String information = "Connexion d'une clé USB";
-						createDataBeforeSendEvent(information, "critique");						
+						String information = "nom_usb_todo";
+						createDataBeforeSendEvent("connexion_usb", information);						
 					} else if (n_usb > result) 
 					{
 						System.out.println("Deconnexion d'une clé USB");
-						String information = "Déconnexion d'une clé USB";
-						createDataBeforeSendEvent(information, "critique");	
+						String information = "nom_usb_todo";
+						createDataBeforeSendEvent("connexion_usb", information);	
 					}
 					n_usb = result;
 				}

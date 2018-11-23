@@ -17,6 +17,7 @@ public class QuitterController
 		fenQuitter = fenetre;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void alerteQuit() 
 	{
 		ServerLinkSingleton server;
@@ -31,11 +32,10 @@ public class QuitterController
 		int sec = date.getSeconds();
 		
 		JSONObject datas = new JSONObject();
-		datas.put("Niveau", "critique");
+		datas.put("type", "etudiant_deconnexion");
 		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
 		datas.put("IDEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 		datas.put("horodatage", hour+":"+minute+":"+sec);
-		datas.put("info", "L'appplication a été fermée");
 		
 		server.send(datas);
 		

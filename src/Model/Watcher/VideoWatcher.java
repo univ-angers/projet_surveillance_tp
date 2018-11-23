@@ -33,7 +33,7 @@ public class VideoWatcher extends Watcher{
 
 	static String addIp = "127.0.0.1";						//Adresse du serveur
 	public static String name;								//Nom du client
-	static String session;									//Matiere
+	static String IDexamen;									//Matiere
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
 	
@@ -48,7 +48,7 @@ public class VideoWatcher extends Watcher{
 
 		//On crée notre datagramme
 		InetAddress adresse = InetAddress.getByName("127.0.0.1");
-		String donneeSt = "NOUVEAU:" + name + ":" + session;
+		String donneeSt = "NOUVEAU:" + name + ":" + IDexamen;
 		byte[] donnee = donneeSt.getBytes();
 		DatagramPacket packet = new DatagramPacket(donnee, donnee.length, adresse, 2345);
 
@@ -87,7 +87,7 @@ public class VideoWatcher extends Watcher{
 		EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		//Création du client et envoi des infos du client au serveur
 		name = etudiant.getIdentifiant();
-		session = etudiant.getNumeroExamen();
+		IDexamen = etudiant.getNumeroExamen();
 
 		while (connexionEtablie == false)
 		{
