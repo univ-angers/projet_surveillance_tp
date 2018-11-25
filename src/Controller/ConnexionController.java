@@ -31,7 +31,7 @@ public class ConnexionController
 
 		etudiant.setNumeroExamen(idExam);
 	}
-	
+
 	/** TODO
 	 * 		VERIFIER QUE LE SERVEUR EST DISPO AVANT DE POUVOIR S'Y CO
 	 */
@@ -40,49 +40,72 @@ public class ConnexionController
 	{
 		//Variable qui permet de faire boucler les Watchers
 		Main.surveillanceEnCours = true;
-		
+
+		//Sera à terme récupéré cdpuis le serveur
+		boolean lanceUSB = true;
+		boolean lanceFichier = true;
+		boolean lanceVideo = true;
+		boolean lanceNet = false;
+		boolean lanceKey = true;
+
 		// On créer les watchers et on les lance
 		//USB
-		UsbWatcher usbWatcher = new UsbWatcher();
-		usbWatcher.start();
+		if (lanceUSB)
+		{
+			UsbWatcher usbWatcher = new UsbWatcher();
+			usbWatcher.start();
+		}
 		//FILE
-		Path p = Paths.get(System.getProperty("user.home"));
-		try {
-			FileWatcher fileWatcher = new FileWatcher(Paths.get(System.getProperty("user.home")));
-			// On démarre le thread du FileWatcher
-			fileWatcher.start();
-		} catch (IOException e) {
-			System.out.println("Impossible de créer le FileWatcher");
-			e.printStackTrace();
+		if (lanceFichier)
+		{
+			Path p = Paths.get(System.getProperty("user.home"));
+			try {
+				FileWatcher fileWatcher = new FileWatcher(Paths.get(System.getProperty("user.home")));
+				// On démarre le thread du FileWatcher
+				fileWatcher.start();
+			} catch (IOException e) {
+				System.out.println("Impossible de créer le FileWatcher");
+				e.printStackTrace();
+			}
 		}
 		//VIDEO
-		VideoWatcher vidWatcher = new VideoWatcher();
-		vidWatcher.start();
-		
-		//NETWORK
-		NetworkWatcher netWatcher = new NetworkWatcher();
-		netWatcher.start();
-		
-		//KEYBOARD
-		KeyListenerWatcher klWatcher = new KeyListenerWatcher();
-		klWatcher.start();
+		if (lanceVideo)
+		{
+			VideoWatcher vidWatcher = new VideoWatcher();
+			vidWatcher.start();
+		}
 
-		//On créer un lien vers le server
-		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
+		//NETWORK
+		if (lanceNet)
+		{
+			NetworkWatcher netWatcher = new NetworkWatcher();
+			netWatcher.start();
+		}
+
+		//KEYBOARD
+		if (lanceKey)
+		{
+			KeyListenerWatcher klWatcher = new KeyListenerWatcher();
+			klWatcher.start();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void logIn() 
+	public boolean logIn() 
 	{
 		ServerLinkSingleton server;
 		server = ServerLinkSingleton.getInstanceExistante();
-		
+
+		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
+
 		JSONObject datas = new JSONObject();
-		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
-		datas.put("mdp", EtudiantExamenInfoSingleton.getInstanceExistante().getMotDePasse());
+		datas.put("IDexamen", etudiant.getNumeroExamen());
+		datas.put("mailEtudiant", etudiant.getIdentifiant());
+		datas.put("mdp", etudiant.getMotDePasse());
 		datas.put("type", "connexion_etudiant");
-		
-		server.send(datas);
+
+		boolean reussi = server.send(datas);
+
+		return reussi;
 	}
 }

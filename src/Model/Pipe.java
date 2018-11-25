@@ -68,7 +68,8 @@ public class Pipe extends Thread {
 	@Override
 	public void run() {
 		//Chaine de commande pour créer le pipe
-		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + VideoWatcher.name.toUpperCase();
+		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE;	//TMP
+		System.out.println("DEBUG CHEMIN = " + "/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE);
 		
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
@@ -90,7 +91,7 @@ public class Pipe extends Thread {
 		{
 			FileInputStream recuPipe;
 			try {
-				recuPipe = new FileInputStream(new File("/tmp/pipeReception"+VideoWatcher.name.toUpperCase()));
+				recuPipe = new FileInputStream(new File("/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE));
 
 				//System.out.println("DEBUG: Le pipe est prêt à réceptionner des informations");
 

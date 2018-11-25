@@ -32,16 +32,18 @@ public class RecorderFFMPEG extends Thread{
 			//Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
 
+			System.out.println("DEBUG CHEMIN = " + "/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE);
+			
 			//On envoie tout sur le pipe créé
-			procFF.redirectOutput(new File("/tmp/pipeReception"+VideoWatcher.name.toUpperCase()));
+			procFF.redirectOutput(new File("/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE));
 
 			try {
-				//System.out.println("DEBUG: Démarrage de l'enregistrement");
+				System.out.println("DEBUG: Démarrage de l'enregistrement");
 				ffmpeg = procFF.start();
 				running = true;
-				//System.out.println("DEBUG: Enregistrement en cours");
+				System.out.println("DEBUG: Enregistrement en cours");
 				ffmpeg.waitFor();
-				//System.out.println("DEBUG: Arret de l'enregistrement");
+				System.out.println("DEBUG: Arret de l'enregistrement");
 				running = false;
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -59,6 +61,7 @@ public class RecorderFFMPEG extends Thread{
 	 */
 	public void stopRecord()
 	{
+		System.out.println("ARRET FORCE FFMPEG");
 		if (ffmpeg != null)
 		{
 			BufferedOutputStream bos = new BufferedOutputStream(ffmpeg.getOutputStream());

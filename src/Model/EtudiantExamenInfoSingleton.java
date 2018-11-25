@@ -6,6 +6,7 @@ public class EtudiantExamenInfoSingleton {
 	private String identifiant;
 	private String motDePasse;
 	private String adrServeur;
+	private String idBDD;
 
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
 	private String numeroExamen;
@@ -64,6 +65,16 @@ public class EtudiantExamenInfoSingleton {
 	public boolean getToutesLesInfosEtud() {
 		return toutesLesInfos;
 	}
+	
+	public void setIdBDD(String idbdd)
+	{
+		this.idBDD = idbdd;
+	}
+	public String getIdBDD()
+	{
+		return this.idBDD;
+	}
+	
 	public void setToutesLesInfosEtud()	{
 		if (!(identifiant.isEmpty() && motDePasse.length() == 0 && adrServeur.isEmpty() && numeroExamen.isEmpty()))
 			toutesLesInfos = true;

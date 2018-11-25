@@ -1,11 +1,14 @@
 package Model;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * A VOIR AU NIVEAU DE L'IP
@@ -18,37 +21,87 @@ public class ServerLinkSingleton {
 	// L'ip du serveur auquel va communiquer l'objet
 	private String ip;
 
-	public void send(JSONObject datas) {
+	public boolean send(JSONObject datas) {
 		//System.out.println("DEBUG: Envoi des données: " + datas);
-		
+
 		URL url;
-	    HttpURLConnection connection = null;
-	    
-	    //Temporaire ?
-	    try {
-	        url = new URL("http://" + ip + ":8080/ServeurJEE/receptionJSON");     //Creating the URL.
-	        connection = (HttpURLConnection) url.openConnection();
-	        connection.setRequestMethod("POST");
-	        connection.setRequestProperty("Content-Type", "application/json");
-	        connection.setUseCaches(false);
-	        connection.setDoInput(true);
-	        connection.setDoOutput(true);
-	        //Send request
-	        OutputStream os = connection.getOutputStream();
-	        OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-	        System.out.println(datas.toString());
-	        osw.write(datas.toString());
-	        osw.flush();
-	        osw.close();
-	        /* DEBUG */
-	        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	            System.out.println("DEBUG: OK");
-	        } else {
-	            System.out.println("DEBUG: FAIL");
-	        }//
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
-	    }
+		HttpURLConnection connection = null;
+
+		//Temporaire ?
+		try {
+			url = new URL("http://" + ip + ":8080/ServeurJEE/receptionJSON");     //Creating the URL.
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+			//Send request
+			OutputStream os = connection.getOutputStream();
+			OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
+			//System.out.println("DEBUG: Envoi = " + datas.toString());
+			osw.write(datas.toString());
+			osw.flush();
+			osw.close();
+
+			/* DEBUG */
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				//System.out.println("DEBUG: OK");
+				return traitementDonnees(connection);
+			} else {
+				//System.out.println("DEBUG: FAIL");
+				return false;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean traitementDonnees(HttpURLConnection connection) {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = br.readLine()) != null) {
+				sb.append(line+"\n");
+			}
+			br.close();
+			String res = sb.toString();
+
+			if (res.length() > 0)	//On fait nos comparaisons uniquement si le serveur a retourné quelque chose
+			{
+				JSONParser parser = new JSONParser();
+				JSONObject jObj = (JSONObject) parser.parse(res);
+				String type = (String) jObj.get("type");
+
+				//Connexion de l'étudiant réussie
+				if ( type.equals("rep_co_pos"))
+				{
+					EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
+					String idBDDEtud = (String) jObj.get("idbdd");
+					etudiant.setIdBDD(idBDDEtud);
+					return true;
+				}
+				
+				//Connexion de l'étudiant non réussie, mauvais ID
+				if ( type.equals("rep_co_neg"))
+					return false;
+				
+				//Refresh de l'interface de l'étudiant
+				if ( type.equals("rep_temps"))
+				{
+					TempsSingleton tps = TempsSingleton.getInstance();
+					String tpsRestant = (String) jObj.get("tps");
+					tps.setTemps(tpsRestant);
+					return true;
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+		return false;	//Si aucun des cas n'a été trouvé
 	}
 
 	// GENERATION
@@ -63,7 +116,7 @@ public class ServerLinkSingleton {
 		}
 		return instance;
 	}
-	
+
 	static public ServerLinkSingleton getInstanceExistante() {
 		return instance;
 	}

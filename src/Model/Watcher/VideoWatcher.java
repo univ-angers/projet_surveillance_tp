@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Date;
 import java.util.Scanner;
 
 import Controller.Main;
@@ -37,7 +38,8 @@ public class VideoWatcher extends Watcher{
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
 	
-	
+	//Pour debug sur un seul pc
+	public static String IDENTIFIANT_TEMPORAIRE;
 	
 	
 
@@ -86,7 +88,7 @@ public class VideoWatcher extends Watcher{
 	public void run(){
 		EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		//Création du client et envoi des infos du client au serveur
-		name = etudiant.getIdentifiant();
+		name = etudiant.getIdBDD();
 		IDexamen = etudiant.getNumeroExamen();
 
 		while (connexionEtablie == false)
@@ -99,6 +101,12 @@ public class VideoWatcher extends Watcher{
 			}
 		}
 
+		/** TEMPORAIRE POUR POUVOIR LANCER PLUSIEURS RECORD SUR LE MËME PC */
+		Date maDate = new Date(); 
+		long val = maDate.getTime();
+		IDENTIFIANT_TEMPORAIRE = String.valueOf(val);
+		/*******************************************************************/
+		
 		//création du pipe
 		Pipe pip = new Pipe(port); //name temporaire pour les test sur un seul PC
 		//On lance le pipe
@@ -110,7 +118,7 @@ public class VideoWatcher extends Watcher{
 		rec.start();	
 
 		//On arrête pas tant que la surveillance est active
-		while (Main.surveillanceEnCours == false)
+		while (Main.surveillanceEnCours != false)
 		{}
 		
 		//La surveillance n'est plus active, on arrête
