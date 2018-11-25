@@ -62,19 +62,20 @@ public class formExamen extends HttpServlet {
 	public Examen ajouterExamen(HttpServletRequest request)
 	{
 		/* Récupération des données du formulaire */
+		//Recupération de la durée
 		String dureeH = request.getParameter("duree-heure");
+		dureeH = "0" + dureeH;		//Pour la mise en forme
 		String dureeM = request.getParameter("duree-minute");
 		String timeSt = dureeH + ":" + dureeM + ":00";
-		System.out.println("DEBUG TIME: " + timeSt);
-		Time time = null;
-		Time.valueOf(timeSt);		//DUREE A CORRIGER, NULL DANS LA BASE
+		Time time = Time.valueOf(timeSt);		//DUREE A CORRIGER, NULL DANS LA BASE
+		//Recupération de la matière
 		String matiere = request.getParameter("matiere");
+		//Récupération de la white-list
 		//String ListeExamens = request.getParameter("white-list");
 
 		/* Création d'un examen */
-		Examen examen = new Examen();
-		
-		examen.setIdProf(1);	//COMMENT RECUPERER L'ID DU PROF
+		Examen examen = new Examen();		
+		examen.setIdProf(1);	//UTILISER LA SESSION A TERME
 		examen.setMatiere(matiere);
 		examen.setDuree(time);
 		

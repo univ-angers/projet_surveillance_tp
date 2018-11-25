@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.beans.Utilisateur;
 
 public class DAOUtilisateurImpl implements DAOUtilisateur {

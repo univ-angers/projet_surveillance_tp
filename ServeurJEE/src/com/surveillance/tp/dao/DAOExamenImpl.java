@@ -24,7 +24,7 @@ public class DAOExamenImpl implements DAOExamen {
 	private static Examen map( ResultSet resultSet ) throws SQLException {
 		Examen examen = new Examen();
 
-		examen.setIdExam(resultSet.getInt("id"));
+		examen.setIdExam(resultSet.getInt("id_examen"));
 		examen.setIdProf(resultSet.getInt("id_user"));
 		examen.setMatiere(resultSet.getString("matiere"));
 		examen.setDuree(resultSet.getTime("duree"));

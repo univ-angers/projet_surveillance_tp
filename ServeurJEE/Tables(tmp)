@@ -53,3 +53,4 @@ FOREIGN KEY (id_rule) REFERENCES Rule(id_rule),
 FOREIGN KEY (id_examen) REFERENCES Examen(id_examen));
 
 
+
