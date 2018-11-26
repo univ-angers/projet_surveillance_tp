@@ -172,9 +172,13 @@ public class receptionJSON extends HttpServlet {
 	 */
 	public void ajoutLog(JSONObject obj)
 	{
-		//System.out.println("DEBUG: Ajout dans le fichier log ");
+		/*
+		 * 
+		 * TODO: Rechercher l'ID de la règle qui doit être appliquée dans la BDD, et la mettre dans le log
+		 * 
+		 */
+		
 		//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
-
 		String mail = (String) obj.get("mailEtudiant");
 		Utilisateur util = 	daoUtilisateur.trouver(mail);
 		int idEtud = util.getId();

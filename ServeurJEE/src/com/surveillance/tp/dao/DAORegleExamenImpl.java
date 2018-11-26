@@ -8,55 +8,47 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.surveillance.tp.beans.Regle;
+import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.beans.Utilisateur;
 
-public class DAORegleImpl implements DAORegle{
+public class DAORegleExamenImpl implements DAORegleExamen{
 
 	private DAOFactory daoFactory;
 
-	DAORegleImpl( DAOFactory daoFactory ) {
+	DAORegleExamenImpl( DAOFactory daoFactory ) {
 		this.daoFactory = daoFactory;
 	}
-	
+
 	/*
 	 * Simple méthode utilitaire permettant de faire la correspondance (le
-	 * mapping) entre une ligne issue de la table des utilisateurs (un
-	 * ResultSet) et un bean Utilisateur.
+	 * mapping) entre une ligne issue de la table des list_de_regle (un
+	 * ResultSet) et un bean RegleExamen.
 	 */
-	private static Regle map( ResultSet resultSet ) throws SQLException {
-		Regle regle = new Regle();
+	private static RegleExam map( ResultSet resultSet ) throws SQLException {
+		RegleExam regleExam = new RegleExam();
 
-		regle.setIdRegle(resultSet.getInt("id_rule"));
-		regle.setDescription(resultSet.getString("description"));
-		regle.setNiveauRegle(resultSet.getInt("id_niveau"));		
+		regleExam.setIdRegle(resultSet.getInt("id_rule"));
+		regleExam.setIdExam(resultSet.getInt("id_examen"));
 
-		return regle;
+		return regleExam;
 	}
-	
-	private static final String SQL_INSERT_REGLE = "INSERT INTO Rule (description, id_niveau) VALUES (?, ?)";
-	
+
+	private static final String SQL_INSERT_REGLE = "INSERT INTO list_of_rule (id_rule, id_examen) VALUES (?, ?)";
+
 	@Override
-	public void creer(Regle regle) throws DAOException {
+	public void creer(RegleExam regleexam) throws DAOException {
+		System.out.println("JE SUIS AU DEBUT");
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_REGLE, true, regle.getDescription(), regle.getNiveauRegle());
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_REGLE, false, regleexam.getIdRegle(), regleexam.getIdExam());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
-				throw new DAOException( "Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table." );
-			}
-			/* Récupération de l'id auto-généré par la requête d'insertion */
-			valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-			if ( valeursAutoGenerees.next() ) {
-				/* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-				regle.setIdRegle(valeursAutoGenerees.getInt(1));
-			} else {
-				throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
+				throw new DAOException( "Échec de la création de la règle de l'examen, aucune ligne ajoutée dans la table." );
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
@@ -64,20 +56,20 @@ public class DAORegleImpl implements DAORegle{
 			fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
 		}		
 	}
-	
-	private static final String SQL_SELECT_REGLE = "SELECT id_rule, description, id_niveau FROM Rule WHERE id_rule = ?";
+
+	private static final String SQL_SELECT_REGLE = "SELECT id_rule, id_examen FROM list_of_rule WHERE id_rule = ? AND id_examen = ?";
 
 	@Override
-	public Regle trouver(int idRegle) throws DAOException {
+	public RegleExam trouver(int idRegle, int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		Regle regle = null;
+		RegleExam regle = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE, false, idRegle );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE, false, idRegle, idExam );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
@@ -91,10 +83,10 @@ public class DAORegleImpl implements DAORegle{
 		return regle;
 	}
 
-	private static final String SQL_DELETE_REGLE = "DELETE FROM Rule WHERE id_rule  = ?";
+	private static final String SQL_DELETE_REGLE = "DELETE FROM list_of_rule WHERE id_rule  = ? AND id_examen = ?";
 
 	@Override
-	public void supprimer(int idRegle) throws DAOException {
+	public void supprimer(int idRegle, int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -102,7 +94,7 @@ public class DAORegleImpl implements DAORegle{
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_REGLE, false, idRegle );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_REGLE, false, idRegle, idExam);
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
@@ -116,10 +108,10 @@ public class DAORegleImpl implements DAORegle{
 		}
 	}
 
-	private static final String SQL_UPDATE_REGLE = "UPDATE Rule SET description = ?, id_niveau = ? WHERE id_rule = ?";
+	private static final String SQL_UPDATE_REGLE = "UPDATE list_of_rule SET id_examen = ? WHERE id_rule = ?";
 
 	@Override
-	public void miseAJour(Regle regle) throws DAOException {
+	public void miseAJour(RegleExam regleexamen) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -127,7 +119,7 @@ public class DAORegleImpl implements DAORegle{
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_REGLE, false, regle.getDescription(), regle.getNiveauRegle(), regle.getIdRegle() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_REGLE, false, regleexamen.getIdExam(), regleexamen.getIdRegle() );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

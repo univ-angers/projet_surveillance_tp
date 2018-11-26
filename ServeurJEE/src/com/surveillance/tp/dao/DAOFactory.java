@@ -80,7 +80,7 @@ public class DAOFactory {
 		return new DAOExamenImpl( this );
 	}	
 	
-	public DAORegle getRegleDao() {
-		return new DAORegleImpl( this );
+	public DAORegleExamen getRegleExamDao() {
+		return new DAORegleExamenImpl( this );
 	}
 }

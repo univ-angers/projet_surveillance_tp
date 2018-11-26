@@ -164,28 +164,35 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Opération de fichier surveillé 
+                                            <input type="checkbox" id="bouton_fichier" name="bouton_fichier"><span></span>Opération de fichier surveillée 
                                         </label>
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Frappe de clavier surveillé 
+                                            <input type="checkbox" id="bouton_clavier" name="bouton_clavier"><span></span>Frappe de clavier surveillée 
                                         </label>
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Montage de dossier/USB surveillé
+                                            <input type="checkbox" id="bouton_usb" name="bouton_usb"><span></span>Montage de dossier/USB surveillé
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label class="css-input switch switch-sm switch-success">
+                                            <input type="checkbox" id="bouton_video" name="bouton_video"><span></span>Surveillance vidéo
                                         </label>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-5">
-                                        <button class="btn btn-block btn-success" type="submit"><i class="si si-note"></i> Crérer</button>
+                                        <button class="btn btn-block btn-success" type="submit"><i class="si si-note"></i> Créer</button>
                                         
                                     </div>
                                 </div>

@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.surveillance.tp.beans.Examen;
+import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
+import com.surveillance.tp.dao.DAORegleExamen;
 import com.surveillance.tp.utilitaire.directoryManager;
 
 public class formExamen extends HttpServlet {
@@ -19,10 +21,12 @@ public class formExamen extends HttpServlet {
 	public static final String CONF_DAO_FACTORY = "daofactory";
 
 	private DAOExamen daoExamen;
+	private DAORegleExamen daoRegleExamen;
 
 	public void init() throws ServletException {
 		/* Récupération d'une instance de notre DAO Utilisateur */
 		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
+		this.daoRegleExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getRegleExamDao();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -39,13 +43,8 @@ public class formExamen extends HttpServlet {
 		Examen nouvExam = ajouterExamen(request);
 
 		//A partir d'ici, nouvExam est l'examen ajouté
+		//On va l'ajouter ainsi que ses règles
 		creerDossierExamen(nouvExam);
-		
-		/*
-		 * 
-		 * AJOUTER LA RECUPERATION DES REGLES
-		 * 
-		 */
 
 		/* Stockage du bean dans la request */
 		request.setAttribute("Examen", nouvExam);
@@ -78,9 +77,52 @@ public class formExamen extends HttpServlet {
 		examen.setIdProf(1);	//UTILISER LA SESSION A TERME
 		examen.setMatiere(matiere);
 		examen.setDuree(time);
-		
+
 		daoExamen.creer(examen);
 		System.out.println("DEBUG: Examen ajouté");
+
+		/* Gestion des règles */
+		String cocheFichier = (String)request.getParameter("bouton_fichier");	// "on" si coché, null sinon
+		String cocheUSB = (String)request.getParameter("bouton_USB");
+		String cocheClavier = (String)request.getParameter("bouton_clavier");
+		String cocheVideo = (String)request.getParameter("bouton_video");
+		
+		RegleExam re = new RegleExam();
+		re.setIdExam(examen.getIdExam());
+
+		if (cocheUSB != null)
+		{
+			re.setIdRegle(1);			//Connexion USB
+			daoRegleExamen.creer(re);
+			re.setIdRegle(2);			//Deconnexion USB
+			daoRegleExamen.creer(re);
+		}
+
+		if (cocheFichier != null)
+		{
+			re.setIdRegle(3);			//creation fichier
+			daoRegleExamen.creer(re);
+			re.setIdRegle(4);			//modification fichier
+			daoRegleExamen.creer(re);
+			re.setIdRegle(5);			//suppression fichier
+			daoRegleExamen.creer(re);
+		}
+
+		if (cocheVideo != null)
+		{
+			System.out.println("DEBUG; Num exam = " + re.getIdExam());
+			re.setIdRegle(6);			// Vidéo
+			daoRegleExamen.creer(re);
+		}
+
+		//TODO NET
+
+		if (cocheClavier != null)
+		{
+			re.setIdRegle(8);			//Touche appuyée
+			daoRegleExamen.creer(re);
+		}
+
 		return examen;
 	}
 
@@ -99,5 +141,5 @@ public class formExamen extends HttpServlet {
 		examDir.mkdirs();
 	}    
 
-	
+
 }

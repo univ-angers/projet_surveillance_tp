@@ -48,7 +48,7 @@ public class DAOExamenImpl implements DAOExamen {
 	        int statut = preparedStatement.executeUpdate();
 	        /* Analyse du statut retourné par la requête d'insertion */
 	        if ( statut == 0 ) {
-	            throw new DAOException( "Échec de la création de l'utilisateur, aucune ligne ajoutée dans la table." );
+	            throw new DAOException( "Échec de la création de l'examen, aucune ligne ajoutée dans la table." );
 	        }
 	        /* Récupération de l'id auto-généré par la requête d'insertion */
 	        valeursAutoGenerees = preparedStatement.getGeneratedKeys();
@@ -56,7 +56,7 @@ public class DAOExamenImpl implements DAOExamen {
 	            /* Puis initialisation de la propriété id du bean Examen avec sa valeur */
 	            examen.setIdExam(valeursAutoGenerees.getInt(1));
 	        } else {
-	            throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
+	            throw new DAOException( "Échec de la création de l'examen en base, aucun ID auto-généré retourné." );
 	        }
 	    } catch ( SQLException e ) {
 	        throw new DAOException( e );
