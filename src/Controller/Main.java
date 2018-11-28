@@ -2,23 +2,19 @@ package Controller;
 
 import javax.swing.SwingUtilities;
 
+import Model.DetectionArret;
 import Model.ServerLinkSingleton;
 import Vue.Connexion;
 
 
-public class Main {
-	
+public class Main 
+{	
 	public static boolean surveillanceEnCours;
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	public static void main(String[] args){
 				
 		surveillanceEnCours = false;
-
-		//On créer un lien vers le server
-		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance("localhost");
+		DetectionArret da = new DetectionArret();
 		
 		// On créer la fenêtre
 		SwingUtilities.invokeLater(new Runnable()
@@ -29,6 +25,11 @@ public class Main {
 				fenetre.setVisible(true);
 			}
 		});
-		
+		try {
+			da.detAr();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -5,6 +5,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javax.swing.*;
 
 import Controller.ConfigController;
@@ -27,7 +33,9 @@ public class Configuration extends JDialog
 	private JPasswordField tf_mdp;
 	private JTextField tf_adrServ;
 	
-	public Configuration()
+	private File adrServ = new File("Ressources/adrServ");
+	
+	public Configuration() throws FileNotFoundException
 	{
 		super();
 		controller = new ConfigController(this);
@@ -38,7 +46,7 @@ public class Configuration extends JDialog
 		build();
 	}
 
-	private void build()
+	private void build() throws FileNotFoundException
 	{
 		setSize(420, 210);
 		setLocationRelativeTo(null);
@@ -48,7 +56,7 @@ public class Configuration extends JDialog
 		setContentPane(buildContentPane());
 	}
 
-	private JPanel buildContentPane()
+	private JPanel buildContentPane() throws FileNotFoundException
 	{
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -92,9 +100,20 @@ public class Configuration extends JDialog
 		c.gridwidth = 2;
 		c.insets = new Insets(0, 0, 20, 20);
 		panel.add(tf_adrServ, c);
-		if (etudiant != null)
-			tf_adrServ.setText(etudiant.getAdresseServeur());
-
+		
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(adrServ));
+		
+		String line;
+		while ((line = br.readLine()) != null) {
+			tf_adrServ.setText(line);
+		}
+		br.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		l_mail = new JLabel("Mail");
 		c.fill = GridBagConstraints.HORIZONTAL;

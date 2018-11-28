@@ -49,7 +49,7 @@ public class UsbWatcher extends Watcher {
 					{
 						System.out.println("Deconnexion d'une clé USB");
 						String information = "nom_usb_todo";
-						createDataBeforeSendEvent("connexion_usb", information);	
+						createDataBeforeSendEvent("deconnexion_usb", information);	
 					}
 					n_usb = result;
 				}

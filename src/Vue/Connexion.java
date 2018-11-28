@@ -5,6 +5,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+
 import javax.swing.*;
 
 import Controller.ConnexionController;
@@ -59,9 +61,15 @@ public class Connexion extends JFrame
 			{
 				if(e.getSource() == b_option)
 				{
-					Configuration fenetre = new Configuration();
-					fenetre.setModal(true);
-					fenetre.setVisible(true);
+					Configuration fenetre;
+					try {
+						fenetre = new Configuration();
+						fenetre.setModal(true);
+						fenetre.setVisible(true);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

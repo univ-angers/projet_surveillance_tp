@@ -41,7 +41,7 @@ public class ConnexionController
 		//Variable qui permet de faire boucler les Watchers
 		Main.surveillanceEnCours = true;
 
-		//Sera à terme récupéré cdpuis le serveur
+		//Sera à terme récupéré depuis le serveur
 		boolean lanceUSB = true;
 		boolean lanceFichier = true;
 		boolean lanceVideo = true;
@@ -93,10 +93,11 @@ public class ConnexionController
 	@SuppressWarnings("unchecked")
 	public boolean logIn() 
 	{
-		ServerLinkSingleton server;
-		server = ServerLinkSingleton.getInstanceExistante();
-
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
+		
+		//On créer un lien vers le server
+		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance(etudiant.getAdresseServeur());
+
 
 		JSONObject datas = new JSONObject();
 		datas.put("IDexamen", etudiant.getNumeroExamen());
@@ -104,7 +105,7 @@ public class ConnexionController
 		datas.put("mdp", etudiant.getMotDePasse());
 		datas.put("type", "connexion_etudiant");
 
-		boolean reussi = server.send(datas);
+		boolean reussi = serverLink.send(datas);
 
 		return reussi;
 	}
