@@ -34,7 +34,7 @@ public class ClientHandler extends Thread{
 		//Changer le chemin pour mettre l'id de la matière en dossier	!!!!
 		
 		System.out.println("DEBUG: Chemin UDP = " + chemin + ".surv");
-		sortieVideo = new FileOutputStream(chemin + nomClient + ".surv");
+		sortieVideo = new FileOutputStream(chemin + nomClient + ".surv",true);
 	}
 
 	public void run()

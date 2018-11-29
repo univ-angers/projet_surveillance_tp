@@ -69,7 +69,7 @@ public class formExamen extends HttpServlet {
 		Time time = Time.valueOf(timeSt);		//DUREE A CORRIGER, NULL DANS LA BASE
 		//Recupération de la matière
 		String matiere = request.getParameter("matiere");
-		//Récupération de la white-list
+		//Récupération de la white-list TODO
 		//String ListeExamens = request.getParameter("white-list");
 
 		/* Création d'un examen */
@@ -83,7 +83,7 @@ public class formExamen extends HttpServlet {
 
 		/* Gestion des règles */
 		String cocheFichier = (String)request.getParameter("bouton_fichier");	// "on" si coché, null sinon
-		String cocheUSB = (String)request.getParameter("bouton_USB");
+		String cocheUSB = (String)request.getParameter("bouton_usb");
 		String cocheClavier = (String)request.getParameter("bouton_clavier");
 		String cocheVideo = (String)request.getParameter("bouton_video");
 		

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.beans.Utilisateur;
@@ -57,30 +58,32 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 		}		
 	}
 
-	private static final String SQL_SELECT_REGLE = "SELECT id_rule, id_examen FROM list_of_rule WHERE id_rule = ? AND id_examen = ?";
+	private static final String SQL_SELECT_REGLE = "SELECT id_rule, id_examen FROM list_of_rule WHERE id_examen = ?";
 
 	@Override
-	public RegleExam trouver(int idRegle, int idExam) throws DAOException {
+	public ArrayList<RegleExam> trouver(int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		RegleExam regle = null;
+		ArrayList<RegleExam> listRegle = new ArrayList<RegleExam>();
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE, false, idRegle, idExam );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE, false, idExam );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
+			while ( resultSet.next() ) {
 				regle = map( resultSet );
+				listRegle.add(regle);
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
 			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
 		}
-		return regle;
+		return listRegle;
 	}
 
 	private static final String SQL_DELETE_REGLE = "DELETE FROM list_of_rule WHERE id_rule  = ? AND id_examen = ?";

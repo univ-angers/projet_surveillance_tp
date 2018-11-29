@@ -83,4 +83,8 @@ public class DAOFactory {
 	public DAORegleExamen getRegleExamDao() {
 		return new DAORegleExamenImpl( this );
 	}
+	
+	public DAORegle getRegleDao() {
+		return new DAORegleImpl (this);
+	}
 }

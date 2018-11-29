@@ -8,46 +8,44 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.surveillance.tp.beans.Regle;
 import com.surveillance.tp.beans.Utilisateur;
 
-public class DAOUtilisateurImpl implements DAOUtilisateur {
+public class DAORegleImpl implements DAORegle{
 
 	private DAOFactory daoFactory;
 
-	DAOUtilisateurImpl( DAOFactory daoFactory ) {
+	DAORegleImpl( DAOFactory daoFactory ) {
 		this.daoFactory = daoFactory;
 	}
-
+	
 	/*
 	 * Simple méthode utilitaire permettant de faire la correspondance (le
 	 * mapping) entre une ligne issue de la table des utilisateurs (un
 	 * ResultSet) et un bean Utilisateur.
 	 */
-	private static Utilisateur map( ResultSet resultSet ) throws SQLException {
-		Utilisateur utilisateur = new Utilisateur();
+	private static Regle map( ResultSet resultSet ) throws SQLException {
+		Regle regle = new Regle();
 
-		utilisateur.setId(resultSet.getInt("id_user"));
-		utilisateur.setNom(resultSet.getString("nom_user"));
-		utilisateur.setPrenom(resultSet.getString("prenom"));
-		utilisateur.setPassword(resultSet.getString("password"));
-		utilisateur.setMail(resultSet.getString("mail"));
-		utilisateur.setGroupe(resultSet.getString("groupe"));
+		regle.setIdRegle(resultSet.getInt("id_rule"));
+		regle.setDescription(resultSet.getString("description"));
+		regle.setNiveauRegle(resultSet.getInt("id_niveau"));	
+		regle.setIdWatcher(resultSet.getInt("id_watcher"));
 
-		return utilisateur;
+		return regle;
 	}
-
-	//Requête permettant d'insérer un utilisateur dans la BDD
-	private static final String SQL_INSERT_ETUD = "INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES (?, ?, MD5(?), ?, ?)";
-
+	
+	private static final String SQL_INSERT_REGLE = "INSERT INTO Rule (description, id_niveau, id_watcher) VALUES (?, ?, ?)";
+	
 	@Override
-	public void creer(Utilisateur utilisateur) throws DAOException {
+	public void creer(Regle regle) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_ETUD, true, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), "eleve");
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_REGLE, true, regle.getDescription(), regle.getNiveauRegle(), regle.getIdWatcher());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if ( statut == 0 ) {
@@ -57,7 +55,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 			valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 			if ( valeursAutoGenerees.next() ) {
 				/* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-				utilisateur.setId(valeursAutoGenerees.getInt(1));
+				regle.setIdRegle(valeursAutoGenerees.getInt(1));
 			} else {
 				throw new DAOException( "Échec de la création de l'utilisateur en base, aucun ID auto-généré retourné." );
 			}
@@ -65,66 +63,65 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 			throw new DAOException( e );
 		} finally {
 			fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
-		}
+		}		
 	}
-
-	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
-	private static final String SQL_SELECT_UTILISATEUR_MDP = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ? AND password = MD5(?)";
+	
+	private static final String SQL_SELECT_REGLE_TYPE = "SELECT id_rule, description, id_niveau, id_watcher FROM Rule WHERE description = ?";
 
 	@Override
-	public Utilisateur trouverMdp(String mail, String password) throws DAOException {
+	public Regle trouverSt(String typeRegle) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		Utilisateur utilisateur = null;
+		Regle regle = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_UTILISATEUR_MDP, false, mail, password);
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE_TYPE, false, typeRegle );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
-				utilisateur = map( resultSet );
+				regle = map( resultSet );
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
 			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
 		}
-		return utilisateur;
+		return regle;
 	}
-
-	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ?";
+	
+	private static final String SQL_SELECT_REGLE_ID = "SELECT id_rule, description, id_niveau, id_watcher FROM Rule WHERE id_rule = ?";
 
 	@Override
-	public Utilisateur trouver(String mail) throws DAOException {
+	public Regle trouver(int idRegle) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		Utilisateur utilisateur = null;
+		Regle regle = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_UTILISATEUR, false, mail);
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_REGLE_ID, false, idRegle );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
-				utilisateur = map( resultSet );
+				regle = map( resultSet );
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
 			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
 		}
-		return utilisateur;
+		return regle;
 	}
 
-	private static final String SQL_DELETE_UTIL = "DELETE FROM Utilisateur WHERE id_user  = ?";
+	private static final String SQL_DELETE_REGLE = "DELETE FROM Rule WHERE id_rule  = ?";
 
 	@Override
-	public void supprimer(int idUtil) throws DAOException {
+	public void supprimer(int idRegle) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -132,12 +129,12 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_UTIL, false, idUtil );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_REGLE, false, idRegle );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {
 				//Doit on faire quelque chose avec l'examen reçu?
-				//utilisateur = map( resultSet );
+				//regle = map( resultSet );
 			}
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
@@ -146,11 +143,10 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		}
 	}
 
-	//Requête permettant de mettre à jour un examen
-	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom_user = ?, password = ?, mail = ?, groupe = ? WHERE id_user = ?";
+	private static final String SQL_UPDATE_REGLE = "UPDATE Rule SET description = ?, id_niveau = ?, id_watcher = ? WHERE id_rule = ?";
 
 	@Override
-	public void miseAJour(Utilisateur utilisateur) throws DAOException {
+	public void miseAJour(Regle regle) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -158,7 +154,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), utilisateur.getGroupe(), utilisateur.getId() );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_REGLE, false, regle.getDescription(), regle.getNiveauRegle(), regle.getIdWatcher(), regle.getIdRegle() );
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if ( resultSet.next() ) {

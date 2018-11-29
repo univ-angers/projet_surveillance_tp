@@ -28,7 +28,7 @@ public class DAOExamenImpl implements DAOExamen {
 		examen.setIdProf(resultSet.getInt("id_user"));
 		examen.setMatiere(resultSet.getString("matiere"));
 		examen.setDuree(resultSet.getTime("duree"));
-		examen.setHeureDebut(resultSet.getDate("heure_debut"));		
+		examen.setHeureDebut(resultSet.getTimestamp("heure_debut"));		
 
 		return examen;
 	}

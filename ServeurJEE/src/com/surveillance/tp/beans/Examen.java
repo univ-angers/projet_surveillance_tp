@@ -2,6 +2,7 @@ package com.surveillance.tp.beans;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Examen {
 	
@@ -9,7 +10,7 @@ public class Examen {
 	private int idProf;		//FOREIGN KEY
 	private String matiere;
 	private Time duree;
-	private Date heureDebut;
+	private Timestamp heureDebut;
 	
 	public int getIdExam() {
 		return idExam;
@@ -35,10 +36,10 @@ public class Examen {
 	public void setDuree(Time duree) {
 		this.duree = duree;
 	}
-	public Date getHeureDebut() {
+	public Timestamp getHeureDebut() {
 		return heureDebut;
 	}
-	public void setHeureDebut(Date heureDebut) {
+	public void setHeureDebut(Timestamp heureDebut) {
 		this.heureDebut = heureDebut;
 	}
 }
