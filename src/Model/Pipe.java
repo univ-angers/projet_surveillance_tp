@@ -68,13 +68,11 @@ public class Pipe extends Thread {
 	@Override
 	public void run() {
 		//Chaine de commande pour créer le pipe
-		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE;	//TMP
-		System.out.println("DEBUG CHEMIN = " + "/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE);
+		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT;
 		
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
 			pPipe = pbPipe.start();
-			//System.out.println("DEBUG: Pipe créé.");
 			pPipe.waitFor();
 			pipePret = true;
 		} catch (IOException e) {
@@ -91,9 +89,7 @@ public class Pipe extends Thread {
 		{
 			FileInputStream recuPipe;
 			try {
-				recuPipe = new FileInputStream(new File("/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT_TEMPORAIRE));
-
-				//System.out.println("DEBUG: Le pipe est prêt à réceptionner des informations");
+				recuPipe = new FileInputStream(new File("/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT));
 
 				while (!RecorderFFMPEG.running)
 				{}
@@ -123,12 +119,10 @@ public class Pipe extends Thread {
 						e1.printStackTrace();
 					}
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			finally
 			{
-				//System.out.println("DEBUG: Le pipe est maintenant fermé.");
 				//Suppresion du fichier
 				File f = new File("/tmp/pipeReception"+VideoWatcher.name.toUpperCase());
 				f.delete();

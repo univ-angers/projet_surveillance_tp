@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -22,34 +23,29 @@ public class ServerLinkSingleton {
 	private String ip;
 
 	public boolean send(JSONObject datas) {
-		//System.out.println("DEBUG: Envoi des données: " + datas);
 
 		URL url;
 		HttpURLConnection connection = null;
 
-		//Temporaire ?
 		try {
-			url = new URL("http://" + ip + ":8080/ServeurJEE/receptionJSON");     //Creating the URL.
+			url = new URL("http://" + ip + ":8080/ServeurJEE/receptionJSON");
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
-			//Send request
+			
+			//Envoi
 			OutputStream os = connection.getOutputStream();
 			OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-			//System.out.println("DEBUG: Envoi = " + datas.toString());
 			osw.write(datas.toString());
 			osw.flush();
 			osw.close();
 
-			/* DEBUG */
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				//System.out.println("DEBUG: OK");
 				return traitementDonnees(connection);
 			} else {
-				//System.out.println("DEBUG: FAIL");
 				return false;
 			}
 		} catch (Exception ex) {
@@ -81,6 +77,18 @@ public class ServerLinkSingleton {
 					EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 					String idBDDEtud = (String) jObj.get("idbdd");
 					etudiant.setIdBDD(idBDDEtud);
+					
+					JSONArray idWatchers = (JSONArray) jObj.get("list_watcher");
+					for (int i = 0; i < idWatchers.size(); ++i) {
+						JSONObject wat = (JSONObject) idWatchers.get(i);
+
+						String s = "W" + String.valueOf(i+1);
+						long idWatcherLong = (long) wat.get(s);
+						
+						int idWatcherInt = (int) idWatcherLong;
+						etudiant.getListeWatchers().add(idWatcherInt);
+					}
+					
 					return true;
 				}
 				
@@ -103,8 +111,6 @@ public class ServerLinkSingleton {
 		}
 		return false;	//Si aucun des cas n'a été trouvé
 	}
-
-	// GENERATION
 
 	private ServerLinkSingleton(String ip) {
 		this.ip = ip;

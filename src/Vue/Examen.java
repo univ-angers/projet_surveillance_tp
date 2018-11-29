@@ -91,7 +91,6 @@ public class Examen extends JFrame implements Observer
 
 	@Override
 	public void actualiser() {
-		System.out.println("DEBUG: MAJ INTERFACE");
 		tps = TempsSingleton.getInstance();
 		l_decompte.setText(tps.getTemps());
 	}

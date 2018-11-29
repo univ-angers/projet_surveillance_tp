@@ -8,7 +8,6 @@ public class RefreshTimer extends TimerTask{
 
 	@Override
 	public void run() {
-		System.out.println("Acquisition du temps depuis le serveur.");
 		
 		ServerLinkSingleton server;
 		server = ServerLinkSingleton.getInstanceExistante();
@@ -19,9 +18,7 @@ public class RefreshTimer extends TimerTask{
 		datas.put("IDexamen", etudiant.getNumeroExamen());
 		datas.put("type", "get_time_exam");
 		
-		boolean reussi = server.send(datas);
-		if (reussi)
-			System.out.println("ENVOI REFRESH REUSSI");
+		server.send(datas);
 	}
 
 	

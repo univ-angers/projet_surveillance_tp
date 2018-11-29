@@ -38,9 +38,8 @@ public class VideoWatcher extends Watcher{
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
 	
-	//Pour debug sur un seul pc
-	public static String IDENTIFIANT_TEMPORAIRE;
-	
+	//Permet d'avoir un pipe unique
+	public static String IDENTIFIANT;	
 	
 
 	public static void envoiServ() throws IOException
@@ -64,8 +63,6 @@ public class VideoWatcher extends Watcher{
 		byte[] buffer = new byte[2048];
 		DatagramPacket packet2 = new DatagramPacket(buffer, buffer.length, adresse, 2345);
 		client.receive(packet2);
-
-		//System.out.println("DEBUG: " + name + " a reçu une réponse du serveur : " + packet2.getData().toString());
 
 		String reponseServ = new String(packet2.getData());
 		reponseServ = reponseServ.trim();
@@ -101,14 +98,13 @@ public class VideoWatcher extends Watcher{
 			}
 		}
 
-		/** TEMPORAIRE POUR POUVOIR LANCER PLUSIEURS RECORD SUR LE MËME PC */
+		//Permet d'avoir un pipe unique
 		Date maDate = new Date(); 
 		long val = maDate.getTime();
-		IDENTIFIANT_TEMPORAIRE = String.valueOf(val);
-		/*******************************************************************/
+		IDENTIFIANT = String.valueOf(val);
 		
 		//création du pipe
-		Pipe pip = new Pipe(port); //name temporaire pour les test sur un seul PC
+		Pipe pip = new Pipe(port);
 		//On lance le pipe
 		pip.start();
 

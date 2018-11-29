@@ -27,7 +27,7 @@ import Controller.Main;
  */
 public class NetworkWatcher extends Watcher{
 
-	static String TYPE = "NET";
+	static String TYPE = "network";
 	
 	ArrayList<String> liensSuspects;
 

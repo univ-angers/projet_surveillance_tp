@@ -3,6 +3,7 @@ package Controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
 
@@ -42,12 +43,45 @@ public class ConnexionController
 		Main.surveillanceEnCours = true;
 
 		//Sera à terme récupéré depuis le serveur
-		boolean lanceUSB = true;
-		boolean lanceFichier = true;
-		boolean lanceVideo = true;
+		boolean lanceUSB = false;
+		boolean lanceFichier = false;
+		boolean lanceVideo = false;
 		boolean lanceNet = false;
-		boolean lanceKey = true;
+		boolean lanceKey = false;
+		
+		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
+		ArrayList<Integer> list = new ArrayList<>();
+		System.out.println("DEBUG: Taille list etudiant watcher = " + etudiant.getListeWatchers().size());
+		list = etudiant.getListeWatchers();
+		System.out.println("DEBUG: Taille watcher = " + list.size());
+		
+		for (int w : list) {
+			switch (w)
+			{
+			case 1:
+				lanceUSB = true;
+				System.out.println(">>>> WATCHER USB ACTIVE");
+				break;
+			case 2:
+				lanceFichier = true;
+				System.out.println(">>>> WATCHER FICHIER ACTIVE");
+				break;
+			case 3:
+				lanceVideo = true;
+				System.out.println(">>>> WATCHER VIDEO ACTIVE");
+				break;
+			case 4:
+				lanceNet = true;
+				System.out.println(">>>> WATCHER NET ACTIVE");
+				break;
+			case 5:
+				lanceKey = true;
+				System.out.println(">>>> WATCHER CLAVIER ACTIVE");
+				break;
+			}
+		}
 
+		
 		// On créer les watchers et on les lance
 		//USB
 		if (lanceUSB)

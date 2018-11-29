@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class EtudiantExamenInfoSingleton {
 
 	// l'identifiant du singleton étudiant correspond au mail étudiant
@@ -8,6 +10,9 @@ public class EtudiantExamenInfoSingleton {
 	private String adrServeur;
 	private String idBDD;
 
+	//Permettra de savoir quels watchers activer pour cet examen
+	private ArrayList<Integer> listeWatchers;
+	
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
 	private String numeroExamen;
 
@@ -21,6 +26,7 @@ public class EtudiantExamenInfoSingleton {
 		identifiant = id;
 		motDePasse = mdp;
 		adrServeur = adrServ;
+		listeWatchers = new ArrayList<>();
 
 		//Il manque le numero d'examen
 		toutesLesInfos = false;
@@ -80,5 +86,13 @@ public class EtudiantExamenInfoSingleton {
 			toutesLesInfos = true;
 		else
 			System.out.println("TOUT N'EST PAS COMPLET");
+	}
+
+	public ArrayList<Integer> getListeWatchers() {
+		return listeWatchers;
+	}
+
+	public void setListeWatchers(ArrayList<Integer> listeWatchers) {
+		this.listeWatchers = listeWatchers;
 	}
 }
