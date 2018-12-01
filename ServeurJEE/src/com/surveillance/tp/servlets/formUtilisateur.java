@@ -27,14 +27,8 @@ public class formUtilisateur extends HttpServlet {
         /* Transmission vers la page en charge de l'affichage des résultats */
         this.getServletContext().getRequestDispatcher( "/WEB-INF/Inscription.jsp" ).forward( request, response );
 	}
-	
-	
-	
-	
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		System.out.println("DEBUG: Reception des infos en POST");
-		
 		/* Creation d'un utilisateur si les conditions sont remplies */
 		Utilisateur nouvUtilisateur = ajouterUtilisateur(request);
 

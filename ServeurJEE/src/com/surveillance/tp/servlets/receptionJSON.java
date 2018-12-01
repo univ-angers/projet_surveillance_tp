@@ -56,20 +56,7 @@ public class receptionJSON extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-
-		reponseTest rep = reponseTest.getInstance();
-		String res = rep.getJSON();
-
-		System.out.println("DEBUG GET: " + res);
-
-		/* Stockage du bean dans la request */
-		request.setAttribute("ResultatJSON", res);
-
-		/* Transmission vers la page en charge de l'affichage des résultats */
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/affichageJSON.jsp" ).forward( request, response );
-
-	}
+	{}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
@@ -182,10 +169,12 @@ public class receptionJSON extends HttpServlet {
 			ArrayList<RegleExam> listeReglesAppliquees = new ArrayList<>();
 			ArrayList<Integer> listeIdWatcher = new ArrayList<>();
 			listeReglesAppliquees = daoRegleExam.trouver(exam.getIdExam());
-	
+
+			JSONArray jsLienSurv = new JSONArray();	//Contient les liens à surveiller
+			
 			for (RegleExam re : listeReglesAppliquees) {
 				Regle r = daoRegle.trouver(re.getIdRegle());
-
+				System.out.println("ID REGLE APPLIQUEE = " + r.getIdRegle());
 				boolean dejaExistant = false;
 				for (int i : listeIdWatcher)
 				{
@@ -194,6 +183,29 @@ public class receptionJSON extends HttpServlet {
 				}
 				if (!dejaExistant)
 					listeIdWatcher.add(r.getIdWatcher());
+				
+				//Dans le cas du watcher net, il y a les sites à mettre en attributs
+				if (r.getIdRegle() == 7)
+				{					
+					//On enlève les [] du tableau qui empechent de parser
+					String sites = re.getAttributs().substring(1, re.getAttributs().length()-1);
+					//On split chaque site dans un tableau
+					String[] resSites = sites.split(",");
+					
+
+					//Conversion de la chaine en JSON
+					JSONParser parser = new JSONParser();
+					for (String s : resSites)
+					{
+						JSONObject siteObj;
+						try {
+							siteObj = (JSONObject) parser.parse(s);
+							jsLienSurv.add(siteObj);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 			}
 			
 			int val = 1;
@@ -202,13 +214,17 @@ public class receptionJSON extends HttpServlet {
 			{
 				JSONObject objW = new JSONObject();
 				objW.put("W"+val, i);
+				
 				jsWatchers.add(objW);
 				val++;
 			}
 			
 			jsObj.put("list_watcher", jsWatchers);
+			jsObj.put("site_surveillance", jsLienSurv);
 			String retour = jsObj.toJSONString();
 			envoiInfoClient(retour, rep);	
+			
+			
 		}
 		else
 			//Dans tous les autres cas, on envoie que l'on a pas retrouvé les informations nécessaires

@@ -1,5 +1,7 @@
 package com.surveillance.tp.dao;
 
+import java.util.ArrayList;
+
 import com.surveillance.tp.beans.Utilisateur;
 
 public interface DAOUtilisateur {
@@ -13,4 +15,6 @@ public interface DAOUtilisateur {
 	void supprimer(int idUtil) throws DAOException;
 	
 	void miseAJour(Utilisateur utilisateur) throws DAOException;
+
+	ArrayList<Utilisateur> recupererUtilisateurs() throws DAOException;
 }

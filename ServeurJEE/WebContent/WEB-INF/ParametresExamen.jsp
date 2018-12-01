@@ -64,7 +64,7 @@
                     <div class="content-mini content-boxed">
                         <ul class="nav nav-pills nav-sub-header push">
                             <li >
-                                <a href="home.jsp">
+                                <a href="listeUtilisateurs">
                                     <i class="fa fa-users"></i>Liste des utilisateurs
                                 </a>
                             </li>
@@ -74,22 +74,15 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="Historique.jsp">
+                                <a href="historique">
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>
                             <li>
-                                <a href="MonCompte.jsp">
+                                <a href="monCompte">
                                     <i class="fa fa-user"></i>Mon compte
                                 </a>
                             </li>
-                             <li >
-                                <a href="CreerExamen.jsp">
-                                    <i class="fa fa-wrench"></i>Créer un examen
-                                </a>
-                            </li>
-                           
-                            
                         </ul>
                     </div>
                 </div>

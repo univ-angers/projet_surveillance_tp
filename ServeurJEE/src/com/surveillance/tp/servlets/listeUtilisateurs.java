@@ -13,15 +13,15 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
 /**
- * Servlet implementation class LoginRegister
+ * Servlet implementation class ListeUtilisateurs
  */
-@WebServlet("/LoginRegister")
-public class LoginRegister extends HttpServlet {
-
+public class listeUtilisateurs extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	public static final String CONF_DAO_FACTORY = "daofactory";
-
 	private DAOUtilisateur daoUtilisateur;
-
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
 	public void init() throws ServletException {
 		/* Récupération d'une instance de notre DAO Utilisateur */
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
@@ -31,38 +31,36 @@ public class LoginRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/authentification.jsp").forward(request, response);	
+
+		HttpSession session = request.getSession();
+
+		//Aucun utilisateur connecté
+		if (session.getAttribute("nomUtilisateur") == null)
+		{
+			System.out.println("DEBUG: Nom util = " + session.getAttribute("nomUtilisateur"));
+			response.sendRedirect("/ServeurJEE/LoginRegister");
+		}
+		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
+			response.sendRedirect("/ServeurJEE/monCompte");
+		else
+		{
+			request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
+
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
+		}
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("POST LOGIN");
-		String userMail=request.getParameter("login-mail");
-		String password=request.getParameter("login-password");
+		// TODO Auto-generated method stub
 
-		System.out.println(userMail);
-		System.out.println(password);
 
-		Utilisateur utilCo = daoUtilisateur.trouverMdp(userMail, password);
+		request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
 
-		if (utilCo == null)
-		{
-			request.setAttribute("erreur", "Utilisateur non trouvé! Réessayez.");
-			request.getRequestDispatcher("/WEB-INF/authentification.jsp").forward(request, response);
-		}
-		else
-		{
-			HttpSession session = request.getSession();
-			session.setAttribute("nomUtilisateur", utilCo.getNom());
-			session.setAttribute("prenomUtilisateur", utilCo.getPrenom());
-			session.setAttribute("groupeUtilisateur", utilCo.getGroupe());
-
-			if (utilCo.getGroupe().equals("eleve"))
-				response.sendRedirect("/ServeurJEE/monCompte");
-			else
-				response.sendRedirect("/ServeurJEE/listeUtilisateurs");
-		}
+		this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}
+
 }

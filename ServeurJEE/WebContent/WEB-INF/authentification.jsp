@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -45,11 +47,16 @@
                             <!-- jQuery Validation (.js-validation-login class is initialized in js/pages/base_pages_login.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
                             <form class="js-validation-login form-horizontal push-30-t push-50" action="" method="post">
+                               
+                               <c:if test="${not empty erreur}">
+   									<c:out value="${erreur}"/>
+							   </c:if>
+                               
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary floating">
-                                            <input class="form-control" type="text" id="login-username" name="login-username">
-                                            <label for="login-username">Username</label>
+                                            <input class="form-control" type="text" id="login-mail" name="login-mail">
+                                            <label for="login-username">Mail</label>
                                         </div>
                                     </div>
                                 </div>

@@ -64,32 +64,26 @@
                     <div class="content-mini content-boxed">
                         <ul class="nav nav-pills nav-sub-header push">
                             <li >
-                                <a href="home.jsp">
+                                <a href="listeUtilisateurs">
                                     <i class="fa fa-users"></i>Liste des utilisateurs
                                 </a>
                             </li>
-                            <li >
-                                <a href="">
-                                    <i class="fa fa-wrench"></i>Paramètres de l'examen
-                                </a>
-                            </li>
-                            <li>
-                                <a href="Historique.jsp">
-                                    <i class="fa fa-archive"></i>Historique
-                                </a>
-                            </li>
-                            <li>
-                                <a href="MonCompte.jsp">
-                                    <i class="fa fa-user"></i>Mon compte
-                                </a>
-                            </li>
+                             <!-- TODO: VERIFIER QU'UN UTILISATEUR A LES DROITS POUR AFFICHER CREATION EXAMEN -->
                             <li class="active">
                                 <a href="">
                                     <i class="fa fa-wrench"></i>Créer un examen
                                 </a>
                             </li>
-                           
-                            
+                            <li>
+                                <a href="historique">
+                                    <i class="fa fa-archive"></i>Historique
+                                </a>
+                            </li>
+                            <li>
+                                <a href="monCompte">
+                                    <i class="fa fa-user"></i>Mon compte
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -118,6 +112,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                     	<div class="form-material form-material-success">
+                                    	<label>Temps d'examen</label>
                                           Heure: 
                                             <select id="duree-heure" name="duree-heure">
                                             	<option value="0" >0</option>

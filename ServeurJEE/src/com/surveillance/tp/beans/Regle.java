@@ -1,5 +1,7 @@
 package com.surveillance.tp.beans;
 
+import org.json.simple.JSONObject;
+
 public class Regle {
 
 	private int idRegle;

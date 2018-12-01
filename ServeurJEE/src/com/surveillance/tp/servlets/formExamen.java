@@ -8,6 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.beans.RegleExam;
@@ -30,9 +34,24 @@ public class formExamen extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{		
-		/* Transmission vers la page en charge de l'affichage des résultats */
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
+	{	
+		HttpSession session = request.getSession();
+
+		//Aucun utilisateur connecté
+		if (session.getAttribute("nomUtilisateur") == null)
+		{
+			System.out.println("DEBUG: Nom util = " + session.getAttribute("nomUtilisateur"));
+			response.sendRedirect("/ServeurJEE/LoginRegister");
+		}
+		//L'utilisateur est un élève, donc pas le droit d'accès
+		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
+		{
+			System.out.println("22222222222222");
+			response.sendRedirect("/ServeurJEE/monCompte");
+		}
+		else
+			/* Transmission vers la page en charge de l'affichage des résultats */
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 	}
 
 
@@ -69,8 +88,6 @@ public class formExamen extends HttpServlet {
 		Time time = Time.valueOf(timeSt);		//DUREE A CORRIGER, NULL DANS LA BASE
 		//Recupération de la matière
 		String matiere = request.getParameter("matiere");
-		//Récupération de la white-list TODO
-		//String ListeExamens = request.getParameter("white-list");
 
 		/* Création d'un examen */
 		Examen examen = new Examen();		
@@ -86,7 +103,9 @@ public class formExamen extends HttpServlet {
 		String cocheUSB = (String)request.getParameter("bouton_usb");
 		String cocheClavier = (String)request.getParameter("bouton_clavier");
 		String cocheVideo = (String)request.getParameter("bouton_video");
-		
+		//Récupération de la white-list
+		String ListeExamens = request.getParameter("white-list");
+
 		RegleExam re = new RegleExam();
 		re.setIdExam(examen.getIdExam());
 
@@ -110,12 +129,29 @@ public class formExamen extends HttpServlet {
 
 		if (cocheVideo != null)
 		{
-			System.out.println("DEBUG; Num exam = " + re.getIdExam());
 			re.setIdRegle(6);			// Vidéo
 			daoRegleExamen.creer(re);
 		}
 
-		//TODO NET
+		if (ListeExamens.length() > 0)
+		{
+			re.setIdRegle(7);
+			//Recupération de chaque site dans le tableau
+			String[] tabSite = ListeExamens.split(" ");
+			//Tableau JSON qui sera mis dans la table
+			JSONArray jsTab = new JSONArray();
+			for (int i=0; i<tabSite.length; i++)
+			{
+				JSONObject obj = new JSONObject();
+				obj.put(String.valueOf(i),tabSite[i]);
+				jsTab.add(obj);
+			}
+
+			String jsString = jsTab.toJSONString();
+			System.out.println("DEBUG: JSON string = " + jsString);
+
+			daoRegleExamen.creerAttribut(re,jsString);
+		}
 
 		if (cocheClavier != null)
 		{

@@ -5,12 +5,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Home</title>
+        <title>Paramètres</title>
 
-        
-
-      
-
+       
         <!-- Stylesheets -->
         <!-- Web fonts -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
@@ -19,13 +16,15 @@
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
 
+        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+        <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
+        <!-- END Stylesheets -->
     </head>
     <body>
-        
+     
         <div id="page-container" class="sidebar-l side-scroll header-navbar-fixed">
-            
-
-            <!-- Header -->
+           
+           <!-- Header -->
             <header id="header-navbar" class="content-mini content-mini-full">
                 <!-- Header Navigation Right -->
                 <ul class="nav-header pull-right">
@@ -51,7 +50,6 @@
           
             </header>
             <!-- END Header -->
-
             <!-- Main Container -->
             <main id="main-container">
                 <!-- Sub Header -->
@@ -64,30 +62,20 @@
                 </div>
                 <div class="bg-primary-lighter collapse navbar-collapse remove-padding" id="sub-header-nav">
                     <div class="content-mini content-boxed">
-                        <ul class="nav nav-pills nav-sub-header push">
+                        <ul class="nav nav-pills nav-sub-header push">                        
                             <li class="active">
-                                <a href="bd_dashboard.html">
-                                    <i class="fa fa-users"></i>Liste des utilisateurs
+                                <a href="">
+                                    <i class="fa fa-wrench"></i>Acceuil
                                 </a>
                             </li>
-                            <li>
-                                <a href="ParametresExamen.jsp">
-                                    <i class="fa fa-wrench"></i>Paramètres de l'examen
+                            <li >
+                                <a href="LoginRegister">
+                                    <i class="fa fa-users"></i>Connexion
                                 </a>
                             </li>
-                            <li>
-                                <a href="Historique.jsp">
-                                    <i class="fa fa-archive"></i>Historique
-                                </a>
-                            </li>
-                            <li>
-                                <a href="MonCompte.jsp">
-                                    <i class="fa fa-user"></i>Mon compte
-                                </a>
-                            </li>
-                             <li >
-                                <a href="CreerExamen.jsp">
-                                    <i class="fa fa-wrench"></i>Créer un examen
+                            <li >
+                                <a href="formUtilisateur">
+                                    <i class="fa fa-wrench"></i>Inscription
                                 </a>
                             </li>
                            
@@ -97,70 +85,7 @@
                 </div>
                 <!-- END Sub Header -->
 
-                <!-- Page Content -->
-                <div class="content content-boxed">
-                    <!-- Section -->
-                    <div class="bg-image img-rounded overflow-hidden push" style="background-image: url('assets/img/photos/camera.jpg');">
-                        <div class="bg-black-op">
-                            <div class="content">
-                                <div class="block block-transparent block-themed text-center">
-                                    <div class="block-content">
-                                        <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Users</h1>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Section -->
-
-                    <!-- Stats -->
-                    
-                    <div class="row text-uppercase">
-                    <div class="block block-opt-refresh-icon4">
-                               
-                                <div class="block-content">
-                                    <table class="table table-borderless table-striped table-vcenter">
-                                        <tbody>
-                                        	<tr>
-                                        	<th>Nom</th>
-                                        	<th>Prénom</th>
-                                        	<th>Alerte</th>
-                                        	<th>Critique</th>
-                                        	<th>Streaming</th>
-                                        	</tr>
-                                        	<%
-                                               for(int i=0;i<21;i++){
-                                            	   %>
-                                               
-                                            <tr>
-                                                <td>Nom</td>
-                                                <td>Prénom</td>
-                                                <td> 0</td>
-                                                <td> 0</td>
-                                                <td> <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="">
-                                        <i class="si si-control-play"></i>
-                                    </a></td>
-                                                
-                                            </tr>
-                                            <%} %>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        
-                    </div>
-                    <!-- END Stats -->
-
-                    <!-- Charts -->
-                    
-                        <div class="col-md-6">
-                            
-                        </div>
-                    </div>
-                    <!-- END Charts -->
-                </div>
+                
                 <!-- END Page Content -->
             </main>
             <!-- END Main Container -->

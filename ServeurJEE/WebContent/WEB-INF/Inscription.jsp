@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Create Account</title>
+        <title>Créer compte utilisateur</title>
 
       
 

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.surveillance.tp.beans.Utilisateur;
 
@@ -94,6 +95,43 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		}
 		return utilisateur;
 	}
+
+	////////////////////////////////
+	///////////////////////////////
+
+	private static final String SQL_SELECT_LISTE_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe  FROM Utilisateur";
+
+	@Override
+	public 
+	ArrayList<Utilisateur>recupererUtilisateurs() throws DAOException{
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion =  daoFactory.getConnection();
+			System.out.println("DEBUG 1");
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_LISTE_UTILISATEUR, false);
+			System.out.println("DEBUG 2");
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				Utilisateur utilisateur = null;
+				utilisateur = map( resultSet );
+				utilisateurs.add(utilisateur);
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		return utilisateurs;
+	}
+	////////////////////////
 
 	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ?";
 

@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -64,17 +64,26 @@
                     <div class="content-mini content-boxed">
                         <ul class="nav nav-pills nav-sub-header push">
                             <li >
-                                <a href="home.jsp">
+                                <a href="listeUtilisateurs">
                                     <i class="fa fa-users"></i>Liste des utilisateurs
                                 </a>
                             </li>
-                            <li>
-                                <a href="ParametresExamen.jsp">
+                            <c:if test="${empty afficheParam}">
+   								<li>
+                              	  <a href="formExamen">
+                                    <i class="fa fa-wrench"></i>Créer un examen
+                             	  </a>
+                         		</li>
+							</c:if>
+                            <c:if test="${not empty afficheParam}">
+   								<li>
+                              	  <a href="paramExam">
                                     <i class="fa fa-wrench"></i>Paramètres de l'examen
-                                </a>
-                            </li>
+                             	  </a>
+                         		</li>
+							</c:if>
                             <li>
-                                <a href="Historique.jsp">
+                                <a href="historique">
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>
@@ -82,14 +91,7 @@
                                 <a href="">
                                     <i class="fa fa-user"></i>Mon compte
                                 </a>
-                            </li>
-                             <li >
-                                <a href="CreerExamen.jsp">
-                                    <i class="fa fa-wrench"></i>Créer un examen
-                                </a>
-                            </li>
-                           
-                            
+                            </li> 
                         </ul>
                     </div>
                 </div>

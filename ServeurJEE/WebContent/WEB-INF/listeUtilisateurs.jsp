@@ -1,12 +1,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="java.util.ArrayList"%> 
+<%@page import="com.surveillance.tp.beans.Utilisateur"%> 
 <!DOCTYPE html>
+
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
 
-        <title>Historique</title>
+        <title>Home</title>
 
+        
+
+      
 
         <!-- Stylesheets -->
         <!-- Web fonts -->
@@ -16,14 +22,13 @@
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
 
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
-        <!-- END Stylesheets -->
     </head>
     <body>
-       
+        
         <div id="page-container" class="sidebar-l side-scroll header-navbar-fixed">
-           <!-- Header -->
+            
+
+            <!-- Header -->
             <header id="header-navbar" class="content-mini content-mini-full">
                 <!-- Header Navigation Right -->
                 <ul class="nav-header pull-right">
@@ -63,11 +68,11 @@
                 <div class="bg-primary-lighter collapse navbar-collapse remove-padding" id="sub-header-nav">
                     <div class="content-mini content-boxed">
                         <ul class="nav nav-pills nav-sub-header push">
-                            <li >
-                                <a href="listeUtilisateurs">
+                            <li class="active">
+                                <a href="">
                                     <i class="fa fa-users"></i>Liste des utilisateurs
                                 </a>
-                            </li>
+                            </li>                            
                             <c:if test="${empty afficheParam}">
    								<li>
                               	  <a href="formExamen">
@@ -82,8 +87,8 @@
                              	  </a>
                          		</li>
 							</c:if>
-                            <li class="active">
-                                <a href="">
+                            <li>
+                                <a href="historique">
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>
@@ -100,12 +105,12 @@
                 <!-- Page Content -->
                 <div class="content content-boxed">
                     <!-- Section -->
-                    <div class="bg-image img-rounded overflow-hidden push" style="background-image: url('assets/img/photos/archive.jpg');">
+                    <div class="bg-image img-rounded overflow-hidden push" style="background-image: url('assets/img/photos/camera.jpg');">
                         <div class="bg-black-op">
                             <div class="content">
                                 <div class="block block-transparent block-themed text-center">
                                     <div class="block-content">
-                                        <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Archive</h1>
+                                        <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Users</h1>
                                         
                                     </div>
                                 </div>
@@ -117,23 +122,46 @@
                     <!-- Stats -->
                     
                     <div class="row text-uppercase">
-                    <%for(int i=0; i<11;i++){ %>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a class="block block-rounded block-link-hover2" href="ExamenDetail.jsp ">
-                                    <div class="block-content block-content-full text-center bg-primary ribbon ribbon-bookmark ribbon-crystal">
-                                        <div class="ribbon-box font-w600">n°1</div>
-                                        <div class="item item-2x item-circle bg-crystal-op push-20-t push-20 animated fadeIn" data-toggle="appear" data-offset="50" data-class="animated fadeIn">
-                                            <i class="si si-camcorder text-white-op"></i>
-                                        </div>
-                                       
-                                    </div>
-                                    <div class="block-content">
+                    <div class="block block-opt-refresh-icon4">
+                               
+                                <div class="block-content">
+                                    <table class="table table-borderless table-striped table-vcenter">
+                                        <tbody>
+                                        	<tr>
+                                        	<th>Nom</th>
+                                        	<th>Prénom</th>
+                                        	<th>Alerte</th>
+                                        	<th>Critique</th>
+                                        	<th>Streaming</th>
+                                        	</tr>
                                         
-                                        <div class="font-s12 text-center push">06 Novembre 2018</div>
-                                    </div>
-                                </a>
+                                             <%ArrayList<Utilisateur> util=(ArrayList<Utilisateur>)request.getAttribute("utilisateurs")	;
+                                             
+                                             for(Utilisateur u:util){
+                                            	 
+                                   
+                                             %>  
+                                             
+                                               
+                                              
+                                            <tr>
+                                                <td><%=u.getNom() %></td>
+                                                <td><%=u.getPrenom() %></td>
+                                                
+                                                <td> 0</td>
+                                                <td> 0</td>
+                                                <td> <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="">
+                                        <i class="si si-control-play"></i>
+                                    </a></td>
+                                                
+                                            </tr>
+                                            <%} %>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <%} %>
+                        
                     </div>
                     <!-- END Stats -->
 
@@ -154,7 +182,7 @@
                 <div class="content-mini content-mini-full content-boxed clearfix push-15">
                     
                     <div class="pull-left">
-                      <center> <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank">Enseignant</a> &copy; 2018/2019</center>
+                        <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank">Enseignant</a> &copy; 2018/2019
                     </div>
                 </div>
             </footer>

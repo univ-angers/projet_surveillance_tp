@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
+
 import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.beans.Utilisateur;
 
@@ -30,6 +32,7 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 
 		regleExam.setIdRegle(resultSet.getInt("id_rule"));
 		regleExam.setIdExam(resultSet.getInt("id_examen"));
+		regleExam.setAttributs(resultSet.getString("attributs"));
 
 		return regleExam;
 	}
@@ -38,7 +41,6 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 
 	@Override
 	public void creer(RegleExam regleexam) throws DAOException {
-		System.out.println("JE SUIS AU DEBUT");
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
@@ -57,8 +59,31 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 			fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
 		}		
 	}
+	
+	private static final String SQL_INSERT_REGLE_ATT = "INSERT INTO list_of_rule (id_rule, id_examen, attributs) VALUES (?, ?, ?)";
+	
+	@Override
+	public void creerAttribut(RegleExam regleexam, String jsTab) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet valeursAutoGenerees = null;
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_INSERT_REGLE_ATT, false, regleexam.getIdRegle(), regleexam.getIdExam(), jsTab);
+			int statut = preparedStatement.executeUpdate();
+			/* Analyse du statut retourné par la requête d'insertion */
+			if ( statut == 0 ) {
+				throw new DAOException( "Échec de la création de la règle de l'examen, aucune ligne ajoutée dans la table." );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
+		}	
+	}
 
-	private static final String SQL_SELECT_REGLE = "SELECT id_rule, id_examen FROM list_of_rule WHERE id_examen = ?";
+	private static final String SQL_SELECT_REGLE = "SELECT id_rule, id_examen, attributs FROM list_of_rule WHERE id_examen = ?";
 
 	@Override
 	public ArrayList<RegleExam> trouver(int idExam) throws DAOException {

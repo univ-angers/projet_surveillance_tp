@@ -4,6 +4,7 @@ public class RegleExam {
 
 	private int idRegle;
 	private int idExam;
+	private String attributs;
 	
 	public int getIdRegle() {
 		return idRegle;
@@ -16,5 +17,11 @@ public class RegleExam {
 	}
 	public void setIdExam(int idExam) {
 		this.idExam = idExam;
+	}
+	public String getAttributs() {
+		return attributs;
+	}
+	public void setAttributs(String attributs) {
+		this.attributs = attributs;
 	}
 }
