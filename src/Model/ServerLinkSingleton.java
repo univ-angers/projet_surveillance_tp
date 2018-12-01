@@ -49,7 +49,6 @@ public class ServerLinkSingleton {
 				return false;
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
 			return false;
 		}
 	}
@@ -78,6 +77,8 @@ public class ServerLinkSingleton {
 					String idBDDEtud = (String) jObj.get("idbdd");
 					etudiant.setIdBDD(idBDDEtud);
 					
+					boolean checkSiteActif = false;	//Ce boolean permet de savoir si on vérifie les sites internets
+					
 					JSONArray idWatchers = (JSONArray) jObj.get("list_watcher");
 					for (int i = 0; i < idWatchers.size(); ++i) {
 						JSONObject wat = (JSONObject) idWatchers.get(i);
@@ -86,7 +87,24 @@ public class ServerLinkSingleton {
 						long idWatcherLong = (long) wat.get(s);
 						
 						int idWatcherInt = (int) idWatcherLong;
+						
+						if (idWatcherInt == 4)
+							checkSiteActif = true;
+						
 						etudiant.getListeWatchers().add(idWatcherInt);
+					}
+					
+					if (checkSiteActif)
+					{
+						JSONArray siteSurv = (JSONArray) jObj.get("site_surveillance");
+						for (int i = 0; i < siteSurv.size(); ++i) {
+							JSONObject wat = (JSONObject) siteSurv.get(i);
+
+							String s = String.valueOf(i);
+							String site = (String) wat.get(s);
+														
+							etudiant.getSiteASurveiller().add(site);
+						}
 					}
 					
 					return true;

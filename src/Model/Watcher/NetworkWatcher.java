@@ -20,7 +20,6 @@ import Controller.Main;
  * OBLIGATION DE LANCER EN SUDO 
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
- * A terminer: Récupérer les liens suspects depuis le serveur
  * Basé sur le tutoriel: https://crunchify.com/how-to-execute-tcpdump-linux-command-using-java-process-class-and-capture-tcpip-packets/
  * @author Bastien
  *
@@ -35,8 +34,8 @@ public class NetworkWatcher extends Watcher{
 
 	public NetworkWatcher() {
 		super(TYPE);
-		// TODO Auto-generated constructor stub
-		liensSuspects = new ArrayList<String>();
+		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
+		liensSuspects = etudiant.getSiteASurveiller();
 	}
 	
 	public void verifierLien(String lien)
@@ -58,13 +57,7 @@ public class NetworkWatcher extends Watcher{
 	 * Lance la commande tcpdump, récupère les informations, et va lancer la vérification
 	 */
 	public void run()
-	{
-		//Récuperation des liens suspects depuis le serveur
-		//A voir
-		//Temporaire
-		liensSuspects.add("www.facebook.com");
-		liensSuspects.add("lea-linux.org");
-		
+	{		
 		System.out.println("Net en marche");
 
 		try {			
@@ -115,27 +108,22 @@ public class NetworkWatcher extends Watcher{
 								}
 							}
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} finally {
 							try {
 								inStream.close();
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					} 
 				} 
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} finally {
-				//System.out.println();
 			}
 
 		} finally {
-			//System.out.println();
 		}
 	}
 }

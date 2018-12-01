@@ -16,6 +16,13 @@ import Model.Watcher.UsbWatcher;
 import Model.Watcher.VideoWatcher;
 import Vue.Connexion;
 
+/**
+ * Controlleur qui gère la fenêtre de connexion
+ * Va vérifier les valeurs entrées, et permettre la connexion si celles ci sont valides
+ * Va ensuite lancer les watchers en fonction de l'examen
+ * @author erinyth
+ *
+ */
 public class ConnexionController 
 {
 	Connexion fenConnexion;
@@ -33,16 +40,15 @@ public class ConnexionController
 		etudiant.setNumeroExamen(idExam);
 	}
 
-	/** TODO
-	 * 		VERIFIER QUE LE SERVEUR EST DISPO AVANT DE POUVOIR S'Y CO
+	/**
+	 * Lance les watchers en fonction de la demande du serveur
 	 */
-
 	public void lancementSurveillance() 
 	{
 		//Variable qui permet de faire boucler les Watchers
 		Main.surveillanceEnCours = true;
 
-		//Sera à terme récupéré depuis le serveur
+		//Passerons à vrai si le serveur le demande
 		boolean lanceUSB = false;
 		boolean lanceFichier = false;
 		boolean lanceVideo = false;
@@ -51,9 +57,7 @@ public class ConnexionController
 		
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		ArrayList<Integer> list = new ArrayList<>();
-		System.out.println("DEBUG: Taille list etudiant watcher = " + etudiant.getListeWatchers().size());
 		list = etudiant.getListeWatchers();
-		System.out.println("DEBUG: Taille watcher = " + list.size());
 		
 		for (int w : list) {
 			switch (w)
@@ -81,15 +85,12 @@ public class ConnexionController
 			}
 		}
 
-		
-		// On créer les watchers et on les lance
-		//USB
 		if (lanceUSB)
 		{
 			UsbWatcher usbWatcher = new UsbWatcher();
 			usbWatcher.start();
 		}
-		//FILE
+		
 		if (lanceFichier)
 		{
 			Path p = Paths.get(System.getProperty("user.home"));
@@ -102,21 +103,19 @@ public class ConnexionController
 				e.printStackTrace();
 			}
 		}
-		//VIDEO
+		
 		if (lanceVideo)
 		{
 			VideoWatcher vidWatcher = new VideoWatcher();
 			vidWatcher.start();
 		}
-
-		//NETWORK
+		
 		if (lanceNet)
 		{
 			NetworkWatcher netWatcher = new NetworkWatcher();
 			netWatcher.start();
 		}
-
-		//KEYBOARD
+		
 		if (lanceKey)
 		{
 			KeyListenerWatcher klWatcher = new KeyListenerWatcher();
@@ -125,6 +124,10 @@ public class ConnexionController
 	}
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * Envoi les données au serveur afin de vérifier si celles ci sont connues
+	 * @return
+	 */
 	public boolean logIn() 
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();

@@ -8,12 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import Controller.QuitterController;
+import Controller.Main;
 
 public class Quitter extends JDialog
 {
 	private Quitter instance = this;
-	private QuitterController controller;
 	
 	private JPanel panel;
 	private GridBagConstraints c;
@@ -24,8 +23,6 @@ public class Quitter extends JDialog
 	public Quitter()
 	{
 		super();
-		
-		controller = new QuitterController(this);
 		
 		// Initialisation de la fenêtre
 		build();
@@ -63,9 +60,8 @@ public class Quitter extends JDialog
 			public void actionPerformed(ActionEvent e) 
 			{
 				if(e.getSource() == b_valider)
-				{					
-					// AJOUTER ICI ALERTE
-					controller.alerteQuit();
+				{
+					Main.surveillanceEnCours = false;
 					
 					JOptionPane.showMessageDialog(instance, "Une alerte a été envoyée à votre professeur.");
 					

@@ -28,7 +28,6 @@ public class Main
 		try {
 			da.detAr();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -129,7 +129,7 @@ public class Connexion extends JFrame
 								instance.dispose();
 							}
 							else
-								JOptionPane.showMessageDialog(instance, "Identifiants non connus. Veuillez réessayer.");
+								JOptionPane.showMessageDialog(instance, "Identifiants non connus ou serveur non joignable. Veuillez réessayer.");
 						}
 						else 
 							JOptionPane.showMessageDialog(instance, "Veuillez renseigner tous les champs correctement.\n\nN'oubliez pas de cliquer sur les petits rouages pour remplir\nvos informations personnelles.\n\nL'identifiant de l'examen doit être un nombre allant de\n0 à 9.999.999.999.");

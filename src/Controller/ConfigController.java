@@ -3,6 +3,11 @@ package Controller;
 import Model.EtudiantExamenInfoSingleton;
 import Vue.Configuration;
 
+/**
+ * Controleur qui gère la fenêtre de configuration du nom et mot de passe
+ * @author erinyth
+ *
+ */
 public class ConfigController 
 {
 	Configuration fenConfig;
@@ -13,6 +18,12 @@ public class ConfigController
 		fenConfig = fenetre;
 	}
 
+	/**
+	 * Ajoute les données de connexion de l'étudiant dans le singleton de l'application
+	 * @param id
+	 * @param mdp
+	 * @param adrServ
+	 */
 	public void receptionEtudiant(String id, String mdp, String adrServ)
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();

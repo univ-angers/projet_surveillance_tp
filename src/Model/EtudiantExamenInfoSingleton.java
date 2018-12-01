@@ -12,7 +12,7 @@ public class EtudiantExamenInfoSingleton {
 
 	//Permettra de savoir quels watchers activer pour cet examen
 	private ArrayList<Integer> listeWatchers;
-	
+	private ArrayList<String> siteASurveiller;
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
 	private String numeroExamen;
 
@@ -27,6 +27,7 @@ public class EtudiantExamenInfoSingleton {
 		motDePasse = mdp;
 		adrServeur = adrServ;
 		listeWatchers = new ArrayList<>();
+		siteASurveiller = new ArrayList<>();
 
 		//Il manque le numero d'examen
 		toutesLesInfos = false;
@@ -94,5 +95,13 @@ public class EtudiantExamenInfoSingleton {
 
 	public void setListeWatchers(ArrayList<Integer> listeWatchers) {
 		this.listeWatchers = listeWatchers;
+	}
+
+	public ArrayList<String> getSiteASurveiller() {
+		return siteASurveiller;
+	}
+
+	public void setSiteASurveiller(ArrayList<String> siteASurveiller) {
+		this.siteASurveiller = siteASurveiller;
 	}
 }
