@@ -34,19 +34,15 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                              
-                                
                                 <li>
-                                    <a tabindex="-1" href="">
+                                    <a tabindex="-1" href="logout">
                                         <i class="si si-logout pull-right"></i>Log out
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                    </li>
-                    
-                </ul>
-          
+                    </li>                    
+                </ul>          
             </header>
             <!-- END Header -->
 

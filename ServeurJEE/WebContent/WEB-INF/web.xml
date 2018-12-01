@@ -72,6 +72,15 @@
     <servlet-name>LoginRegister</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.surveillance.tp.servlets.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
     
   <servlet>
     <servlet-name>monCompte</servlet-name>

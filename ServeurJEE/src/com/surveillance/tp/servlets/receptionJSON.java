@@ -126,13 +126,6 @@ public class receptionJSON extends HttpServlet {
 				try {
 					fichierLog.createNewFile();
 
-
-					/*
-					String jsonStr = "{\"header\":[{\"nbLog\":0,\"nbCrit\":0,\"nbNet\":0,\"nbClavier\":0,\"nbFichier\":0,\"nbUSB\":0}],\"body\":[{}]}";
-					JSONParser parser = new JSONParser();
-					JSONObject objInit = (JSONObject) parser.parse(jsonStr);
-					 */
-
 					JSONObject objInit = new JSONObject();
 
 					JSONObject header = new JSONObject();
