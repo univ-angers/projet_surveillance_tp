@@ -126,12 +126,18 @@ public class receptionJSON extends HttpServlet {
 				try {
 					fichierLog.createNewFile();
 
+
+					/*
 					String jsonStr = "{\"header\":[{\"nbLog\":0,\"nbCrit\":0,\"nbNet\":0,\"nbClavier\":0,\"nbFichier\":0,\"nbUSB\":0}],\"body\":[{}]}";
 					JSONParser parser = new JSONParser();
 					JSONObject objInit = (JSONObject) parser.parse(jsonStr);
+					 */
 
+					JSONObject objInit = new JSONObject();
 
 					JSONObject header = new JSONObject();
+					header.put("nom", util.getNom());
+					header.put("prenom", util.getPrenom());
 					header.put("nbLog", 0);
 					header.put("nbCrit", 0);
 					header.put("nbNet", 0);
@@ -154,7 +160,7 @@ public class receptionJSON extends HttpServlet {
 						file.flush();
 						file.close();
 					}
-				} catch (IOException | ParseException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -171,7 +177,7 @@ public class receptionJSON extends HttpServlet {
 			listeReglesAppliquees = daoRegleExam.trouver(exam.getIdExam());
 
 			JSONArray jsLienSurv = new JSONArray();	//Contient les liens à surveiller
-			
+
 			for (RegleExam re : listeReglesAppliquees) {
 				Regle r = daoRegle.trouver(re.getIdRegle());
 				System.out.println("ID REGLE APPLIQUEE = " + r.getIdRegle());
@@ -183,7 +189,7 @@ public class receptionJSON extends HttpServlet {
 				}
 				if (!dejaExistant)
 					listeIdWatcher.add(r.getIdWatcher());
-				
+
 				//Dans le cas du watcher net, il y a les sites à mettre en attributs
 				if (r.getIdRegle() == 7)
 				{					
@@ -191,7 +197,7 @@ public class receptionJSON extends HttpServlet {
 					String sites = re.getAttributs().substring(1, re.getAttributs().length()-1);
 					//On split chaque site dans un tableau
 					String[] resSites = sites.split(",");
-					
+
 
 					//Conversion de la chaine en JSON
 					JSONParser parser = new JSONParser();
@@ -207,24 +213,24 @@ public class receptionJSON extends HttpServlet {
 					}
 				}
 			}
-			
+
 			int val = 1;
 			JSONArray jsWatchers = new JSONArray();
 			for (int i : listeIdWatcher)
 			{
 				JSONObject objW = new JSONObject();
 				objW.put("W"+val, i);
-				
+
 				jsWatchers.add(objW);
 				val++;
 			}
-			
+
 			jsObj.put("list_watcher", jsWatchers);
 			jsObj.put("site_surveillance", jsLienSurv);
 			String retour = jsObj.toJSONString();
 			envoiInfoClient(retour, rep);	
-			
-			
+
+
 		}
 		else
 			//Dans tous les autres cas, on envoie que l'on a pas retrouvé les informations nécessaires
@@ -254,7 +260,7 @@ public class receptionJSON extends HttpServlet {
 			System.out.println("dateDebut :" + dateDebut);
 			Time duree = exam.getDuree();
 			long GMT1 = 3600000;		//Decalage horaire du à GMT+1
-			
+
 			long tempsDebut = dateDebut.getTime();
 			long tempsDuree = duree.getTime();
 			long heureFin = tempsDuree + tempsDebut + GMT1;
