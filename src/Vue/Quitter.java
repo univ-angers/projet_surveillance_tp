@@ -13,17 +13,17 @@ import Controller.Main;
 public class Quitter extends JDialog
 {
 	private Quitter instance = this;
-	
+
 	private JPanel panel;
 	private GridBagConstraints c;
 	private JLabel l_quitter;
 	private JButton b_valider;
 	private JButton b_refuser;
-	
+
 	public Quitter()
 	{
 		super();
-		
+
 		// Initialisation de la fenêtre
 		build();
 	}
@@ -45,13 +45,13 @@ public class Quitter extends JDialog
 		c = new GridBagConstraints();
 
 		l_quitter = new JLabel("Voulez-vous vraiment quitter l'examen ?");
-			c.fill = GridBagConstraints.CENTER;
-			c.weightx = 0.3;
-			c.gridx = 1;
-			c.gridy = 0;
-			c.gridwidth = 1;
-			c.insets = new Insets(10, -150, 20, 40);
-			panel.add(l_quitter, c);
+		c.fill = GridBagConstraints.CENTER;
+		c.weightx = 0.3;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		c.insets = new Insets(10, -150, 20, 40);
+		panel.add(l_quitter, c);
 
 
 		b_valider = new JButton("Oui");
@@ -62,21 +62,31 @@ public class Quitter extends JDialog
 				if(e.getSource() == b_valider)
 				{
 					Main.surveillanceEnCours = false;
-					
+
 					JOptionPane.showMessageDialog(instance, "Une alerte a été envoyée à votre professeur.");
-					
-					System.exit(0);
+
+					Thread t = new Thread() {
+						public void run() {
+							try {
+								sleep(2000);	//Permet aux watchers de bien de terminer
+								System.exit(0);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					};
+					t.run();
 				}
 			}
 		});
-			c.fill = GridBagConstraints.CENTER;
-			c.weightx = 0.2;
-			c.gridx = 0;
-			c.gridy = 1;
-			c.gridwidth = 1;
-			c.insets = new Insets(0, 100, 15, 35);
-			panel.add(b_valider, c);
-		
+		c.fill = GridBagConstraints.CENTER;
+		c.weightx = 0.2;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 100, 15, 35);
+		panel.add(b_valider, c);
+
 		b_refuser = new JButton("Non");
 		b_refuser.setBackground(new Color(161, 225, 88));
 		b_refuser.addActionListener(new ActionListener() {
@@ -88,13 +98,13 @@ public class Quitter extends JDialog
 				}
 			}
 		});
-			c.fill = GridBagConstraints.CENTER;
-			c.weightx = 0.2;
-			c.gridx = 1;
-			c.gridy = 1;
-			c.gridwidth = 1;
-			c.insets = new Insets(0, 50, 15, 100);
-			panel.add(b_refuser, c);
+		c.fill = GridBagConstraints.CENTER;
+		c.weightx = 0.2;
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 50, 15, 100);
+		panel.add(b_refuser, c);
 
 
 		return panel;

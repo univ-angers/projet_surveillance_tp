@@ -24,7 +24,7 @@ import Model.RecorderFFMPEG;
 public class VideoWatcher extends Watcher{
 
 	static String TYPE = "VIDEO";
-	
+
 	public VideoWatcher() {
 		super(TYPE);
 	}
@@ -37,10 +37,10 @@ public class VideoWatcher extends Watcher{
 	static String IDexamen;									//Matiere
 	static boolean connexionEtablie = false;				
 	static Scanner saisieInfo = new Scanner(System.in);
-	
+
 	//Permet d'avoir un pipe unique
 	public static String IDENTIFIANT;	
-	
+
 
 	public static void envoiServ() throws IOException
 	{
@@ -80,7 +80,7 @@ public class VideoWatcher extends Watcher{
 
 		client.close();
 	}
-	
+
 	@Override
 	public void run(){
 		EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
@@ -103,7 +103,7 @@ public class VideoWatcher extends Watcher{
 		Date maDate = new Date(); 
 		long val = maDate.getTime();
 		IDENTIFIANT = String.valueOf(val);
-		
+
 		//création du pipe
 		Pipe pip = new Pipe(port);
 		//On lance le pipe
@@ -114,10 +114,17 @@ public class VideoWatcher extends Watcher{
 		//On lance la capture et l'envoi
 		rec.start();	
 
-		//On arrête pas tant que la surveillance est active
-		while (Main.surveillanceEnCours != false)
-		{}
-		
+
+		//On arrête pas tant que la surveillance est active	
+		while(Main.surveillanceEnCours != false)
+		{ 
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} 
+		}
+
 		//La surveillance n'est plus active, on arrête
 		rec.stopRecord();
 	}
