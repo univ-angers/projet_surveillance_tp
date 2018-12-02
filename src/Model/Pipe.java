@@ -17,11 +17,13 @@ public class Pipe extends Thread {
 	private final int portVideo;
 	private Process pPipe;
 	private boolean pipePret;
+	EtudiantExamenInfoSingleton etudiant;
 
 	public Pipe(int port)
 	{
 		pPipe = null;
 		portVideo = port;
+		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 	}
 	
 	public void envoiPaquet(byte[] donnees, int taillePaquet) throws IOException
@@ -30,7 +32,7 @@ public class Pipe extends Thread {
 		DatagramSocket client = new DatagramSocket();
 
 		//On crée notre datagramme
-		InetAddress adresse = InetAddress.getByName("127.0.0.1");
+		InetAddress adresse = InetAddress.getByName(etudiant.getAdresseServeur());
 		DatagramPacket packet = new DatagramPacket(donnees, taillePaquet, adresse, portVideo);
 
 		//On lui affecte les données à envoyer
@@ -53,7 +55,7 @@ public class Pipe extends Thread {
 		DatagramSocket client = new DatagramSocket();
 
 		//On crée notre datagramme
-		InetAddress adresse = InetAddress.getByName("127.0.0.1");
+		InetAddress adresse = InetAddress.getByName(etudiant.getAdresseServeur());
 		DatagramPacket packet = new DatagramPacket(donnees, taillePaquet, adresse, 2345);
 
 		//On lui affecte les données à envoyer
