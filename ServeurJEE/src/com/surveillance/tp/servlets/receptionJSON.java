@@ -315,7 +315,7 @@ public class receptionJSON extends HttpServlet {
 
 			Object logExistant = parser.parse(lecture);
 			JSONObject jsonLog = (JSONObject) logExistant;
-			JSONObject header = (JSONObject) jsonLog.get("header");
+			JSONObject header = (JSONObject) jsonLog .get("header");
 			JSONArray body = (JSONArray) jsonLog.get("body");
 
 			//Récupération des informations header existantes
@@ -328,7 +328,7 @@ public class receptionJSON extends HttpServlet {
 
 			//Mise à jour du header
 			nbLog++;
-			alerte.replace("nbLog", nbLog);
+			alerte.put("nbLog", nbLog);
 
 			//On récupère le type de l'alerte
 			String type = (String) alerte.get("type");
@@ -336,39 +336,39 @@ public class receptionJSON extends HttpServlet {
 			//On recherche la règle coorespondante au type, on récupère son ID, et on remplace le type texte par l'id de la règle dans l'alerte
 			Regle reg = daoRegle.trouverSt(type);
 			String idRegle = String.valueOf(reg.getIdRegle());
-			alerte.replace("type", idRegle);
+			alerte.put("type", idRegle);
 			//On modifie le nombre de règle critiques si nécessaire
 			int niveauRegle = reg.getNiveauRegle();
 			if (niveauRegle == 1)
 			{
 				nbCrit++;
-				header.replace("nbCrit", nbCrit);
+				header.put("nbCrit", nbCrit);
 			}
 			//En fonction du type, on incrémente le compteur de règle correspondante
 			switch (type) {
 			case "connexion_usb": case "deconnexion_usb": 
 				//On modifie le nombre d'alerte de type USB
 				nbUSB++;
-				header.replace("nbUSB", nbUSB);
+				header.put("nbUSB", nbUSB);
 				break;
 			case "creation_fichier": case "modification_fichier": case "suppresion_fichier":
 				//On modifie le nombre d'alerte de type Fichier
 				nbFichier++;
-				header.replace("nbFichier", nbFichier);
+				header.put("nbFichier", nbFichier);
 				break;
 			case "network":
 				//On modifie le nombre d'alerte de type Net
 				nbNet++;
-				header.replace("nbNet", nbNet);
+				header.put("nbNet", nbNet);
 				break;
 			case "touche_appuyee":
 				//On modifie le nombre d'alerte de type Clavier
 				nbClavier++;
-				header.replace("nbClavier", nbClavier);
+				header.put("nbClavier", nbClavier);
 				break;
 			}			
 
-
+			System.out.println("CACA DE TEST");
 			System.out.println("DEBUG: AJOUT NOUVELLES INFORMATIONS DANS LE LOG");
 			//Mise à jour du log
 			body.add(alerte);

@@ -125,22 +125,16 @@ public class DAOExamenImpl implements DAOExamen {
 	public void supprimer(int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_EXAM, false, idExam );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'examen reçu?
-				//examen = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 	private static final String SQL_UPDATE2_EXAM = "UPDATE Examen SET etat='off' WHERE id_user  = ? and etat='on'";
@@ -148,22 +142,16 @@ public class DAOExamenImpl implements DAOExamen {
 	public void updateExamen(int id_user) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE2_EXAM, false, id_user );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'examen reçu?
-				//examen = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 	
@@ -175,22 +163,16 @@ public class DAOExamenImpl implements DAOExamen {
 	public void miseAJour(Examen examen) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_EXAM, false, examen.getIdProf(), examen.getMatiere(),examen.getDuree(), examen.getHeureDebut(), examen.getIdExam() );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'examen reçu?
-				//examen = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 	
@@ -204,8 +186,7 @@ public class DAOExamenImpl implements DAOExamen {
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ArrayList<Examen> exams = new ArrayList<Examen>();
-
-
+		
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion =  daoFactory.getConnection();

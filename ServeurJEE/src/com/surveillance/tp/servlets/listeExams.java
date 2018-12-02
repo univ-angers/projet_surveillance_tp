@@ -60,7 +60,7 @@ public class listeExams extends HttpServlet {
 		// TODO Auto-generated method stub
 
 
-		request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
+		//request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 	}

@@ -38,7 +38,7 @@ public class formExamen extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		//Aucun utilisateur connecté
-		if (session.getAttribute("nomUtilisateur") == null)
+		if (session.getAttribute("id_user") == null)
 		{
 			System.out.println("DEBUG: Nom util = " + session.getAttribute("nomUtilisateur"));
 			response.sendRedirect("/ServeurJEE/LoginRegister");
@@ -46,23 +46,25 @@ public class formExamen extends HttpServlet {
 		//L'utilisateur est un élève, donc pas le droit d'accès
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
 		{
-			System.out.println("22222222222222");
-			
-		    
 			response.sendRedirect("/ServeurJEE/monCompte");
 		}
 		else
-			if(session.getAttribute("id_user")!=null) {
+		{
 			/* Transmission vers la page en charge de l'affichage des résultats */
 			Integer id=(Integer)session.getAttribute("id_user");
 			Examen examen= daoExamen.trouverExamenUtil(id);
 			if(examen!=null) {
+				System.out.println("ICI");
 				request.setAttribute("examenOn",examen.getIdExam());
-			this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
-			
-			
+				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 			}
+			else
+			{
+				System.out.println("LA");
+				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 			}
+
+		}
 	}
 
 
@@ -72,15 +74,15 @@ public class formExamen extends HttpServlet {
 		/* Creation d'un utilisateur si les conditions sont remplies */
 		Examen nouvExam = ajouterExamen(request);
 
-		//A partir d'ici, nouvExam est l'examen ajouté
+		/* Ajout de l'id de l'examen en paramètre de session */
+		HttpSession session = request.getSession();
+		session.setAttribute("idExamEnCours", nouvExam.getIdExam());
+
 		//On va l'ajouter ainsi que ses règles
 		creerDossierExamen(nouvExam);
 
-		/* Stockage du bean dans la request */
-		request.setAttribute("Examen", nouvExam);
-
 		/* Affichage de la vue qu'on veut */
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );
+		//this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
 	}
 
 	/**

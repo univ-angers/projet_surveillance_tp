@@ -117,22 +117,16 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 	public void supprimer(int idRegle, int idExam) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_REGLE, false, idRegle, idExam);
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'examen reçu?
-				//regle = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 
@@ -142,22 +136,16 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 	public void miseAJour(RegleExam regleexamen) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_REGLE, false, regleexamen.getIdExam(), regleexamen.getIdRegle() );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'utilisateur reçu?
-				//examen = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 }

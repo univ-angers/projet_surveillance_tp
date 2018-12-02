@@ -165,22 +165,16 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	public void supprimer(int idUtil) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_UTIL, false, idUtil );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'examen reçu?
-				//utilisateur = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 
@@ -191,22 +185,16 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	public void miseAJour(Utilisateur utilisateur) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL, false, utilisateur.getPrenom(), utilisateur.getNom(), utilisateur.getPassword(), utilisateur.getMail(), utilisateur.getGroupe(), utilisateur.getId() );
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			if ( resultSet.next() ) {
-				//Doit on faire quelque chose avec l'utilisateur reçu?
-				//examen = map( resultSet );
-			}
+			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );
 		} finally {
-			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
 }
