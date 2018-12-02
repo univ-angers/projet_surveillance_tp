@@ -132,7 +132,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <label for=examen-id>MODIFICATIONS</label>
+                                            Prendre en compte les modifications: <input type="checkbox" id="modif_ok" name="modif_ok" value="newsletter">
                                         </div>
                                     </div>
                                 </div>
