@@ -19,6 +19,7 @@ public class ClientHandler extends Thread{
 	private FileOutputStream sortieVideo;
 	private DatagramSocket socketSpecialClient;
 	private String chemin;
+	private boolean receptionActive;
 
 	public ClientHandler(String NC, String M, int P) throws FileNotFoundException
 	{
@@ -26,7 +27,7 @@ public class ClientHandler extends Thread{
 		IDexam = M;
 		port = P;
 		chemin = idVersChemin();
-		
+		receptionActive = true;
 		sortieVideo = new FileOutputStream(chemin + nomClient + ".surv",true);
 	}
 
@@ -39,19 +40,16 @@ public class ClientHandler extends Thread{
 			socketSpecialClient = new DatagramSocket( port ) ;
 			byte[] receptionVideo = new byte[2048];
 
-			while(true){                 				
+			while(receptionActive){                 				
 				DatagramPacket paquetVideo = new DatagramPacket(receptionVideo, receptionVideo.length);
 
 				socketSpecialClient.receive(paquetVideo);
 
-				//System.out.println("DEBUG: Client: " + nomClient + ", Port ecoute: "+ port + ", Port reception: " + paquetVideo.getPort());
 				ajoutElementVideo(paquetVideo);
 			}
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Fin de vidéo non récupérable");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
@@ -66,7 +64,6 @@ public class ClientHandler extends Thread{
 			//On l'écrit dans la flux
 			sortieVideo.write(paquet.getData());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally
@@ -78,6 +75,7 @@ public class ClientHandler extends Thread{
 	 */
 	public void stopSocket(){
 		System.out.println("Fermeture du client " + nomClient);
+		receptionActive = false;
 		socketSpecialClient.close();
 	}
 	
