@@ -20,19 +20,16 @@ public class KeyListenerWatcher extends Watcher
 
 	public class GlobalKeyListener implements NativeKeyListener 
 	{
-		public void nativeKeyPressed(NativeKeyEvent e) {
-			//System.out.println(NativeKeyEvent.getKeyText(e.getKeyCode()));
-			String information = NativeKeyEvent.getKeyText(e.getKeyCode());
-			createDataBeforeSendEvent("touche_appuyee", information);
+		public void nativeKeyPressed(NativeKeyEvent e) {	
 
+			String information = azerty(e.getKeyCode());
+			createDataBeforeSendEvent("touche_appuyee", information);
 		}
 
 		public void nativeKeyReleased(NativeKeyEvent e) {
-			//	System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 		}
 
 		public void nativeKeyTyped(NativeKeyEvent e) {
-			//	System.out.println("Key Typed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 		}
 	}
 
@@ -54,5 +51,116 @@ public class KeyListenerWatcher extends Watcher
 
 		GlobalScreen.addNativeKeyListener(new GlobalKeyListener());
 		LogManager.getLogManager().reset();
+	}
+
+	/**
+	 * Transforme les caractères du clavier qwerty en azerty
+	 * @param code
+	 * @return
+	 */
+	public String azerty(int code)
+	{		
+		//On récupère l'élément du clavier qwerty
+		String information = NativeKeyEvent.getKeyText(code);
+		
+		//Si il y a un changement avec le clavier français, l'information sera changée
+		switch (code)
+		{
+		case 0:
+			information = "<";
+			break;
+		case 2:
+			information = "&";
+			break;
+		case 3:
+			information = "é";
+			break;
+		case 4:
+			information = "\"";
+			break;
+		case 5:
+			information = "'";
+			break;
+		case 6:
+			information = "(";
+			break;
+		case 7:
+			information = "-";
+			break;
+		case 8:
+			information = "è";
+			break;
+		case 9:
+			information = "_";
+			break;
+		case 10:
+			information = "ç";
+			break;
+		case 11:
+			information = "à";
+			break;
+		case 12:
+			information = ")";
+			break;
+		case 13:
+			information = "=";
+			break;
+		case 16:
+			information = "A";
+			break;
+		case 17:
+			information = "Z";
+			break;
+		case 26:
+			information = "^";
+			break;
+		case 27:
+			information = "$";
+			break;
+		case 30:
+			information = "Q";
+			break;
+		case 39:
+			information = "M";
+			break;
+		case 40:
+			information = "ù";
+			break;
+		case 41:
+			information = "²";
+			break;
+		case 43:
+			information = "*";
+			break;
+		case 44:
+			information = "W";
+			break;
+		case 50:
+			information = ",";
+			break;
+		case 51:
+			information = ";";
+			break;
+		case 52:
+			information = ":";
+			break;
+		case 53:
+			information = "! OU / paveNum";	//Même keyCode
+			break;
+		case 3662:
+			information = "+";
+			break;
+		case 3658:
+			information = "-";
+			break;
+		case 3638:
+			information = "MAJ";
+			break;
+		case 3639:
+			information = "* paveNum OU printEcr";	//Même keyCode
+			break;
+		}		
+		
+		return information;
 	}
 }
