@@ -38,12 +38,8 @@ public class LoginRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("POST LOGIN");
 		String userMail=request.getParameter("login-mail");
 		String password=request.getParameter("login-password");
-
-		System.out.println(userMail);
-		System.out.println(password);
 
 		Utilisateur utilCo = daoUtilisateur.trouverMdp(userMail, password);
 
@@ -60,7 +56,6 @@ public class LoginRegister extends HttpServlet {
 			session.setAttribute("groupeUtilisateur", utilCo.getGroupe());
 			session.setAttribute("id_user",utilCo.getId() );
 			
-			System.out.println(session.getAttribute("id_user"));
 
 			if (utilCo.getGroupe().equals("eleve"))
 				response.sendRedirect("/ServeurJEE/monCompte");

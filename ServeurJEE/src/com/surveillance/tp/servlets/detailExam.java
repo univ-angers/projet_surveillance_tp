@@ -22,14 +22,13 @@ public class detailExam extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		//Aucun utilisateur connecté
-		if (session.getAttribute("nomUtilisateur") == null)
-		{
-			System.out.println("DEBUG: Nom util = " + session.getAttribute("nomUtilisateur"));
+		if (session.getAttribute("id_user") == null)
 			response.sendRedirect("/ServeurJEE/LoginRegister");
-		}
+
 		//L'utilisateur est un élève, donc pas le droit d'accès
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
 			response.sendRedirect("/ServeurJEE/monCompte");
+
 		else
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/ExamenDetail.jsp" ).forward( request, response );        
 	}

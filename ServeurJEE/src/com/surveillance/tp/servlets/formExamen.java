@@ -39,36 +39,18 @@ public class formExamen extends HttpServlet {
 
 		//Aucun utilisateur connecté
 		if (session.getAttribute("id_user") == null)
-		{
-			System.out.println("DEBUG: Nom util = " + session.getAttribute("nomUtilisateur"));
 			response.sendRedirect("/ServeurJEE/LoginRegister");
-		}
+		
 		//L'utilisateur est un élève, donc pas le droit d'accès
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
-		{
 			response.sendRedirect("/ServeurJEE/monCompte");
-		}
-		else
-		{
-			/* Transmission vers la page en charge de l'affichage des résultats */
-			Integer id=(Integer)session.getAttribute("id_user");
-			Examen examen= daoExamen.trouverExamenUtil(id);
-			if(examen!=null) {
-				request.setAttribute("examenOn",examen.getIdExam());
-				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
-			}
-			else
-			{
-				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
-			}
 
-		}
+		else
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 	}
 
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		System.out.println("DEBUG: Reception des infos en POST pour examen");
-
 		/* Creation d'un utilisateur si les conditions sont remplies */
 		Examen nouvExam = ajouterExamen(request);
 
@@ -80,7 +62,7 @@ public class formExamen extends HttpServlet {
 		creerDossierExamen(nouvExam);
 
 		/* Affichage de la vue qu'on veut */
-		response.sendRedirect("/ServeurJEE/listeUtilisateurs");
+		response.sendRedirect("/ServeurJEE/paramExam");
 	}
 
 	/**
@@ -96,13 +78,13 @@ public class formExamen extends HttpServlet {
 		dureeH = "0" + dureeH;		//Pour la mise en forme
 		String dureeM = request.getParameter("duree-minute");
 		String timeSt = dureeH + ":" + dureeM + ":00";
-		Time time = Time.valueOf(timeSt);		//DUREE A CORRIGER, NULL DANS LA BASE
+		Time time = Time.valueOf(timeSt);
 		//Recupération de la matière
 		String matiere = request.getParameter("matiere");
 
 		/* Création d'un examen */
 		Examen examen = new Examen();
-		
+
 		HttpSession session = request.getSession();
 		int idProf = (int) session.getAttribute("id_user");
 		examen.setIdProf(idProf);
@@ -110,7 +92,6 @@ public class formExamen extends HttpServlet {
 		examen.setDuree(time);
 
 		daoExamen.creer(examen);
-		System.out.println("DEBUG: Examen ajouté");
 
 		/* Gestion des règles */
 		String cocheFichier = (String)request.getParameter("bouton_fichier");	// "on" si coché, null sinon
@@ -162,7 +143,6 @@ public class formExamen extends HttpServlet {
 			}
 
 			String jsString = jsTab.toJSONString();
-			System.out.println("DEBUG: JSON string = " + jsString);
 
 			daoRegleExamen.creerAttribut(re,jsString);
 		}
@@ -184,8 +164,6 @@ public class formExamen extends HttpServlet {
 	{
 		File examDir;
 		String pathDir = directoryManager.idDbToString(exam.getIdExam());
-
-		System.out.println("DEBUG: CHEMIN SERVLET: " + pathDir);
 
 		examDir = new File(pathDir);
 		examDir.mkdirs();

@@ -137,6 +137,7 @@ public class DAOExamenImpl implements DAOExamen {
 			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
+	
 	private static final String SQL_UPDATE_STOP_EXAM = "UPDATE Examen SET etat='off' WHERE id_user  = ? and etat='on'";
 	@Override
 	public void updateExamenStop(int id_user) throws DAOException {
@@ -155,6 +156,23 @@ public class DAOExamenImpl implements DAOExamen {
 		}
 	}
 	
+	private static final String SQL_UPDATE_START_EXAM = "UPDATE Examen SET heure_debut = NOW() WHERE id_user  = ? and etat='on'";
+	
+	@Override
+	public void updateExamenDemarrage(Integer idProf) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_START_EXAM, false, idProf );
+			preparedStatement.executeUpdate();
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses(preparedStatement, connexion);
+		}
+	}
 	
 	//Requête permettant de mettre à jour un examen
 	private static final String SQL_UPDATE_EXAM = "UPDATE Examen SET id_user = ?, matiere = ?, duree = ?, heure_debut = ? WHERE id_examen = ?";
@@ -190,13 +208,10 @@ public class DAOExamenImpl implements DAOExamen {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion =  daoFactory.getConnection();
-			System.out.println("DEBUG 1");
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_LISTE_EXAM,false,id_user);
-			System.out.println("DEBUG 2");
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-
 				Examen exam = null;
 				exam= map( resultSet );
 				exams.add(exam);

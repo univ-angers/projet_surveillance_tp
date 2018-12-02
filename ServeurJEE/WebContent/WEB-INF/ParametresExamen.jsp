@@ -102,46 +102,67 @@
                        
                         <div class="block-content block-content-full block-content-narrow" >
                         <center>
-                        <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="">
+                        <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="demarrageExamen">
                                         <i class="si si-control-play"></i>
                                     </a>
-                            <a class="btn btn-rounded btn-noborder btn-lg btn-primary push-5 animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight" href="" style="background-color:red;"><i class="fa fa-power-off"></i></a>
+                            <a class="btn btn-rounded btn-noborder btn-lg btn-primary push-5 animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight" href="arretExamen" style="background-color:red;"><i class="fa fa-power-off"></i></a>
                         </center>
                             <!-- Register Title -->
                            
                             <!-- Register Form -->
                             <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-register form-horizontal push-50-t push-50" action="formExamen" method="post">
+                            <form class="js-validation-register form-horizontal push-50-t push-50" action="paramExam" method="post">
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="duree" name="duree" placeholder="Entrer une durée ">
-                                            <label for="duree">Durée</label>
+                                            <input class="form-control" type="number" id="examen-id" name="examen-id" disabled="disabled" value="<%=request.getAttribute("IDexam")%>" placeholder="Saisir l'ID de l'examen">
+                                            <label for=examen-id>Id examen</label>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="form-material form-material-success">
+                                            <input class="form-control" type="text" id="server" name="server" disabled="disabled" value="<%=request.getAttribute("IP")%>" placeholder="Saisir l'adresse du serveur">
+                                            <label for="server2">Adresse du serveur</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="form-material form-material-success">
+                                            <label for=examen-id>MODIFICATIONS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+									<div class="col-xs-12">
+										<div class="form-material form-material-success">
+											<label>Temps d'examen</label> Heure: <select id="duree-heure"
+												name="duree-heure">
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</select> Minute <select id="duree-minute" name="duree-minute">
+												<option value="0">00</option>
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+											</select>
+										</div>
+									</div>
+								</div>
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
                                             <input class="form-control" type="text" id="matiere" name="matiere" placeholder="Entrer une matiere">
                                             <label for="matiere">Matiere</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-success">
-                                            <input class="form-control" type="number" id="examen-id" name="examen-id" placeholder="Saisir l'ID de l'examen">
-                                            <label for=examen-id">Id examen</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="server" name="server" placeholder="Saisir l'adresse du serveur">
-                                            <label for="server2">Adresse du serveur</label>
                                         </div>
                                     </div>
                                 </div>
@@ -157,24 +178,32 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Opération de fichier surveillé 
+                                            <input type="checkbox" id="bouton_fichier" name="bouton_fichier"><span></span>Opération de fichier surveillé 
                                         </label>
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Frappe de clavier surveillé 
+                                            <input type="checkbox" id="bouton_clavier" name="bouton_clavier"><span></span>Frappe de clavier surveillé 
                                         </label>
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <div class="col-xs-12">
                                         <label class="css-input switch switch-sm switch-success">
-                                            <input type="checkbox" id="register-terms" name="register-terms"><span></span>Montage de dossier/USB surveillé
+                                            <input type="checkbox" id="bouton_usb" name="bouton_usb"><span></span>Montage de dossier/USB surveillé
                                         </label>
                                     </div>
                                 </div>
+                                <div class="form-group">
+									<div class="col-xs-12">
+										<label class="css-input switch switch-sm switch-success">
+											<input type="checkbox" id="bouton_video" name="bouton_video"><span></span>Surveillance
+											vidéo
+										</label>
+									</div>
+								</div>
                                 
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-5">

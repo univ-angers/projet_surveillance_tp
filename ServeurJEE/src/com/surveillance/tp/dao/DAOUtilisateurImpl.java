@@ -113,9 +113,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion =  daoFactory.getConnection();
-			System.out.println("DEBUG 1");
 			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_LISTE_UTILISATEUR, false);
-			System.out.println("DEBUG 2");
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {

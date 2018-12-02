@@ -24,6 +24,7 @@ import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 import com.surveillance.tp.utilitaire.directoryManager;
+import com.surveillance.tp.utilitaire.examTimer;
 
 /**
  * Servlet implementation class ListeUtilisateurs
@@ -37,7 +38,7 @@ public class listeUtilisateurs extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Utilisateur */
+		/* Récupération d'une instance de nos DAO */
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
 		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
 	}
@@ -61,17 +62,27 @@ public class listeUtilisateurs extends HttpServlet {
 		{
 			int idProf = (int) session.getAttribute("id_user");
 			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);
+			//Verification que le temps d'examen n'est pas terminé
+			if (examEnCours != null) {
+				if (examTimer.examenTermine(examEnCours))
+					response.sendRedirect("/ServeurJEE/arretExamen");
+			}
 
 			ArrayList<EtudiantExamen> listeUtilisateurExamenCourant = new ArrayList<>();
 			if (examEnCours != null)
 			{
 				String cheminExam = directoryManager.idDbToString(examEnCours.getIdExam());
 				listeUtilisateurExamenCourant = recupererEtudiants(cheminExam);
+
+				//Permet de savoir quel onglet afficher
+				request.setAttribute("afficheParam", 1);
 			}
+
 			request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);
-			
+
 			/* Afichage */
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
+
 		}
 	}
 
@@ -113,7 +124,7 @@ public class listeUtilisateurs extends HttpServlet {
 	 */
 	private EtudiantExamen creerEtExDepuisLog(String cheminEt, String idEtud) {
 		EtudiantExamen etudiant = new EtudiantExamen();
-		
+
 		//Lecture du fichier log avec arrêt au premier }
 		try{
 			StringBuilder sb = new StringBuilder();
@@ -139,7 +150,7 @@ public class listeUtilisateurs extends HttpServlet {
 			try {
 				jObj = (JSONObject) parser.parse(headerSt);
 				JSONObject header = (JSONObject) jObj.get("header");
-				
+
 				//Récupération des données
 				String nom = (String) header.get("nom");
 				String prenom = (String) header.get("prenom");
@@ -158,7 +169,8 @@ public class listeUtilisateurs extends HttpServlet {
 				etudiant.setNbAlertesClavier(String.valueOf(nbClavier));
 				etudiant.setNbAlertesNet(String.valueOf(nbNet));
 				etudiant.setNbAlertesFichier(String.valueOf(nbFichier));
-				etudiant.setNbAlertesUSB(String.valueOf(nbUSB));				
+				etudiant.setNbAlertesUSB(String.valueOf(nbUSB));
+				etudiant.setId(Integer.valueOf(idEtud));
 
 			} catch (ParseException e) {
 				e.printStackTrace();

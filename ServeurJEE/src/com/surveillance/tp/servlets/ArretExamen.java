@@ -18,33 +18,33 @@ public class ArretExamen extends HttpServlet {
 	private DAOExamen daoExamen;
 
 	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Utilisateur */
+		/* Récupération d'une instance de notre DAO Examen */
 		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("id_user")!=null) {
+
+		//Aucun utilisateur connecté
+		if (session.getAttribute("id_user") == null)
+			response.sendRedirect("/ServeurJEE/LoginRegister");
+
+		//L'utilisateur est un élève, donc pas le droit d'accès
+		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
+			response.sendRedirect("/ServeurJEE/monCompte");
+
+		else 
+		{
 			Integer idProf = (Integer)session.getAttribute("id_user");
-			
+
 			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);	
 			if (examEnCours != null)
 				daoExamen.updateExamenStop(idProf);
 
-			response.sendRedirect("/ServeurJEE/formExamen");
+			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 		}
-		else 
-		{
-			response.sendRedirect("/ServeurJEE/formExamen");
-		}
-
-
-
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		//this.getServletContext().getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
 	}
 }

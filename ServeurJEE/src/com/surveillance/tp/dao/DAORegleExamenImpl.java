@@ -129,6 +129,26 @@ public class DAORegleExamenImpl implements DAORegleExamen{
 			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
+	
+	//Supprime toutes les règles d'un examen précis
+	private static final String SQL_DELETE_REGLE_EXAM = "DELETE FROM list_of_rule WHERE id_examen = ?";
+
+	@Override
+	public void supprimerExam(int idExam) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_DELETE_REGLE_EXAM, false, idExam);
+			preparedStatement.executeUpdate();
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses(preparedStatement, connexion);
+		}
+	}
 
 	private static final String SQL_UPDATE_REGLE = "UPDATE list_of_rule SET id_examen = ? WHERE id_rule = ?";
 

@@ -61,7 +61,6 @@ public class formUtilisateur extends HttpServlet {
 
 				/* Données valides donc ajout dans la BDD grâce à notre DAO */
 				daoUtilisateur.creer(util);
-				System.out.println("DEBUG: Utilisateur ajouté");
 			}
 		}
 
@@ -70,7 +69,6 @@ public class formUtilisateur extends HttpServlet {
 
 	public boolean traiterDonnees(String nom, String prenom, String mail)
 	{
-		//A VOIR LES VERIFICATIONS EXACTES
 		if (!nom.isEmpty() && !prenom.isEmpty() && !mail.isEmpty())
 			return true;
 		else
@@ -79,7 +77,6 @@ public class formUtilisateur extends HttpServlet {
 
 	public String traiterMotDePasse(String mdp)
 	{
-		//A VOIR LES VERIFICATIONS EXACTS
 		if (mdp.length()>=5)
 		{
 			//Traiter le mot de passe (chiffrer)

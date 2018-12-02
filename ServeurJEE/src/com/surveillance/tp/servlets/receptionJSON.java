@@ -72,7 +72,6 @@ public class receptionJSON extends HttpServlet {
 			JSONParser parser = new JSONParser();
 			JSONObject jObj = (JSONObject) parser.parse(resultat);
 
-			System.out.println("DEBUG: CHAINE JSON RECUE SUR JEE: " + resultat);	
 			//Recupération du type de données
 			String type = (String) jObj.get("type");
 
@@ -93,7 +92,6 @@ public class receptionJSON extends HttpServlet {
 	 */
 	public void connexionEtudiant(JSONObject obj, HttpServletResponse rep)
 	{
-		System.out.println("DEBUG: Connexion détéctée");
 		String mail = (String) obj.get("mailEtudiant");
 		String motDePasse = (String) obj.get("mdp");
 		String idExam = (String) obj.get("IDexamen");
@@ -172,7 +170,6 @@ public class receptionJSON extends HttpServlet {
 
 			for (RegleExam re : listeReglesAppliquees) {
 				Regle r = daoRegle.trouver(re.getIdRegle());
-				System.out.println("ID REGLE APPLIQUEE = " + r.getIdRegle());
 				boolean dejaExistant = false;
 				for (int i : listeIdWatcher)
 				{
@@ -248,8 +245,6 @@ public class receptionJSON extends HttpServlet {
 		if (exam != null)
 		{
 			Timestamp dateDebut = exam.getHeureDebut();
-			//Time dateDebut = exam.getHeureDebut();
-			System.out.println("dateDebut :" + dateDebut);
 			Time duree = exam.getDuree();
 			long GMT1 = 3600000;		//Decalage horaire du à GMT+1
 
@@ -370,7 +365,6 @@ public class receptionJSON extends HttpServlet {
 				break;
 			}			
 
-			System.out.println("DEBUG: AJOUT NOUVELLES INFORMATIONS DANS LE LOG");
 			//Mise à jour du log
 			body.add(alerte);
 			jsonLog.put("header", header);

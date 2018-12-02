@@ -15,6 +15,8 @@ public class EtudiantExamen {
 	private String nbAlertesNet;
 	private String nbAlertesFichier;
 	private String nbAlertesUSB;
+	private int id;
+	
 	public String getNomEt() {
 		return nomEt;
 	}
@@ -62,5 +64,11 @@ public class EtudiantExamen {
 	}
 	public void setNbAlertesUSB(String nbAlertesUSB) {
 		this.nbAlertesUSB = nbAlertesUSB;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -86,14 +86,10 @@
 				</ul>
 			</div>
 		</div>
-		<!-- END Sub Header --> <!-- Page Content --> <%
+		<!-- END Sub Header --> <!-- Page Content --> 
 
-if(request.getAttribute("examenOn")==null){
-	
-	
-
-
-%> <!-- Register Content -->
+		
+		<!-- Register Content -->
 		<div class="bg-video" data-vide-bg="assets/img/videos/hero_tech"
 			data-vide-options="posterType: jpg, position: 50% 75%"
 			style="position: relative;">
@@ -144,8 +140,6 @@ if(request.getAttribute("examenOn")==null){
 										</div>
 									</div>
 								</div>
-
-
 								<div class="form-group">
 									<div class="col-xs-12">
 										<div class="form-material form-material-success">
@@ -222,26 +216,7 @@ if(request.getAttribute("examenOn")==null){
 		</div>
 		<!-- END Register Content --> 
 		
-		<%} else{%>
-		 </br>
-		
-		<center>
-			<div class="form-group">
-				<div class="col-xs-12">
-					<div class="form-material form-material-primary floating">
-						<<label for="login-username">Examen déjà en cours. Appuyez sur ce bouton pour le stopper.</label>
-					</div>
-				</div>
-			</div>
-
-			<a
-				class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft"
-				data-toggle="appear" data-class="animated fadeInLeft"
-				href="arretExamen"> <i class="si si-power"></i>
-			</a>
-		</center>
-
-		<%} %> <!-- END Charts --> <!-- END Page Content --> </main>
+		<!-- END Charts --> <!-- END Page Content --> </main>
 		<!-- END Main Container -->
 
 		<!-- Footer -->

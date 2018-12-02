@@ -15,9 +15,8 @@ public interface DAORegleExamen {
 	public ArrayList<RegleExam> trouver(int idExam) throws DAOException;
 	
 	void supprimer(int idRegle, int idExam) throws DAOException;
+
+	void supprimerExam(int idExam) throws DAOException;
 	
 	void miseAJour(RegleExam regleexam) throws DAOException;
-	
-	
-
 }
