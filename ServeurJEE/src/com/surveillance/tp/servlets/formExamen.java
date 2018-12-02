@@ -47,11 +47,22 @@ public class formExamen extends HttpServlet {
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
 		{
 			System.out.println("22222222222222");
+			
+		    
 			response.sendRedirect("/ServeurJEE/monCompte");
 		}
 		else
+			if(session.getAttribute("id_user")!=null) {
 			/* Transmission vers la page en charge de l'affichage des résultats */
+			Integer id=(Integer)session.getAttribute("id_user");
+			Examen examen= daoExamen.trouverExamenUtil(id);
+			if(examen!=null) {
+				request.setAttribute("examenOn",examen.getIdExam());
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
+			
+			
+			}
+			}
 	}
 
 

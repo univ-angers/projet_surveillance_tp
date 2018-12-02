@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="java.util.ArrayList"%> 
+<%@page import="com.surveillance.tp.beans.Examen"%> 
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -113,11 +115,18 @@
                     <!-- Stats -->
                     
                     <div class="row text-uppercase">
-                    <%for(int i=0; i<11;i++){ %>
+                    <%if(request.getAttribute("Archive")!=null){
+                    	ArrayList<Examen>exams=(ArrayList)request.getAttribute("Archive");
+                    	for(Examen e:exams){
+                    		
+                    		
+                    	
+                    	%>
+                    
                     <div class="col-sm-6 col-md-4 col-lg-3">
                                 <a class="block block-rounded block-link-hover2" href="ExamenDetail.jsp ">
                                     <div class="block-content block-content-full text-center bg-primary ribbon ribbon-bookmark ribbon-crystal">
-                                        <div class="ribbon-box font-w600">n°1</div>
+                                        <div class="ribbon-box font-w600"></div>
                                         <div class="item item-2x item-circle bg-crystal-op push-20-t push-20 animated fadeIn" data-toggle="appear" data-offset="50" data-class="animated fadeIn">
                                             <i class="si si-camcorder text-white-op"></i>
                                         </div>
@@ -125,11 +134,11 @@
                                     </div>
                                     <div class="block-content">
                                         
-                                        <div class="font-s12 text-center push">06 Novembre 2018</div>
+                                        <div class="font-s12 text-center push"><%=e.getHeureDebut()%></div>
                                     </div>
                                 </a>
                             </div>
-                            <%} %>
+                            <%}} %>
                     </div>
                     <!-- END Stats -->
 

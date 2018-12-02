@@ -17,5 +17,7 @@ public interface DAORegleExamen {
 	void supprimer(int idRegle, int idExam) throws DAOException;
 	
 	void miseAJour(RegleExam regleexam) throws DAOException;
+	
+	
 
 }

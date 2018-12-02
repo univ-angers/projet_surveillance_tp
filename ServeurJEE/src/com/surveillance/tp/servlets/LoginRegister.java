@@ -58,6 +58,7 @@ public class LoginRegister extends HttpServlet {
 			session.setAttribute("nomUtilisateur", utilCo.getNom());
 			session.setAttribute("prenomUtilisateur", utilCo.getPrenom());
 			session.setAttribute("groupeUtilisateur", utilCo.getGroupe());
+			session.setAttribute("id_user",utilCo.getId() );
 
 			if (utilCo.getGroupe().equals("eleve"))
 				response.sendRedirect("/ServeurJEE/monCompte");

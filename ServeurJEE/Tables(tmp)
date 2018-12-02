@@ -40,6 +40,7 @@ id_user INTEGER,
 matiere VARCHAR(100),
 duree TIME,
 heure_debut TIMESTAMP,
+etat VARCHAR(3) DEFAULT 'on',
 PRIMARY KEY (id_examen),
 FOREIGN KEY (id_user) REFERENCES Utilisateur(id_user));
 

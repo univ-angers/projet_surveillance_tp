@@ -5,8 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.surveillance.tp.beans.Examen;
+import com.surveillance.tp.beans.Utilisateur;
 
 public class DAOExamenImpl implements DAOExamen {
 
@@ -91,6 +93,32 @@ public class DAOExamenImpl implements DAOExamen {
 		return examen;
 	}
 	
+	private static final String SQL_SELECT_EXAM_UTIL = "SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_user = ? and etat='on'";
+	@Override
+	public Examen trouverExamenUtil(int id_util) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Examen examen = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_EXAM_UTIL, false, id_util );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				examen = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		return examen;
+	}
+	
+	
 	private static final String SQL_DELETE_EXAM = "DELETE FROM Examen WHERE id_examen  = ?";
 	
 	@Override
@@ -115,6 +143,30 @@ public class DAOExamenImpl implements DAOExamen {
 			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
 		}
 	}
+	private static final String SQL_UPDATE2_EXAM = "UPDATE Examen SET etat='off' WHERE id_user  = ? and etat='on'";
+	@Override
+	public void updateExamen(int id_user) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE2_EXAM, false, id_user );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				//Doit on faire quelque chose avec l'examen reçu?
+				//examen = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+	}
+	
 	
 	//Requête permettant de mettre à jour un examen
 	private static final String SQL_UPDATE_EXAM = "UPDATE Examen SET id_user = ?, matiere = ?, duree = ?, heure_debut = ? WHERE id_examen = ?";
@@ -140,5 +192,39 @@ public class DAOExamenImpl implements DAOExamen {
 		} finally {
 			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
 		}
+	}
+	
+
+	private static final String SQL_SELECT_LISTE_EXAM = "SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_user= ?";
+
+	@Override
+	public 
+	ArrayList<Examen>recupererExams(int id_user) throws DAOException{
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		ArrayList<Examen> exams = new ArrayList<Examen>();
+
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion =  daoFactory.getConnection();
+			System.out.println("DEBUG 1");
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_LISTE_EXAM,false,id_user);
+			System.out.println("DEBUG 2");
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				Examen exam = null;
+				exam= map( resultSet );
+				exams.add(exam);
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		return exams;
 	}
 }

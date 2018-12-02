@@ -2,6 +2,9 @@
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
+
+
+
     <head>
         <meta charset="utf-8">
 
@@ -92,7 +95,14 @@
                 <!-- Page Content -->
                 
                 
-                
+              <%
+
+if(request.getAttribute("examenOn")!=null){
+	
+	
+
+
+%>  
                 
                     <!-- Register Content -->
         <div class="bg-video" data-vide-bg="assets/img/videos/hero_tech" data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;"><div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; background-size: cover; background-color: transparent; background-repeat: no-repeat; background-position: 50% 75%; background-image: none;"><video autoplay="" loop="" muted="" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%); visibility: visible; opacity: 1; width: 1833px; height: auto;"><source src="assets/img/videos/hero_tech.mp4" type="video/mp4"><source src="assets/img/videos/hero_tech.webm" type="video/webm"><source src="assets/img/videos/hero_tech.ogv" type="video/ogg"></video></div>
@@ -202,11 +212,16 @@
         </div>
         <!-- END Register Content -->
                 
+              <%} else{%>
+             
+              </br>
+              <center>
+<a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="arretExamen">
+                                        <i class="si si-power"></i>
+                                    </a>                
+                </center>
                 
-                
-                
-                
-                
+                <%} %>
                 
           
                     <!-- END Charts -->
