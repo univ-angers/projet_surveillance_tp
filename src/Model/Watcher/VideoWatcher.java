@@ -23,7 +23,7 @@ import Model.RecorderFFMPEG;
  */
 public class VideoWatcher extends Watcher{
 
-	static String TYPE = "FILE";
+	static String TYPE = "VIDEO";
 	
 	public VideoWatcher() {
 		super(TYPE);
@@ -32,7 +32,7 @@ public class VideoWatcher extends Watcher{
 	// On choisit un port aléatoire pour discuter avec le serveur pour l'envoi futur
 	public static int port;
 
-	static String addIp = "127.0.0.1";						//Adresse du serveur
+	static String addIp;						//Adresse du serveur
 	public static String name;								//Nom du client
 	static String IDexamen;									//Matiere
 	static boolean connexionEtablie = false;				
@@ -48,7 +48,7 @@ public class VideoWatcher extends Watcher{
 		DatagramSocket client = new DatagramSocket();
 
 		//On crée notre datagramme
-		InetAddress adresse = InetAddress.getByName("127.0.0.1");
+		InetAddress adresse = InetAddress.getByName(addIp);
 		String donneeSt = "NOUVEAU:" + name + ":" + IDexamen;
 		byte[] donnee = donneeSt.getBytes();
 		DatagramPacket packet = new DatagramPacket(donnee, donnee.length, adresse, 2345);
@@ -87,6 +87,7 @@ public class VideoWatcher extends Watcher{
 		//Création du client et envoi des infos du client au serveur
 		name = etudiant.getIdBDD();
 		IDexamen = etudiant.getNumeroExamen();
+		addIp = etudiant.getAdresseServeur();
 
 		while (connexionEtablie == false)
 		{
