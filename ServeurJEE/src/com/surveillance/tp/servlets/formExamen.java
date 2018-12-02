@@ -80,7 +80,7 @@ public class formExamen extends HttpServlet {
 		creerDossierExamen(nouvExam);
 
 		/* Affichage de la vue qu'on veut */
-		//this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
+		response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 	}
 
 	/**
@@ -101,8 +101,11 @@ public class formExamen extends HttpServlet {
 		String matiere = request.getParameter("matiere");
 
 		/* Création d'un examen */
-		Examen examen = new Examen();		
-		examen.setIdProf(1);	//UTILISER LA SESSION A TERME
+		Examen examen = new Examen();
+		
+		HttpSession session = request.getSession();
+		int idProf = (int) session.getAttribute("id_user");
+		examen.setIdProf(idProf);
 		examen.setMatiere(matiere);
 		examen.setDuree(time);
 

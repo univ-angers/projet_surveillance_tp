@@ -9,12 +9,12 @@ package com.surveillance.tp.beans;
 public class EtudiantExamen {
 	private String nomEt;
 	private String prenEt;
-	private int nbAlertes;
-	private int nbAlertesCritiques;
-	private int nbAlertesClavier;
-	private int nbAlertesNet;
-	private int nbAlertesFichier;
-	private int nbAlertesUSB;
+	private String nbAlertes;
+	private String nbAlertesCritiques;
+	private String nbAlertesClavier;
+	private String nbAlertesNet;
+	private String nbAlertesFichier;
+	private String nbAlertesUSB;
 	public String getNomEt() {
 		return nomEt;
 	}
@@ -27,40 +27,40 @@ public class EtudiantExamen {
 	public void setPrenEt(String prenEt) {
 		this.prenEt = prenEt;
 	}
-	public int getNbAlertes() {
+	public String getNbAlertes() {
 		return nbAlertes;
 	}
-	public void setNbAlertes(int nbAlertes) {
+	public void setNbAlertes(String nbAlertes) {
 		this.nbAlertes = nbAlertes;
 	}
-	public int getNbAlertesCritiques() {
+	public String getNbAlertesCritiques() {
 		return nbAlertesCritiques;
 	}
-	public void setNbAlertesCritiques(int nbAlertesCritiques) {
+	public void setNbAlertesCritiques(String nbAlertesCritiques) {
 		this.nbAlertesCritiques = nbAlertesCritiques;
 	}
-	public int getNbAlertesClavier() {
+	public String getNbAlertesClavier() {
 		return nbAlertesClavier;
 	}
-	public void setNbAlertesClavier(int nbAlertesClavier) {
+	public void setNbAlertesClavier(String nbAlertesClavier) {
 		this.nbAlertesClavier = nbAlertesClavier;
 	}
-	public int getNbAlertesNet() {
+	public String getNbAlertesNet() {
 		return nbAlertesNet;
 	}
-	public void setNbAlertesNet(int nbAlertesNet) {
+	public void setNbAlertesNet(String nbAlertesNet) {
 		this.nbAlertesNet = nbAlertesNet;
 	}
-	public int getNbAlertesFichier() {
+	public String getNbAlertesFichier() {
 		return nbAlertesFichier;
 	}
-	public void setNbAlertesFichier(int nbAlertesFichier) {
+	public void setNbAlertesFichier(String nbAlertesFichier) {
 		this.nbAlertesFichier = nbAlertesFichier;
 	}
-	public int getNbAlertesUSB() {
+	public String getNbAlertesUSB() {
 		return nbAlertesUSB;
 	}
-	public void setNbAlertesUSB(int nbAlertesUSB) {
+	public void setNbAlertesUSB(String nbAlertesUSB) {
 		this.nbAlertesUSB = nbAlertesUSB;
 	}
 }

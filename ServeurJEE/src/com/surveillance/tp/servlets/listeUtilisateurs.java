@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.surveillance.tp.beans.EtudiantExamen;
 import com.surveillance.tp.beans.Examen;
@@ -45,7 +46,6 @@ public class listeUtilisateurs extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("D1");
 
 		HttpSession session = request.getSession();
 		//Aucun utilisateur connecté
@@ -69,83 +69,103 @@ public class listeUtilisateurs extends HttpServlet {
 				listeUtilisateurExamenCourant = recupererEtudiants(cheminExam);
 			}
 			request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);
+			
+			/* Afichage */
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
 		}
 	}
 
 
-/**
- * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
- */
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// TODO Auto-generated method stub
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		this.getServletContext().getRequestDispatcher("/WEB-INF/listeUtilisateurs.jsp").forward(request, response);
+	}
 
+	/**
+	 * Va parcourir tous les dossiers (étudiants) du dossier de l'examen, lire chaque log, et créer un
+	 * EtudiantExamen pour chacun.
+	 * @param cheminExam
+	 * @return
+	 */
+	private ArrayList<EtudiantExamen> recupererEtudiants(String cheminExam) {
+		ArrayList<EtudiantExamen> listeEt = new ArrayList<>();
 
-	//request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
+		File dossierCourant = new File(cheminExam);
 
-	this.getServletContext().getRequestDispatcher("/WEB-INF/listeUtilisateurs.jsp").forward(request, response);
-}
-
-/**
- * Va parcourir tous les dossiers (étudiants) du dossier de l'examen, lire chaque log, et créer un
- * EtudiantExamen pour chacun.
- * @param cheminExam
- * @return
- */
-private ArrayList<EtudiantExamen> recupererEtudiants(String cheminExam) {
-	ArrayList<EtudiantExamen> listeEt = new ArrayList<>();
-
-	System.out.println("DEBUG: CHEMIN DE L'EXAMEN = " + cheminExam);
-
-	File dossierCourant = new File(cheminExam);
-
-	//On récupère chaque élément du dossier, donc chaque dossier d'étudiant
-	String s[] = dossierCourant.list();
-	for (int i=0; i<s.length; i++){
-		File dirTemp = new File(cheminExam + s[i] + "\\" );
-
-		if(dirTemp.isDirectory()){
-			EtudiantExamen etEx = creerEtExDepuisLog(cheminExam + s[i] + "\\",s[i]);
+		//On récupère chaque élément du dossier, donc chaque dossier d'étudiant
+		String s[] = dossierCourant.list();
+		for (int i=0; i<s.length; i++){
+			//Et on appelle la méthode permettant de créer un étudiant depuis son log
+			EtudiantExamen etEx = creerEtExDepuisLog(cheminExam + "/" +  s[i] + "/",s[i]);
 			listeEt.add(etEx);
 		}
+
+		return listeEt;
 	}
 
-	return listeEt;
-}
-
-/**
- * Retourne l'étudiant correspondant au log du chemin indiqué
- * @param cheminEt
- * @return
- */
-private EtudiantExamen creerEtExDepuisLog(String cheminEt, String idEtud) {
-	System.out.println("DEBUG: CHEMIN DE L'ETUDIANT = " + cheminEt);
-
-	//Lecture du fichier log avec arrêt au premier }
-	try{
-		StringBuilder sb = new StringBuilder();
-		char stop = '}';
-		try {
-			InputStream ips=new FileInputStream(cheminEt + "\\" + idEtud + ".lg");
-			BufferedReader buffer=new BufferedReader(new InputStreamReader(ips));
-			int r;
-			while ((r = buffer.read()) != -1) {
-				char c = (char) r;
-				sb.append(c);
-				if (c == stop)
-					break;
+	/**
+	 * Retourne l'étudiant correspondant au log du chemin indiqué
+	 * @param cheminEt
+	 * @return
+	 */
+	private EtudiantExamen creerEtExDepuisLog(String cheminEt, String idEtud) {
+		EtudiantExamen etudiant = new EtudiantExamen();
+		
+		//Lecture du fichier log avec arrêt au premier }
+		try{
+			StringBuilder sb = new StringBuilder();
+			char stop = '}';
+			try {
+				InputStream ips=new FileInputStream(cheminEt + "/" + idEtud + ".lg");
+				BufferedReader buffer=new BufferedReader(new InputStreamReader(ips));
+				int r;
+				while ((r = buffer.read()) != -1) {
+					char c = (char) r;
+					sb.append(c);
+					if (c == stop)
+						break;
+				}
+				buffer.close();
+			} catch(IOException e) {
 			}
-			buffer.close();
-		} catch(IOException e) {
+			String headerSt = sb.toString() + "}";	//On ajoute un } pour avec un JSON correctement formé
+
+			//Conversion de la chaine en JSON
+			JSONParser parser = new JSONParser();
+			JSONObject jObj;
+			try {
+				jObj = (JSONObject) parser.parse(headerSt);
+				JSONObject header = (JSONObject) jObj.get("header");
+				
+				//Récupération des données
+				String nom = (String) header.get("nom");
+				String prenom = (String) header.get("prenom");
+				long nbLog = (long) header.get("nbLog");
+				long nbCrit = (long) header.get("nbCrit");
+				long nbClavier = (long) header.get("nbClavier");
+				long nbNet = (long) header.get("nbNet");
+				long nbFichier = (long) header.get("nbFichier");
+				long nbUSB = (long) header.get("nbUSB");
+
+				//Ajout pour l'étudiant
+				etudiant.setNomEt(nom);
+				etudiant.setPrenEt(prenom);
+				etudiant.setNbAlertes(String.valueOf(nbLog));
+				etudiant.setNbAlertesCritiques(String.valueOf(nbCrit));	
+				etudiant.setNbAlertesClavier(String.valueOf(nbClavier));
+				etudiant.setNbAlertesNet(String.valueOf(nbNet));
+				etudiant.setNbAlertesFichier(String.valueOf(nbFichier));
+				etudiant.setNbAlertesUSB(String.valueOf(nbUSB));				
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
-		String headerSt = sb.toString() + "}";	//On ajoute un } pour avec un JSON correctement formé
-
-		System.out.println("DEBUG: Header etud " + idEtud + " = " + headerSt);
-
-		return null;
+		finally
+		{}
+		return etudiant;			
 	}
-	finally
-	{}			
-}
 }

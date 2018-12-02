@@ -325,9 +325,7 @@ public class receptionJSON extends HttpServlet {
 			long nbUSB = (long) header.get("nbUSB");
 			long nbNet = (long) header.get("nbNet");
 
-			//Mise à jour du header
-			nbLog++;
-			alerte.put("nbLog", nbLog);
+			
 
 			//On récupère le type de l'alerte
 			String type = (String) alerte.get("type");
@@ -335,7 +333,12 @@ public class receptionJSON extends HttpServlet {
 			//On recherche la règle coorespondante au type, on récupère son ID, et on remplace le type texte par l'id de la règle dans l'alerte
 			Regle reg = daoRegle.trouverSt(type);
 			String idRegle = String.valueOf(reg.getIdRegle());
+			//Mise a jour de l'alerte qui ira dans le body
 			alerte.put("type", idRegle);
+			
+			//Mise à jour du header
+			nbLog++;
+			header.put("nbLog", nbLog);
 			//On modifie le nombre de règle critiques si nécessaire
 			int niveauRegle = reg.getNiveauRegle();
 			if (niveauRegle == 1)
