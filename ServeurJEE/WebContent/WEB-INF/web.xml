@@ -42,14 +42,6 @@
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>historique</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.historique</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>historique</servlet-name>
-    <url-pattern>/historique</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>listeUtilisateurs</servlet-name>
     <servlet-class>com.surveillance.tp.servlets.listeUtilisateurs</servlet-class>
   </servlet>
@@ -127,7 +119,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>listeExams</servlet-name>
-    <url-pattern>/Historique.jsp</url-pattern>
+    <url-pattern>/historique</url-pattern>
   </servlet-mapping>
   
   

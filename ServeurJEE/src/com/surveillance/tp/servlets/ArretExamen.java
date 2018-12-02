@@ -25,11 +25,11 @@ public class ArretExamen extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("id_user")!=null) {
-			System.out.println("ICI");
 			Integer idProf = (Integer)session.getAttribute("id_user");
 			
-			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);			
-			daoExamen.updateExamen(examEnCours.getIdExam());
+			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);	
+			if (examEnCours != null)
+				daoExamen.updateExamenStop(idProf);
 
 			response.sendRedirect("/ServeurJEE/formExamen");
 		}

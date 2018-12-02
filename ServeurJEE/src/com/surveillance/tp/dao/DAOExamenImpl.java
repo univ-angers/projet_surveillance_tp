@@ -137,16 +137,16 @@ public class DAOExamenImpl implements DAOExamen {
 			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
-	private static final String SQL_UPDATE2_EXAM = "UPDATE Examen SET etat='off' WHERE id_user  = ? and etat='on'";
+	private static final String SQL_UPDATE_STOP_EXAM = "UPDATE Examen SET etat='off' WHERE id_user  = ? and etat='on'";
 	@Override
-	public void updateExamen(int id_user) throws DAOException {
+	public void updateExamenStop(int id_user) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE2_EXAM, false, id_user );
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_STOP_EXAM, false, id_user );
 			preparedStatement.executeUpdate();
 		} catch ( SQLException e ) {
 			throw new DAOException( e );

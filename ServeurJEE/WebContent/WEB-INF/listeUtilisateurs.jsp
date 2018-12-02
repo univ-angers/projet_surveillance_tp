@@ -1,3 +1,4 @@
+<%@page import="com.surveillance.tp.beans.EtudiantExamen"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.ArrayList"%> 
 <%@page import="com.surveillance.tp.beans.Utilisateur"%> 
@@ -135,9 +136,9 @@
                                         	<th>Streaming</th>
                                         	</tr>
                                         
-                                             <%ArrayList<Utilisateur> util=(ArrayList<Utilisateur>)request.getAttribute("utilisateurs")	;
+                                             <%ArrayList<EtudiantExamen> util=(ArrayList<EtudiantExamen>)request.getAttribute("utilisateurs")	;
                                              
-                                             for(Utilisateur u:util){
+                                             for(EtudiantExamen u:util){
                                             	 
                                    
                                              %>  
@@ -145,11 +146,10 @@
                                                
                                               
                                             <tr>
-                                                <td><%=u.getNom() %></td>
-                                                <td><%=u.getPrenom() %></td>
-                                                
-                                                <td> 0</td>
-                                                <td> 0</td>
+                                                <td><%=u.getNomEt() %></td>
+                                                <td><%=u.getPrenEt() %></td>                                                
+                                                <td><%=u.getNbAlertes() %></td>
+                                                <td><%=u.getNbAlertesCritiques() %></td>
                                                 <td> <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="">
                                         <i class="si si-control-play"></i>
                                     </a></td>

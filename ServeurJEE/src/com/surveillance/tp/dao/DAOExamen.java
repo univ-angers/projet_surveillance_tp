@@ -15,7 +15,7 @@ public interface DAOExamen {
 	
 	void miseAJour(Examen examen) throws DAOException;
 	
-	void updateExamen(int id_user) throws DAOException;
+	void updateExamenStop(int id_user) throws DAOException;
 	
 	ArrayList<Examen>recupererExams(int id_user)throws DAOException;
 }

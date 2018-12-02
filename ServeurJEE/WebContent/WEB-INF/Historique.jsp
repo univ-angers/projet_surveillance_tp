@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.ArrayList"%> 
 <%@page import="com.surveillance.tp.beans.Examen"%> 
+
+
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -81,7 +83,7 @@
                          		</li>
 							</c:if>
                             <li class="active">
-                                <a href="">
+                                <a href="listeExams">
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>

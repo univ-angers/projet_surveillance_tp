@@ -54,13 +54,11 @@ public class formExamen extends HttpServlet {
 			Integer id=(Integer)session.getAttribute("id_user");
 			Examen examen= daoExamen.trouverExamenUtil(id);
 			if(examen!=null) {
-				System.out.println("ICI");
 				request.setAttribute("examenOn",examen.getIdExam());
 				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 			}
 			else
 			{
-				System.out.println("LA");
 				this.getServletContext().getRequestDispatcher( "/WEB-INF/CreerExamen.jsp" ).forward( request, response );
 			}
 

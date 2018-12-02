@@ -5,16 +5,14 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-
 /**
  * Classe qui correspond à la connexion à un client
  * Chaque client va communiquer avec le serveur par un port précis qui lui est attribué
  * @author etudiant
- *
+ * 
  */
 public class ClientHandler extends Thread{
 
-	//A déterminer ce que l'on prendra exactement
 	private String nomClient;
 	private String IDexam;
 	private int port;
@@ -26,14 +24,9 @@ public class ClientHandler extends Thread{
 	{
 		nomClient = NC;
 		IDexam = M;
-		System.out.println("SUPER DEBUG: " + IDexam);
 		port = P;
 		chemin = idVersChemin();
 		
-		System.out.println("DEBUG CHEMIN = " + chemin);
-		//Changer le chemin pour mettre l'id de la matière en dossier	!!!!
-		
-		System.out.println("DEBUG: Chemin UDP = " + chemin + ".surv");
 		sortieVideo = new FileOutputStream(chemin + nomClient + ".surv",true);
 	}
 
@@ -77,9 +70,7 @@ public class ClientHandler extends Thread{
 			e.printStackTrace();
 		}
 		finally
-		{
-			//?
-		}
+		{}
 	}
 
 	/**

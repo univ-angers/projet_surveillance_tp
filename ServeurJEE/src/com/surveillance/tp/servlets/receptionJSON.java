@@ -27,7 +27,6 @@ import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.beans.Regle;
 import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.beans.Utilisateur;
-import com.surveillance.tp.beans.reponseTest;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAORegle;
@@ -110,7 +109,7 @@ public class receptionJSON extends HttpServlet {
 
 			String chemin = directoryManager.idDbToString(idEx);
 
-			//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/logEtud.lg
+			//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
 			chemin = chemin + "/" + idEtud + "/";
 
 			//Créer le dossier de l'étudiant
@@ -118,7 +117,7 @@ public class receptionJSON extends HttpServlet {
 			dossierEt.mkdir();
 
 			//Créer le log de l'étudiant et son header
-			String cheminLog = chemin + "log" + util.getId() + ".lg";
+			String cheminLog = chemin + util.getId() + ".lg";
 			File fichierLog = new File(cheminLog);
 			//Dans le cas ou le fichier existe déjà (un étudiant qui quitte l'application et revient), on ne recréé pas de header
 			if (!fichierLog.exists())
@@ -295,8 +294,8 @@ public class receptionJSON extends HttpServlet {
 		String idExamen = (String) alerte.get("IDexamen");	
 		String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
 
-		//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/logNom.lg
-		chemin = chemin + "/" + idEtud + "/log" + util.getId() + ".lg";
+		//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
+		chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
 
 		miseAJourLog(chemin, alerte);		
 	}
@@ -368,7 +367,6 @@ public class receptionJSON extends HttpServlet {
 				break;
 			}			
 
-			System.out.println("CACA DE TEST");
 			System.out.println("DEBUG: AJOUT NOUVELLES INFORMATIONS DANS LE LOG");
 			//Mise à jour du log
 			body.add(alerte);
