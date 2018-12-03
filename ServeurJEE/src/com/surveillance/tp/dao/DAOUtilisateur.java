@@ -17,4 +17,6 @@ public interface DAOUtilisateur {
 	void miseAJour(Utilisateur utilisateur) throws DAOException;
 
 	ArrayList<Utilisateur> recupererUtilisateurs() throws DAOException;
+
+	Utilisateur trouverID(int idUtil);
 }

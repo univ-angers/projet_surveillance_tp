@@ -96,8 +96,33 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		return utilisateur;
 	}
 
-	////////////////////////////////
-	///////////////////////////////
+	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
+		private static final String SQL_SELECT_UTILISATEUR_ID = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE id_user = ?";
+
+
+	@Override
+	public Utilisateur trouverID(int idUtil) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Utilisateur utilisateur = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_UTILISATEUR_ID, false, idUtil);
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				utilisateur = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		return utilisateur;
+	}
 
 	private static final String SQL_SELECT_LISTE_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe  FROM Utilisateur";
 
@@ -129,7 +154,6 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		}
 		return utilisateurs;
 	}
-	////////////////////////
 
 	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ?";
 
@@ -177,7 +201,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de mettre à jour un examen
-	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom_user = ?, password = ?, mail = ?, groupe = ? WHERE id_user = ?";
+	private static final String SQL_UPDATE_UTIL = "UPDATE Utilisateur SET prenom = ?, nom_user = ?, password = MD5(?), mail = ?, groupe = ? WHERE id_user = ?";
 
 	@Override
 	public void miseAJour(Utilisateur utilisateur) throws DAOException {

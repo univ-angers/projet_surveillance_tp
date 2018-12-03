@@ -115,7 +115,17 @@
                             <!-- Register Form -->
                             <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-register form-horizontal push-50-t push-50" action="base_pages_register.html" method="post">
+                            <c:if test="${not empty info_change}">
+                            	<div class="form-group">
+                            		<div class="col-xs-12">
+                                		<div class="form-material form-material-success">
+                                    		<label for="mdp_succes">Vos données ont été changées avec succès.</label>
+										</div>
+                            		</div>
+                            	</div>
+                            </c:if>
+                            
+                            <form class="js-validation-register form-horizontal push-50-t push-50" action="monCompte" method="post">
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
@@ -127,34 +137,40 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="prenom" name="matiere" placeholder="Entrer votre prénom">
+                                            <input class="form-control" type="text" id="prenom" name="prenom" placeholder="Entrer votre prénom">
                                             <label for="prenom">Prénom</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-success">
-                                            <input class="form-control" type="text" id="poste" name="poste" placeholder="Entrer votre poste">
-                                            <label for=poste">Poste</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                                </div>                                
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-5">
-                                        <button class="btn btn-block btn-success" type="submit"><i class="si si-note"></i> Sauvegarde</button>
+                                        <button class="btn btn-block btn-success" id="saveInfos" name="saveInfos" type="submit"><i class="si si-note"></i> Sauvegarde</button>
                                         
                                     </div>
                                 </div>
                             </form>
                             
+                            <div class="form-group">
+                            	<div class="col-xs-12">
+                                	<div class="form-material form-material-success">
+                                    	<c:if test="${not empty mdp_change}">
+   											<label for="mdp_succes">Le mot de passe a été changé avec succes.</label>
+										</c:if>
+                           				 <c:if test="${not empty mdp_fail}">
+   											<label for="md_fail">Mot de passe non correspondant.</label>
+										</c:if>                
+                                	</div>
+                            	</div>
+                            </div>
+                               
+                            </br>
+                       
                             
-                            <form class="js-validation-register form-horizontal push-50-t push-50" action="base_pages_register.html" method="post">
+                            <form class="js-validation-register form-horizontal push-50-t push-50" action="monCompte" method="post">
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="password" id="motPasse" name="motPasse" placeholder="Entrer votre mot de passe ">
+                                            <input class="form-control" type="password" id="motPass" name="motPass" placeholder="Entrer votre mot de passe ">
                                             <label for="motPasse">Mot de passe</label>
                                         </div>
                                     </div>
@@ -162,7 +178,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="password" id="nouvPasse" name="nouvPasse" placeholder="Entrer votre nouveau mot de passe">
+                                            <input class="form-control" type="password" id="nouvPass" name="nouvPass" placeholder="Entrer votre nouveau mot de passe">
                                             <label for="nouvPasse">Nouveau mot de passe</label>
                                         </div>
                                     </div>
@@ -170,7 +186,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="password" id="confPasse" name="confPasse" placeholder="Confirmer votre mot de passe">
+                                            <input class="form-control" type="password" id="confPass" name="confPass" placeholder="Confirmer votre mot de passe">
                                             <label for="confPasse">Confirmer votre mot de passe</label>
                                         </div>
                                     </div>
@@ -178,7 +194,7 @@
                                 
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-5">
-                                        <button class="btn btn-block btn-success" type="submit"><i class="si si-note"></i> Sauvegarde</button>
+                                        <button class="btn btn-block btn-success" id="saveMdp" name="saveMdp" type="submit"><i class="si si-note"></i> Sauvegarde</button>
                                         
                                     </div>
                                 </div>
