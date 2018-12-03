@@ -38,7 +38,10 @@ public class monCompte extends HttpServlet {
 
 		//Si l'utilisateur est un élève, donc pas les droits
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
+		{
+			request.setAttribute("eleve", "oui");
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/MonCompte.jsp" ).forward( request, response ); 
+		}
 
 		else
 		{
@@ -110,6 +113,8 @@ public class monCompte extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+			else
+				request.setAttribute("mdp_fail", "oui");
 		}
 
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/MonCompte.jsp" ).forward( request, response );

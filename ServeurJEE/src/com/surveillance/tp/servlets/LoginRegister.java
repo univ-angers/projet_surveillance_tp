@@ -31,7 +31,13 @@ public class LoginRegister extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/authentification.jsp").forward(request, response);	
+
+		HttpSession session = request.getSession();
+		//Aucun utilisateur connecté
+		if (session.getAttribute("id_user") == null)
+			request.getRequestDispatcher("/WEB-INF/authentification.jsp").forward(request, response);
+		else
+			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 	}
 
 	/**
@@ -55,7 +61,7 @@ public class LoginRegister extends HttpServlet {
 			session.setAttribute("prenomUtilisateur", utilCo.getPrenom());
 			session.setAttribute("groupeUtilisateur", utilCo.getGroupe());
 			session.setAttribute("id_user",utilCo.getId() );
-			
+
 
 			if (utilCo.getGroupe().equals("eleve"))
 				response.sendRedirect("/ServeurJEE/monCompte");

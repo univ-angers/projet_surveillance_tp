@@ -63,6 +63,7 @@
                 <div class="bg-primary-lighter collapse navbar-collapse remove-padding" id="sub-header-nav">
                     <div class="content-mini content-boxed">
                         <ul class="nav nav-pills nav-sub-header push">
+                        <c:if test="${empty eleve}">    
                             <li >
                                 <a href="listeUtilisateurs">
                                     <i class="fa fa-users"></i>Liste des utilisateurs
@@ -87,6 +88,7 @@
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>
+                  		</c:if>      
                             <li class="active">
                                 <a href="">
                                     <i class="fa fa-user"></i>Mon compte

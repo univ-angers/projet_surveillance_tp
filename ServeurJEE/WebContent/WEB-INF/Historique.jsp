@@ -83,7 +83,7 @@
                          		</li>
 							</c:if>
                             <li class="active">
-                                <a href="listeExams">
+                                <a href="">
                                     <i class="fa fa-archive"></i>Historique
                                 </a>
                             </li>

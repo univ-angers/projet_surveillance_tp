@@ -49,13 +49,9 @@ public class ReceptionResetPass extends HttpServlet {
 		System.out.println("BLBLBL");
 		String nouvMdp = (String) request.getParameter("nouv_mdp");
 		String verifMdp = (String) request.getParameter("mdp_conf");
-		System.out.println("DEBUG = " + nouvMdp);
-		System.out.println("DEBUG = " + verifMdp);
 
-		String idUtilSt = (String) request.getParameter("id_util");
+		String idUtilSt = (String) request.getParameter("id_user");
 		int idUtil = Integer.valueOf(idUtilSt);
-		
-		System.out.println("DEBUG = " + idUtil);
 		
 		Utilisateur util = daoUtilisateur.trouverID(idUtil);
 		if (util != null)

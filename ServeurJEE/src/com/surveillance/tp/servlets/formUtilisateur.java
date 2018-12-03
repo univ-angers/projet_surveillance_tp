@@ -5,14 +5,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.surveillance.tp.beans.Utilisateur;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
 public class formUtilisateur extends HttpServlet {
-	
-	
+
+
 	public static final String CONF_DAO_FACTORY = "daofactory";
 
 	private DAOUtilisateur daoUtilisateur;
@@ -21,17 +22,24 @@ public class formUtilisateur extends HttpServlet {
 		/* Récupération d'une instance de notre DAO Utilisateur */
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
 	}
-		
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{		
-        /* Transmission vers la page en charge de l'affichage des résultats */
-        this.getServletContext().getRequestDispatcher( "/WEB-INF/Inscription.jsp" ).forward( request, response );
+		HttpSession session = request.getSession();
+		//Aucun utilisateur connecté
+		if (session.getAttribute("id_user") == null)
+		{
+			/* Transmission vers la page en charge de l'affichage des résultats */
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/Inscription.jsp" ).forward( request, response );
+		}
+		else
+			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 	}
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		/* Creation d'un utilisateur si les conditions sont remplies */
 		ajouterUtilisateur(request);
-		
+
 		/* Affichage de la vue qu'on veut */
 		response.sendRedirect("/ServeurJEE/LoginRegister");
 	}

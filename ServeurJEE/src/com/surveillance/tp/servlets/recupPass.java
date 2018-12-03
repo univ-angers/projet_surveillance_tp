@@ -29,7 +29,6 @@ public class recupPass extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String destination = (String) request.getParameter("reminder-email");
-		System.out.println(destination);
 		Utilisateur util = daoUtilisateur.trouver(destination);
 		
 		if (util != null)
