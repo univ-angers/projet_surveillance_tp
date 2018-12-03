@@ -134,29 +134,24 @@
                                         	<th>Alerte</th>
                                         	<th>Critique</th>
                                         	<th>Streaming</th>
-                                        	</tr>
-                                        
+                                        	</tr>                                        
                                              <%ArrayList<EtudiantExamen> util=(ArrayList<EtudiantExamen>)request.getAttribute("utilisateurs")	;
-                                             
                                              for(EtudiantExamen u:util){
-                                            	 
-                                   
-                                             %>  
-                                             
-                                               
-                                              
+                                            %>  
                                             <tr>
-                                                <td><%=u.getNomEt() %></td>
-                                                <td><%=u.getPrenEt() %></td>                                                
-                                                <td><%=u.getNbAlertes() %></td>
-                                                <td><%=u.getNbAlertesCritiques() %></td>
-                                                <td> <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="">
-                                        <i class="si si-control-play"></i>
-                                    </a></td>
-                                                
-                                            </tr>
-                                            <%} %>
-                                            
+												<td><%=u.getNomEt()%></td>
+												<td><%=u.getPrenEt()%></td>
+												<td><%=u.getNbAlertes()%></td>
+												<td><%=u.getNbAlertesCritiques()%></td>
+												<td><a
+													class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft"
+													data-toggle="appear" data-class="animated fadeInLeft"
+													href=<%="\"detailExamen?id_etudiant=" +u.getId() + "\""%>> <i
+													class="si si-control-play"></i>
+												</a></td>
+
+											</tr>
+                                            <%} %>                                            
                                         </tbody>
                                     </table>
                                 </div>

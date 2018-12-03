@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="block-content">
                                         
-                                        <div class="font-s12 text-center push">Fichier.txt</div>
+                                        <div class="font-s12 text-center push">Log</div>
                                     </div>
                                 </a>
                             </div>
@@ -84,20 +84,19 @@
                                     <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
                                 </li>
                             </ul>
-                            <h3 class="block-title">Text content</h3>
+                            <h3 class="block-title">Log</h3>
                         </div>
-                        <div class="block-content">
-                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                        <div class="block-content" style="overflow:scroll;">
+                        
+                        <%if(request.getAttribute("log2")!=null){ %>
+                            <p><%=request.getAttribute("log") %></p>
+                            <%} %>
+                            
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Télécharger le fichier</button>
-                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> Envoyer le fichier</button>
-                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> Editer le fichier</button>
+                        
+                        
                     </div>
                 </div>
             </div>
