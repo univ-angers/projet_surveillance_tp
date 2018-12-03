@@ -247,27 +247,39 @@ public class receptionJSON extends HttpServlet {
 
 		if (exam != null)
 		{
-			Timestamp dateDebut = exam.getHeureDebut();
-			Time duree = exam.getDuree();
-			long GMT1 = 3600000;		//Decalage horaire du à GMT+1
+			String retour = "";
+			if (exam.getHeureDebut() != null)
+			{
+				Timestamp dateDebut = exam.getHeureDebut();
+				Time duree = exam.getDuree();
+				long GMT1 = 3600000;		//Decalage horaire du à GMT+1
 
-			long tempsDebut = dateDebut.getTime();
-			long tempsDuree = duree.getTime();
-			long heureFin = tempsDuree + tempsDebut + GMT1;
-			long tempsActuel = System.currentTimeMillis();
+				long tempsDebut = dateDebut.getTime();
+				long tempsDuree = duree.getTime();
+				long heureFin = tempsDuree + tempsDebut + GMT1;
+				long tempsActuel = System.currentTimeMillis();
 
-			long tempsRestant = heureFin - tempsActuel;		
+				long tempsRestant = heureFin - tempsActuel;		
 
-			Date fin = new Date(tempsRestant);
-			DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-			formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-			String temps = formatter.format(fin);
+				Date fin = new Date(tempsRestant);
+				DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+				formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+				String temps = formatter.format(fin);
 
-			JSONObject jsObj = new JSONObject();
-			jsObj.put("type", "rep_temps");
-			jsObj.put("code", 200);
-			jsObj.put("tps", temps);
-			String retour = jsObj.toJSONString();
+				JSONObject jsObj = new JSONObject();
+				jsObj.put("type", "rep_temps");
+				jsObj.put("code", 200);
+				jsObj.put("tps", temps);
+				retour = jsObj.toJSONString();
+			}
+			else
+			{
+				JSONObject jsObj = new JSONObject();
+				jsObj.put("type", "rep_temps");
+				jsObj.put("code", 200);
+				jsObj.put("tps", "Examen non démarré");
+				retour = jsObj.toJSONString();
+			}
 			envoiInfoClient(retour, rep);			
 		}
 	}
