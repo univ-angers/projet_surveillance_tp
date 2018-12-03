@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -102,10 +102,16 @@
                        
                         <div class="block-content block-content-full block-content-narrow" >
                         <center>
-                        <a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="demarrageExamen">
+                        <c:if test="${not empty Demarre}">
+   									<a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="demarrageExamen">
                                         <i class="si si-control-play"></i>
                                     </a>
-                            <a class="btn btn-rounded btn-noborder btn-lg btn-primary push-5 animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight" href="arretExamen" style="background-color:red;"><i class="fa fa-power-off"></i></a>
+						</c:if>
+                         <c:if test="${empty Demarre}">
+   						        <a class="btn btn-rounded btn-noborder btn-lg btn-primary push-5 animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight" href="arretExamen" style="background-color:red;">
+                            	<i class="fa fa-power-off"></i>
+                            </a>
+                        </c:if>
                         </center>
                             <!-- Register Title -->
                            
