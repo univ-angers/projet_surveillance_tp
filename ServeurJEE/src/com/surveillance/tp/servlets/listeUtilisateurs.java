@@ -65,27 +65,35 @@ public class listeUtilisateurs extends HttpServlet {
 			//Verification que le temps d'examen n'est pas terminé
 			if (examEnCours != null) {
 				if (examTimer.examenTermine(examEnCours))
+				{
+					System.out.println("pouet");
 					response.sendRedirect("/ServeurJEE/arretExamen");
-			}
+				}
+				else
+				{
+					ArrayList<EtudiantExamen> listeUtilisateurExamenCourant = new ArrayList<>();
 
-			ArrayList<EtudiantExamen> listeUtilisateurExamenCourant = new ArrayList<>();
-			if (examEnCours != null)
+					String cheminExam = directoryManager.idDbToString(examEnCours.getIdExam());
+					listeUtilisateurExamenCourant = recupererEtudiants(cheminExam);
+
+					//Permet de savoir quel onglet afficher
+					request.setAttribute("afficheParam", 1);				
+
+					request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);				
+
+					this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
+				}
+			}
+			else
 			{
-				String cheminExam = directoryManager.idDbToString(examEnCours.getIdExam());
-				listeUtilisateurExamenCourant = recupererEtudiants(cheminExam);
+				ArrayList<EtudiantExamen> listeUtilisateurExamenCourant = new ArrayList<>();
 
-				//Permet de savoir quel onglet afficher
-				request.setAttribute("afficheParam", 1);
+				request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);				
+
+				this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
 			}
-
-			request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);
-
-			/* Afichage */
-			this.getServletContext().getRequestDispatcher( "/WEB-INF/listeUtilisateurs.jsp" ).forward( request, response );
-
 		}
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

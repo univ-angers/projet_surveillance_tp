@@ -11,23 +11,30 @@ public class examTimer {
 	{
 		if (exam != null)
 		{
-			Timestamp dateDebut = exam.getHeureDebut();
-			Time duree = exam.getDuree();
-			long GMT1 = 3600000;		//Decalage horaire du à GMT+1
-
-			long tempsDebut = dateDebut.getTime();
-			long tempsDuree = duree.getTime();
-			long heureFin = tempsDuree + tempsDebut + GMT1;
-			long tempsActuel = System.currentTimeMillis();
-
-			long tempsRestant = heureFin - tempsActuel;
-			
-			//Temps supplémentaire pour que les watchers ne s'arrêtent pas pile à l'examen, en cas de retard
-			long tempsSupplementaire = -600000;	//10 minutes
-			if (tempsRestant > tempsSupplementaire)
+			//Cas de l'examen créé mais qui n'a jamais démarré
+			//On ne retourne pas qu'il est fini puisqu'il n'a pas commencé
+			if (exam.getHeureDebut() == null)
 				return false;
+			else
+			{
+				Timestamp dateDebut = exam.getHeureDebut();
+				Time duree = exam.getDuree();
+				long GMT1 = 3600000;		//Decalage horaire du à GMT+1
+
+				long tempsDebut = dateDebut.getTime();
+				long tempsDuree = duree.getTime();
+				long heureFin = tempsDuree + tempsDebut + GMT1;
+				long tempsActuel = System.currentTimeMillis();
+
+				long tempsRestant = heureFin - tempsActuel;
+
+				//Temps supplémentaire pour que les watchers ne s'arrêtent pas pile à l'examen, en cas de retard
+				long tempsSupplementaire = -600000;	//10 minutes
+				if (tempsRestant > tempsSupplementaire)
+					return false;
+			}
 		}
-		
+
 		return true;
 	}
 }

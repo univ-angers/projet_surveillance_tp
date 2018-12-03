@@ -80,7 +80,9 @@ public class receptionJSON extends HttpServlet {
 			else if ( type.equals("get_time_exam"))
 				retourTimer(jObj, response);
 			else
+			{				
 				ajoutLog(jObj);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,6 +101,7 @@ public class receptionJSON extends HttpServlet {
 
 		Utilisateur util = 	daoUtilisateur.trouverMdp(mail, motDePasse);
 		Examen exam = daoExamen.trouver(idEx);
+
 
 		//Si l'utilisateur existe et que son mot de passe est correct, ainsi qu'un examen valide
 		if (util != null && exam != null)
@@ -275,24 +278,25 @@ public class receptionJSON extends HttpServlet {
 	 */
 	public void ajoutLog(JSONObject alerte)
 	{
-		/*
-		 * 
-		 * TODO: Rechercher l'ID de la règle qui doit être appliquée dans la BDD, et la mettre dans le log
-		 * 
-		 */
-
-		//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
-		String mail = (String) alerte.get("mailEtudiant");
-		Utilisateur util = 	daoUtilisateur.trouver(mail);
-		int idEtud = util.getId();
-
 		String idExamen = (String) alerte.get("IDexamen");	
-		String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
+		int idEx = Integer.valueOf(idExamen);
+		Examen examEnCours = daoExamen.trouver(idEx);
 
-		//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
-		chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
+		//Si l'examen auquel on veut ajouter nos logs a bien commencé
+		if (examEnCours.getHeureDebut() != null)
+		{
+			//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
+			String mail = (String) alerte.get("mailEtudiant");
+			Utilisateur util = 	daoUtilisateur.trouver(mail);
+			int idEtud = util.getId();
 
-		miseAJourLog(chemin, alerte);		
+			String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
+
+			//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
+			chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
+
+			miseAJourLog(chemin, alerte);
+		}
 	}
 
 	/**
@@ -320,7 +324,7 @@ public class receptionJSON extends HttpServlet {
 			long nbUSB = (long) header.get("nbUSB");
 			long nbNet = (long) header.get("nbNet");
 
-			
+
 
 			//On récupère le type de l'alerte
 			String type = (String) alerte.get("type");
@@ -330,7 +334,7 @@ public class receptionJSON extends HttpServlet {
 			String idRegle = String.valueOf(reg.getIdRegle());
 			//Mise a jour de l'alerte qui ira dans le body
 			alerte.put("type", idRegle);
-			
+
 			//Mise à jour du header
 			nbLog++;
 			header.put("nbLog", nbLog);

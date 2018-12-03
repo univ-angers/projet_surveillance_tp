@@ -53,106 +53,104 @@ public class paramExam extends HttpServlet {
 				if (examTimer.examenTermine(examEnCours))
 					response.sendRedirect("/ServeurJEE/arretExamen");
 
-				request.setAttribute("IDexam", examEnCours.getIdExam());
-				request.setAttribute("Matiere", examEnCours.getMatiere());
-				request.setAttribute("IP", InetAddress.getLocalHost().getHostAddress());
+				else
+				{
+					request.setAttribute("IDexam", examEnCours.getIdExam());
+					request.setAttribute("Matiere", examEnCours.getMatiere());
+					request.setAttribute("IP", InetAddress.getLocalHost().getHostAddress());
 
-				this.getServletContext().getRequestDispatcher( "/WEB-INF/ParametresExamen.jsp" ).forward( request, response );
+					this.getServletContext().getRequestDispatcher( "/WEB-INF/ParametresExamen.jsp" ).forward( request, response );
+				}
 			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* Récupération des données du formulaire */
-		String cocheModif = (String)request.getParameter("modif_ok");
-		
-		//Si l'utilisateur a coché la case de modification
-		if (cocheModif.length() > 0)
+
+		//Recupération de la durée
+		String dureeH = request.getParameter("duree-heure");
+		dureeH = "0" + dureeH;		//Pour la mise en forme
+		String dureeM = request.getParameter("duree-minute");
+		String timeSt = dureeH + ":" + dureeM + ":00";
+		Time time = Time.valueOf(timeSt);
+		//Recupération de la matière
+		String matiere = request.getParameter("matiere");
+
+		HttpSession session = request.getSession();
+		int idProf = (int) session.getAttribute("id_user");
+
+		//Modification si besoin de l'examen
+		Examen examEnCours = daoExamen.trouverExamenUtil(idProf);
+		if (examEnCours.getDuree() != time || examEnCours.getMatiere() != matiere)
+		{			
+			examEnCours.setMatiere(matiere);
+			examEnCours.setDuree(time);		
+			daoExamen.miseAJour(examEnCours);
+		}
+
+		/* Gestion des règles */
+		String cocheFichier = (String)request.getParameter("bouton_fichier");	// "on" si coché, null sinon
+		String cocheUSB = (String)request.getParameter("bouton_usb");
+		String cocheClavier = (String)request.getParameter("bouton_clavier");
+		String cocheVideo = (String)request.getParameter("bouton_video");
+		//Récupération de la white-list
+		String ListeExamens = request.getParameter("white-list");
+
+
+		//On va supprimer toutes les règles qui existaient pour cet examen, et les recréer
+		daoRegleExamen.supprimerExam(examEnCours.getIdExam());
+
+		RegleExam re = new RegleExam();
+		re.setIdExam(examEnCours.getIdExam());
+
+		if (cocheUSB != null)
 		{
-			//Recupération de la durée
-			String dureeH = request.getParameter("duree-heure");
-			dureeH = "0" + dureeH;		//Pour la mise en forme
-			String dureeM = request.getParameter("duree-minute");
-			String timeSt = dureeH + ":" + dureeM + ":00";
-			Time time = Time.valueOf(timeSt);
-			//Recupération de la matière
-			String matiere = request.getParameter("matiere");
+			re.setIdRegle(1);			//Connexion USB
+			daoRegleExamen.creer(re);
+			re.setIdRegle(2);			//Deconnexion USB
+			daoRegleExamen.creer(re);
+		}
 
-			HttpSession session = request.getSession();
-			int idProf = (int) session.getAttribute("id_user");
+		if (cocheFichier != null)
+		{
+			re.setIdRegle(3);			//creation fichier
+			daoRegleExamen.creer(re);
+			re.setIdRegle(4);			//modification fichier
+			daoRegleExamen.creer(re);
+			re.setIdRegle(5);			//suppression fichier
+			daoRegleExamen.creer(re);
+		}
 
-			//Modification si besoin de l'examen
-			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);
-			if (examEnCours.getDuree() != time || examEnCours.getMatiere() != matiere)
-			{			
-				examEnCours.setMatiere(matiere);
-				examEnCours.setDuree(time);		
-				daoExamen.miseAJour(examEnCours);
-			}
+		if (cocheVideo != null)
+		{
+			re.setIdRegle(6);			// Vidéo
+			daoRegleExamen.creer(re);
+		}
 
-			/* Gestion des règles */
-			String cocheFichier = (String)request.getParameter("bouton_fichier");	// "on" si coché, null sinon
-			String cocheUSB = (String)request.getParameter("bouton_usb");
-			String cocheClavier = (String)request.getParameter("bouton_clavier");
-			String cocheVideo = (String)request.getParameter("bouton_video");
-			//Récupération de la white-list
-			String ListeExamens = request.getParameter("white-list");
-
-
-			//On va supprimer toutes les règles qui existaient pour cet examen, et les recréer
-			daoRegleExamen.supprimerExam(examEnCours.getIdExam());
-
-			RegleExam re = new RegleExam();
-			re.setIdExam(examEnCours.getIdExam());
-
-			if (cocheUSB != null)
+		if (ListeExamens.length() > 0)
+		{
+			re.setIdRegle(7);
+			//Recupération de chaque site dans le tableau
+			String[] tabSite = ListeExamens.split(" ");
+			//Tableau JSON qui sera mis dans la table
+			JSONArray jsTab = new JSONArray();
+			for (int i=0; i<tabSite.length; i++)
 			{
-				re.setIdRegle(1);			//Connexion USB
-				daoRegleExamen.creer(re);
-				re.setIdRegle(2);			//Deconnexion USB
-				daoRegleExamen.creer(re);
+				JSONObject obj = new JSONObject();
+				obj.put(String.valueOf(i),tabSite[i]);
+				jsTab.add(obj);
 			}
 
-			if (cocheFichier != null)
-			{
-				re.setIdRegle(3);			//creation fichier
-				daoRegleExamen.creer(re);
-				re.setIdRegle(4);			//modification fichier
-				daoRegleExamen.creer(re);
-				re.setIdRegle(5);			//suppression fichier
-				daoRegleExamen.creer(re);
-			}
+			String jsString = jsTab.toJSONString();
 
-			if (cocheVideo != null)
-			{
-				re.setIdRegle(6);			// Vidéo
-				daoRegleExamen.creer(re);
-			}
+			daoRegleExamen.creerAttribut(re,jsString);
+		}
 
-			if (ListeExamens.length() > 0)
-			{
-				re.setIdRegle(7);
-				//Recupération de chaque site dans le tableau
-				String[] tabSite = ListeExamens.split(" ");
-				//Tableau JSON qui sera mis dans la table
-				JSONArray jsTab = new JSONArray();
-				for (int i=0; i<tabSite.length; i++)
-				{
-					JSONObject obj = new JSONObject();
-					obj.put(String.valueOf(i),tabSite[i]);
-					jsTab.add(obj);
-				}
-
-				String jsString = jsTab.toJSONString();
-
-				daoRegleExamen.creerAttribut(re,jsString);
-			}
-
-			if (cocheClavier != null)
-			{
-				re.setIdRegle(8);			//Touche appuyée
-				daoRegleExamen.creer(re);
-			}
+		if (cocheClavier != null)
+		{
+			re.setIdRegle(8);			//Touche appuyée
+			daoRegleExamen.creer(re);
 		}
 
 		response.sendRedirect("/ServeurJEE/listeUtilisateurs");

@@ -36,7 +36,7 @@ public class DAOExamenImpl implements DAOExamen {
 	}
 
 	
-	private static final String SQL_INSERT_EXAM = "INSERT INTO Examen (id_user, matiere, duree, heure_debut) VALUES (?, ?, ?, NOW())";
+	private static final String SQL_INSERT_EXAM = "INSERT INTO Examen (id_user, matiere, duree, heure_debut) VALUES (?, ?, ?, NULL)";
 		
 	@Override
 	public void creer(Examen examen) throws DAOException {
