@@ -44,7 +44,7 @@ public class Quitter extends JDialog
 		panel.setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
 
-		l_quitter = new JLabel("Voulez-vous vraiment quitter l'examen ?");
+		l_quitter = new JLabel("Attention une alerte sera envoyée. Quitter ?");
 		c.fill = GridBagConstraints.CENTER;
 		c.weightx = 0.3;
 		c.gridx = 1;
@@ -68,7 +68,7 @@ public class Quitter extends JDialog
 					Thread t = new Thread() {
 						public void run() {
 							try {
-								sleep(2000);	//Permet aux watchers de bien de terminer
+								sleep(2000);	//Permet aux watchers de bien se terminer
 								System.exit(0);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
