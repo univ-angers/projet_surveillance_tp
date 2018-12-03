@@ -10,6 +10,10 @@ public interface DAOUtilisateur {
 
 	Utilisateur trouverMdp(String mail, String password) throws DAOException;
 	
+	Utilisateur trouverCleReset(String cle) throws DAOException;
+
+	Utilisateur trouverID(int idUtil);
+	
 	Utilisateur trouver(String mail) throws DAOException;
 	
 	void supprimer(int idUtil) throws DAOException;
@@ -18,5 +22,6 @@ public interface DAOUtilisateur {
 
 	ArrayList<Utilisateur> recupererUtilisateurs() throws DAOException;
 
-	Utilisateur trouverID(int idUtil);
+	
+	public void miseAJourReset(Utilisateur utilisateur, String token) throws DAOException;
 }

@@ -137,6 +137,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>receptionResetPass</servlet-name>
+    <servlet-class>com.surveillance.tp.servlets.ReceptionResetPass</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>receptionResetPass</servlet-name>
+    <url-pattern>/receptionReset</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>video</servlet-name>
     <servlet-class>com.surveillance.tp.servlets.video</servlet-class>
   </servlet>

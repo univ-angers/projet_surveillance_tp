@@ -33,6 +33,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		utilisateur.setPassword(resultSet.getString("password"));
 		utilisateur.setMail(resultSet.getString("mail"));
 		utilisateur.setGroupe(resultSet.getString("groupe"));
+		utilisateur.setCleRecup(resultSet.getString("cle_reset_mail"));
 
 		return utilisateur;
 	}
@@ -70,7 +71,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
-	private static final String SQL_SELECT_UTILISATEUR_MDP = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ? AND password = MD5(?)";
+	private static final String SQL_SELECT_UTILISATEUR_MDP = "SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE mail = ? AND password = MD5(?)";
 
 	@Override
 	public Utilisateur trouverMdp(String mail, String password) throws DAOException {
@@ -95,9 +96,36 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		}
 		return utilisateur;
 	}
+	
+	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
+		private static final String SQL_SELECT_UTILISATEUR_CLE_RESET = "SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE cle_reset_mail = ?";
+
+		@Override
+		public Utilisateur trouverCleReset(String cle) throws DAOException {
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			Utilisateur utilisateur = null;
+
+			try {
+				/* Récupération d'une connexion depuis la Factory */
+				connexion = daoFactory.getConnection();
+				preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_UTILISATEUR_CLE_RESET, false, cle);
+				resultSet = preparedStatement.executeQuery();
+				/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+				if ( resultSet.next() ) {
+					utilisateur = map( resultSet );
+				}
+			} catch ( SQLException e ) {
+				throw new DAOException( e );
+			} finally {
+				fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+			}
+			return utilisateur;
+		}
 
 	//Requête permettant de rechercher un utilisateur dans la BDD par son ID
-		private static final String SQL_SELECT_UTILISATEUR_ID = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE id_user = ?";
+		private static final String SQL_SELECT_UTILISATEUR_ID = "SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE id_user = ?";
 
 
 	@Override
@@ -124,7 +152,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		return utilisateur;
 	}
 
-	private static final String SQL_SELECT_LISTE_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe  FROM Utilisateur";
+	private static final String SQL_SELECT_LISTE_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail  FROM Utilisateur";
 
 	@Override
 	public 
@@ -155,7 +183,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 		return utilisateurs;
 	}
 
-	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe FROM Utilisateur WHERE mail = ?";
+	private static final String SQL_SELECT_UTILISATEUR = "SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE mail = ?";
 
 	@Override
 	public Utilisateur trouver(String mail) throws DAOException {
@@ -219,4 +247,24 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 			fermeturesSilencieuses(preparedStatement, connexion);
 		}
 	}
+	
+	//Requête permettant de mettre à jour la clé de reset d'un examen
+		private static final String SQL_UPDATE_UTIL_RESET = "UPDATE Utilisateur SET cle_reset_mail = ? WHERE id_user = ?";
+
+		@Override
+		public void miseAJourReset(Utilisateur utilisateur, String token) throws DAOException {
+			Connection connexion = null;
+			PreparedStatement preparedStatement = null;
+
+			try {
+				/* Récupération d'une connexion depuis la Factory */
+				connexion = daoFactory.getConnection();
+				preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_UTIL_RESET, false, token, utilisateur.getId() );
+				preparedStatement.executeUpdate();
+			} catch ( SQLException e ) {
+				throw new DAOException( e );
+			} finally {
+				fermeturesSilencieuses(preparedStatement, connexion);
+			}
+		}
 }

@@ -32,6 +32,7 @@ nom_user VARCHAR(50),
 password VARCHAR(255),
 mail VARCHAR(100),
 groupe VARCHAR(50),
+cle_reset_mail VARCHAR(30),
 PRIMARY KEY (id_user));
 
 CREATE TABLE Examen

@@ -30,13 +30,10 @@ public class formUtilisateur extends HttpServlet {
 
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		/* Creation d'un utilisateur si les conditions sont remplies */
-		Utilisateur nouvUtilisateur = ajouterUtilisateur(request);
-
-		/* Stockage du bean dans la request */
-		request.setAttribute("Utilisateur", nouvUtilisateur);
+		ajouterUtilisateur(request);
 		
 		/* Affichage de la vue qu'on veut */
-		//this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		response.sendRedirect("/ServeurJEE/LoginRegister");
 	}
 
 	public Utilisateur ajouterUtilisateur(HttpServletRequest request)

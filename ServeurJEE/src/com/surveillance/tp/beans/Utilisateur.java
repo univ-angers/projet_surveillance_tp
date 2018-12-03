@@ -7,6 +7,7 @@ public class Utilisateur {
 	private String password;
 	private String mail;
 	private String groupe;
+	private String cleRecup;
 	
 	public String getGroupe() {
 		return groupe;
@@ -47,5 +48,11 @@ public class Utilisateur {
 	}
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+	public String getCleRecup() {
+		return cleRecup;
+	}
+	public void setCleRecup(String cleRecup) {
+		this.cleRecup = cleRecup;
 	}
 }

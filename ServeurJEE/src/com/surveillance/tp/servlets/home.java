@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class home extends HttpServlet {
 
@@ -19,6 +20,12 @@ public class home extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		HttpSession session = request.getSession();
+
+		//Aucun utilisateur connecté
+		if (session.getAttribute("id_user") == null)
+			request.setAttribute("affiche_auth", "oui");
+		
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );        
 	}
 

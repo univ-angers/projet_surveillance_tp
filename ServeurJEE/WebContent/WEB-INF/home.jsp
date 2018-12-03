@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="ie9 no-focus" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
@@ -68,19 +68,19 @@
                                     <i class="fa fa-wrench"></i>Acceuil
                                 </a>
                             </li>
-                            <li >
-                                <a href="LoginRegister">
-                                    <i class="fa fa-users"></i>Connexion
-                                </a>
-                            </li>
-                            <li >
-                                <a href="formUtilisateur">
-                                    <i class="fa fa-wrench"></i>Inscription
-                                </a>
-                            </li>
-                           
-                            
-                        </ul>
+                            <c:if test="${not empty affiche_auth}">
+   								<li >
+                                	<a href="LoginRegister">
+                                    	<i class="fa fa-users"></i>Connexion
+                           		    </a>
+                            	</li>
+                            	<li >
+                                	<a href="formUtilisateur">
+                                    	<i class="fa fa-wrench"></i>Inscription
+                                	</a>
+                            	</li>
+   							</c:if>
+                    	</ul>
                     </div>
                 </div>
                 <!-- END Sub Header -->

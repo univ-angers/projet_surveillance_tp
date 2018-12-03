@@ -32,7 +32,7 @@
                         <div class="block-header bg-primary">
                             <ul class="block-options">
                                 <li>
-                                    <a href="RecupPass.jsp">Mot de passe oublié ?</a>
+                                    <a href="recupPass">Mot de passe oublié ?</a>
                                 </li>
                                 <li>
                                     <a href="Inscription.jsp" data-toggle="tooltip" data-placement="left" title="New Account"><i class="si si-plus"></i></a>
