@@ -23,23 +23,22 @@ public class ReceptionResetPass extends HttpServlet {
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Coucou");
 		//Recupérer ID 
 		String token = request.getQueryString();
-		
-		Utilisateur util = daoUtilisateur.trouverCleReset(token);
-		
-		if (util != null)
+
+		if (token.length() == 30)
 		{
-			request.setAttribute("id_util", util.getId());
-			request.getRequestDispatcher("/WEB-INF/recupReset.jsp").forward(request, response);	
+			Utilisateur util = daoUtilisateur.trouverCleReset(token);
+
+			if (util != null)
+			{
+				request.setAttribute("id_util", util.getId());
+				request.getRequestDispatcher("/WEB-INF/recupReset.jsp").forward(request, response);	
+			}
+			else
+				request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 		}
-		else
-			request.getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);	
 	}
 
 	/**
@@ -52,7 +51,7 @@ public class ReceptionResetPass extends HttpServlet {
 
 		String idUtilSt = (String) request.getParameter("id_user");
 		int idUtil = Integer.valueOf(idUtilSt);
-		
+
 		Utilisateur util = daoUtilisateur.trouverID(idUtil);
 		if (util != null)
 		{
@@ -61,7 +60,7 @@ public class ReceptionResetPass extends HttpServlet {
 				util.setPassword(nouvMdp);
 				daoUtilisateur.miseAJour(util);
 				daoUtilisateur.miseAJourReset(util, null);
-				
+
 				response.sendRedirect("/ServeurJEE/home");
 			}
 			else
@@ -76,6 +75,6 @@ public class ReceptionResetPass extends HttpServlet {
 			request.setAttribute("erreur", "oui");
 			request.getRequestDispatcher("/WEB-INF/recupReset.jsp").forward(request, response);	
 		}
-		
+
 	}
 }

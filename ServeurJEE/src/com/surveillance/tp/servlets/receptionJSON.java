@@ -33,6 +33,7 @@ import com.surveillance.tp.dao.DAORegle;
 import com.surveillance.tp.dao.DAORegleExamen;
 import com.surveillance.tp.dao.DAOUtilisateur;
 import com.surveillance.tp.utilitaire.directoryManager;
+import com.surveillance.tp.utilitaire.examTimer;
 
 public class receptionJSON extends HttpServlet {
 
@@ -250,16 +251,7 @@ public class receptionJSON extends HttpServlet {
 			String retour = "";
 			if (exam.getHeureDebut() != null)
 			{
-				Timestamp dateDebut = exam.getHeureDebut();
-				Time duree = exam.getDuree();
-				long GMT1 = 3600000;		//Decalage horaire du à GMT+1
-
-				long tempsDebut = dateDebut.getTime();
-				long tempsDuree = duree.getTime();
-				long heureFin = tempsDuree + tempsDebut + GMT1;
-				long tempsActuel = System.currentTimeMillis();
-
-				long tempsRestant = heureFin - tempsActuel;		
+				long tempsRestant = examTimer.tempsRestant(exam);
 
 				Date fin = new Date(tempsRestant);
 				DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
@@ -297,17 +289,21 @@ public class receptionJSON extends HttpServlet {
 		//Si l'examen auquel on veut ajouter nos logs a bien commencé
 		if (examEnCours.getHeureDebut() != null)
 		{
-			//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
-			String mail = (String) alerte.get("mailEtudiant");
-			Utilisateur util = 	daoUtilisateur.trouver(mail);
-			int idEtud = util.getId();
+			//Et qu'il n'est pas terminé
+			if (!examTimer.examenTermine(examEnCours))
+			{
+				//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
+				String mail = (String) alerte.get("mailEtudiant");
+				Utilisateur util = 	daoUtilisateur.trouver(mail);
+				int idEtud = util.getId();
 
-			String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
+				String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
 
-			//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
-			chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
+				//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
+				chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
 
-			miseAJourLog(chemin, alerte);
+				miseAJourLog(chemin, alerte);
+			}
 		}
 	}
 
@@ -321,6 +317,8 @@ public class receptionJSON extends HttpServlet {
 		//Modification du header
 		JSONParser parser = new JSONParser();
 		try {
+			System.out.println("DEBUG: Alerte = " + alerte.toJSONString());
+
 			FileReader lecture = new FileReader(chemin);
 
 			Object logExistant = parser.parse(lecture);
@@ -335,7 +333,6 @@ public class receptionJSON extends HttpServlet {
 			long nbFichier = (long) header.get("nbFichier");
 			long nbUSB = (long) header.get("nbUSB");
 			long nbNet = (long) header.get("nbNet");
-
 
 
 			//On récupère le type de l'alerte
@@ -354,8 +351,21 @@ public class receptionJSON extends HttpServlet {
 			int niveauRegle = reg.getNiveauRegle();
 			if (niveauRegle == 1)
 			{
+				/*
+				//Ne pas envoyer l'alerte de l'étudiant qui quitte l'examen si le temps est écoulé
+				String idExSt = (String) alerte.get("IDexamen");
+				int idEx = Integer.valueOf(idExSt);
+				Examen exam = daoExamen.trouver(idEx);
+				if (reg.getIdRegle()==9 && examTimer.tempsRestant(exam) > 0)
+				{
+					System.out.println("On ajoute rien");
+				}
+				//Pour tous les autres cas, on ajoute l'alerte
+				else
+				{}*/
 				nbCrit++;
 				header.put("nbCrit", nbCrit);
+
 			}
 			//En fonction du type, on incrémente le compteur de règle correspondante
 			switch (type) {

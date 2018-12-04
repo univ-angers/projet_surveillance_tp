@@ -17,16 +17,7 @@ public class examTimer {
 				return false;
 			else
 			{
-				Timestamp dateDebut = exam.getHeureDebut();
-				Time duree = exam.getDuree();
-				long GMT1 = 3600000;		//Decalage horaire du à GMT+1
-
-				long tempsDebut = dateDebut.getTime();
-				long tempsDuree = duree.getTime();
-				long heureFin = tempsDuree + tempsDebut + GMT1;
-				long tempsActuel = System.currentTimeMillis();
-
-				long tempsRestant = heureFin - tempsActuel;
+				long tempsRestant = examTimer.tempsRestant(exam);
 
 				//Temps supplémentaire pour que les watchers ne s'arrêtent pas pile à l'examen, en cas de retard
 				long tempsSupplementaire = -600000;	//10 minutes
@@ -36,5 +27,21 @@ public class examTimer {
 		}
 
 		return true;
+	}
+	
+	public static long tempsRestant(Examen exam)
+	{
+		Timestamp dateDebut = exam.getHeureDebut();
+		Time duree = exam.getDuree();
+		long GMT1 = 3600000;		//Decalage horaire du à GMT+1
+
+		long tempsDebut = dateDebut.getTime();
+		long tempsDuree = duree.getTime();
+		long heureFin = tempsDuree + tempsDebut + GMT1;
+		long tempsActuel = System.currentTimeMillis();
+
+		long tempsRestant = heureFin - tempsActuel;
+		
+		return tempsRestant;
 	}
 }
