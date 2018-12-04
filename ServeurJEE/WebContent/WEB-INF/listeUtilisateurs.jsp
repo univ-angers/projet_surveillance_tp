@@ -146,7 +146,12 @@
 												<td><a
 													class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft"
 													data-toggle="appear" data-class="animated fadeInLeft"
-													href=<%="\"detailExamen?id_etudiant=" +u.getId() + "\""%>> <i
+													<% if (request.getAttribute("id_examen") == null) {%>
+														href=<%="\"detailExamen?id_etudiant=" + u.getId() + "\""%>
+													<% } else { %>	
+														href=<%="\"detailExamen?id_etudiant=" + u.getId() + "&id_examen=" + request.getAttribute("id_examen") + "\""%> 
+													<% } %>
+														><i
 													class="si si-control-play"></i>
 												</a></td>
 

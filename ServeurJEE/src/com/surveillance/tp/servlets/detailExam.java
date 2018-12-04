@@ -41,9 +41,18 @@ public class detailExam extends HttpServlet {
 		else
 		{
 			String idE=request.getParameter("id_etudiant");
+			String idExamSt = request.getParameter("id_examen");
+			System.out.println("DEBUG = " + idExamSt);
 			int id_etudiant=Integer.parseInt(idE);
-
-			Examen examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
+			Examen examen;
+			//On veut accéder à un dossier archivé
+			if (idExamSt != null)
+			{
+				int idExam = Integer.valueOf(idExamSt);
+				examen=daoExamen.trouver(idExam);
+			}
+			else
+				examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
 			String log="";
 			String logBody="\"body";
 
@@ -59,41 +68,41 @@ public class detailExam extends HttpServlet {
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/ExamenDetail.jsp" ).forward( request, response );   
 		}
 	}
-	
+
 	public String readLog(int id_exam,int id_etudiant)
 	{
-	    String content = "";
-	    try
-	    {
-	        content = new String ( Files.readAllBytes( Paths.get("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_exam+"/"+id_etudiant+"/"+id_etudiant+"/"+".log") ) );
-	    }
-	    catch (IOException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    return content;
+		String content = "";
+		try
+		{
+			content = new String ( Files.readAllBytes( Paths.get("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_exam+"/"+id_etudiant+"/"+id_etudiant+"/"+".log") ) );
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return content;
 	}
-	
-	
+
+
 	private static String usingBufferedReader(int id_ex,int id_etud)
 	{
-	    StringBuilder contentBuilder = new StringBuilder();
-	    System.out.println("ID Ex : "+ id_ex);
-	    System.out.println("ID Etu : "+ id_etud);
-	    try (BufferedReader br = new BufferedReader(new FileReader("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_ex+"/"+id_etud+"/"+id_etud+".lg")))
-	    {
-	 
-	        String sCurrentLine;
-	        while ((sCurrentLine = br.readLine()) != null)
-	        {
-	            contentBuilder.append(sCurrentLine).append("\n");
-	        }
-	        System.out.println(contentBuilder.toString());
-	    }
-	    catch (IOException e)
-	    {
-	        e.printStackTrace();
-	    }
-	    return contentBuilder.toString();
+		StringBuilder contentBuilder = new StringBuilder();
+		System.out.println("ID Ex : "+ id_ex);
+		System.out.println("ID Etu : "+ id_etud);
+		try (BufferedReader br = new BufferedReader(new FileReader("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_ex+"/"+id_etud+"/"+id_etud+".lg")))
+		{
+
+			String sCurrentLine;
+			while ((sCurrentLine = br.readLine()) != null)
+			{
+				contentBuilder.append(sCurrentLine).append("\n");
+			}
+			System.out.println(contentBuilder.toString());
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return contentBuilder.toString();
 	}
 }

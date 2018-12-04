@@ -101,11 +101,10 @@ public class receptionJSON extends HttpServlet {
 		int idEx = Integer.parseInt(idExam);
 
 		Utilisateur util = 	daoUtilisateur.trouverMdp(mail, motDePasse);
-		Examen exam = daoExamen.trouver(idEx);
-
+		Examen exam = daoExamen.trouverExamenIDEnCours(idEx);
 
 		//Si l'utilisateur existe et que son mot de passe est correct, ainsi qu'un examen valide
-		if (util != null && exam != null)
+		if (util != null && exam != null )
 		{
 			int idEtud = util.getId();
 
@@ -284,7 +283,7 @@ public class receptionJSON extends HttpServlet {
 	{
 		String idExamen = (String) alerte.get("IDexamen");	
 		int idEx = Integer.valueOf(idExamen);
-		Examen examEnCours = daoExamen.trouver(idEx);
+		Examen examEnCours = daoExamen.trouverExamenIDEnCours(idEx);
 
 		//Si l'examen auquel on veut ajouter nos logs a bien commencé
 		if (examEnCours.getHeureDebut() != null)
@@ -302,7 +301,7 @@ public class receptionJSON extends HttpServlet {
 				//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
 				chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
 
-				miseAJourLog(chemin, alerte);
+				miseAJourLog(examEnCours, chemin, alerte);
 			}
 		}
 	}
@@ -312,101 +311,102 @@ public class receptionJSON extends HttpServlet {
 	 * @param chemin
 	 * @param alerte
 	 */
-	void miseAJourLog(String chemin, JSONObject alerte)
+	void miseAJourLog(Examen exam, String chemin, JSONObject alerte)
 	{
 		//Modification du header
 		JSONParser parser = new JSONParser();
 		try {
 			System.out.println("DEBUG: Alerte = " + alerte.toJSONString());
 
-			FileReader lecture = new FileReader(chemin);
-
-			Object logExistant = parser.parse(lecture);
-			JSONObject jsonLog = (JSONObject) logExistant;
-			JSONObject header = (JSONObject) jsonLog .get("header");
-			JSONArray body = (JSONArray) jsonLog.get("body");
-
-			//Récupération des informations header existantes
-			long nbLog = (long) header.get("nbLog");
-			long nbCrit = (long) header.get("nbCrit");
-			long nbClavier = (long) header.get("nbClavier");
-			long nbFichier = (long) header.get("nbFichier");
-			long nbUSB = (long) header.get("nbUSB");
-			long nbNet = (long) header.get("nbNet");
-
-
-			//On récupère le type de l'alerte
-			String type = (String) alerte.get("type");
-
-			//On recherche la règle coorespondante au type, on récupère son ID, et on remplace le type texte par l'id de la règle dans l'alerte
-			Regle reg = daoRegle.trouverSt(type);
-			String idRegle = String.valueOf(reg.getIdRegle());
-			//Mise a jour de l'alerte qui ira dans le body
-			alerte.put("type", idRegle);
-
-			//Mise à jour du header
-			nbLog++;
-			header.put("nbLog", nbLog);
-			//On modifie le nombre de règle critiques si nécessaire
-			int niveauRegle = reg.getNiveauRegle();
-			if (niveauRegle == 1)
+			if (exam != null)
 			{
-				/*
-				//Ne pas envoyer l'alerte de l'étudiant qui quitte l'examen si le temps est écoulé
-				String idExSt = (String) alerte.get("IDexamen");
-				int idEx = Integer.valueOf(idExSt);
-				Examen exam = daoExamen.trouver(idEx);
-				if (reg.getIdRegle()==9 && examTimer.tempsRestant(exam) > 0)
+
+				FileReader lecture = new FileReader(chemin);
+
+				Object logExistant = parser.parse(lecture);
+				JSONObject jsonLog = (JSONObject) logExistant;
+				JSONObject header = (JSONObject) jsonLog .get("header");
+				JSONArray body = (JSONArray) jsonLog.get("body");
+
+				//Récupération des informations header existantes
+				long nbLog = (long) header.get("nbLog");
+				long nbCrit = (long) header.get("nbCrit");
+				long nbClavier = (long) header.get("nbClavier");
+				long nbFichier = (long) header.get("nbFichier");
+				long nbUSB = (long) header.get("nbUSB");
+				long nbNet = (long) header.get("nbNet");
+
+
+				//On récupère le type de l'alerte
+				String type = (String) alerte.get("type");
+
+				//On recherche la règle coorespondante au type, on récupère son ID, et on remplace le type texte par l'id de la règle dans l'alerte
+				Regle reg = daoRegle.trouverSt(type);
+				String idRegle = String.valueOf(reg.getIdRegle());
+				//Mise a jour de l'alerte qui ira dans le body
+				alerte.put("type", idRegle);
+
+				//Mise à jour du header
+				nbLog++;
+				header.put("nbLog", nbLog);
+				//On modifie le nombre de règle critiques si nécessaire
+				int niveauRegle = reg.getNiveauRegle();
+				if (niveauRegle == 1)
 				{
-					System.out.println("On ajoute rien");
+					//Ne pas envoyer l'alerte de l'étudiant qui quitte l'examen si le temps est écoulé
+					System.out.println("DEBUG: tempsRestant = " + examTimer.tempsRestant(exam));
+					if (reg.getIdRegle()==9 && examTimer.tempsRestant(exam) < 0)
+					{
+						System.out.println("On ajoute rien");
+					}
+					//Pour tous les autres cas, on ajoute l'alerte
+					else
+					{}
+					nbCrit++;
+					header.put("nbCrit", nbCrit);
+
 				}
-				//Pour tous les autres cas, on ajoute l'alerte
-				else
-				{}*/
-				nbCrit++;
-				header.put("nbCrit", nbCrit);
+				//En fonction du type, on incrémente le compteur de règle correspondante
+				switch (type) {
+				case "connexion_usb": case "deconnexion_usb": 
+					//On modifie le nombre d'alerte de type USB
+					nbUSB++;
+					header.put("nbUSB", nbUSB);
+					break;
+				case "creation_fichier": case "modification_fichier": case "suppresion_fichier":
+					//On modifie le nombre d'alerte de type Fichier
+					nbFichier++;
+					header.put("nbFichier", nbFichier);
+					break;
+				case "network":
+					//On modifie le nombre d'alerte de type Net
+					nbNet++;
+					header.put("nbNet", nbNet);
+					break;
+				case "touche_appuyee":
+					//On modifie le nombre d'alerte de type Clavier
+					nbClavier++;
+					header.put("nbClavier", nbClavier);
+					break;
+				}			
 
-			}
-			//En fonction du type, on incrémente le compteur de règle correspondante
-			switch (type) {
-			case "connexion_usb": case "deconnexion_usb": 
-				//On modifie le nombre d'alerte de type USB
-				nbUSB++;
-				header.put("nbUSB", nbUSB);
-				break;
-			case "creation_fichier": case "modification_fichier": case "suppresion_fichier":
-				//On modifie le nombre d'alerte de type Fichier
-				nbFichier++;
-				header.put("nbFichier", nbFichier);
-				break;
-			case "network":
-				//On modifie le nombre d'alerte de type Net
-				nbNet++;
-				header.put("nbNet", nbNet);
-				break;
-			case "touche_appuyee":
-				//On modifie le nombre d'alerte de type Clavier
-				nbClavier++;
-				header.put("nbClavier", nbClavier);
-				break;
-			}			
-
-			//Mise à jour du log
-			body.add(alerte);
-			jsonLog.put("header", header);
-			jsonLog.put("body", body);
+				//Mise à jour du log
+				body.add(alerte);
+				jsonLog.put("header", header);
+				jsonLog.put("body", body);
 
 
-			FileWriter file = new FileWriter(chemin);
-			try {
-				file.write(jsonLog.toJSONString());
+				FileWriter file = new FileWriter(chemin);
+				try {
+					file.write(jsonLog.toJSONString());
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				file.flush();
-				file.close();
-				lecture.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					file.flush();
+					file.close();
+					lecture.close();
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

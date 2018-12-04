@@ -9,7 +9,10 @@ public interface DAOExamen {
 	void creer(Examen examen) throws DAOException;
 
 	Examen trouver(int idExam) throws DAOException;
+	
 	Examen trouverExamenUtil(int id_util);
+	
+	Examen trouverExamenIDEnCours(int idExam) throws DAOException;
 	
 	void supprimer(int idExam) throws DAOException;
 	

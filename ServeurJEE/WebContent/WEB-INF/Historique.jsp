@@ -126,7 +126,7 @@
                     	%>
                     
                     <div class="col-sm-6 col-md-4 col-lg-3">
-                                <a class="block block-rounded block-link-hover2" href="ExamenDetail.jsp ">
+                                <a class="block block-rounded block-link-hover2" href="<%="listeUtilisateurs?id_examen=" + String.valueOf(e.getIdExam()) %>">
                                     <div class="block-content block-content-full text-center bg-primary ribbon ribbon-bookmark ribbon-crystal">
                                         <div class="ribbon-box font-w600"></div>
                                         <div class="item item-2x item-circle bg-crystal-op push-20-t push-20 animated fadeIn" data-toggle="appear" data-offset="50" data-class="animated fadeIn">
@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="block-content">
                                         
-                                        <div class="font-s12 text-center push"><%=e.getHeureDebut()%></div>
+                                        <div class="font-s12 text-center push"><%=e.getMatiere() + " / " + e.getHeureDebut()%></div>
                                     </div>
                                 </a>
                             </div>

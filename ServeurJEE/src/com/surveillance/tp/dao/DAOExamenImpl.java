@@ -118,6 +118,31 @@ public class DAOExamenImpl implements DAOExamen {
 		return examen;
 	}
 	
+	private static final String SQL_SELECT_EXAM_ON = "SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_examen = ? and etat='on'";
+	@Override
+	public Examen trouverExamenIDEnCours(int idExam) throws DAOException {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		Examen examen = null;
+
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_EXAM_ON, false, idExam );
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			if ( resultSet.next() ) {
+				examen = map( resultSet );
+			}
+		} catch ( SQLException e ) {
+			throw new DAOException( e );
+		} finally {
+			fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+		}
+		return examen;
+	}
+	
 	
 	private static final String SQL_DELETE_EXAM = "DELETE FROM Examen WHERE id_examen  = ?";
 	

@@ -20,8 +20,8 @@ public class examTimer {
 				long tempsRestant = examTimer.tempsRestant(exam);
 
 				//Temps supplémentaire pour que les watchers ne s'arrêtent pas pile à l'examen, en cas de retard
-				long tempsSupplementaire = -600000;	//10 minutes
-				if (tempsRestant > tempsSupplementaire)
+				long tempsSupplementaire = 600000;	//10 minutes
+				if (tempsRestant > -tempsSupplementaire)
 					return false;
 			}
 		}

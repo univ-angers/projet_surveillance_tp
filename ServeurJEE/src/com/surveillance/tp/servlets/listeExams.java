@@ -71,16 +71,15 @@ public class listeExams extends HttpServlet {
 	}
 
 
-/**
- * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
- */
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	// TODO Auto-generated method stub
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 
+		System.out.println("Coucou");
 
-	//request.setAttribute("utilisateurs", daoUtilisateur.recupererUtilisateurs());
-
-	this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
-}
+		this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
+	}
 
 }
