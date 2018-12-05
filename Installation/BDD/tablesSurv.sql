@@ -1,29 +1,9 @@
-header
-combien y a log
-combien d'alertes critiques
-
-combien d'alerte de chaque type
-
-
-nom BDD : projetsurv
-
-mysql -u root -p
-
-CREATE USER 'AdminSurv'@'localhost' IDENTIFIED BY 'mdpAdmin';
-CREATE DATABASE projetsurv;
-GRANT ALL PRIVILEGES ON projetsurv.* TO 'AdminSurv'@'localhost';
-exit
-mysql -u AdminSurv -p
-
-USE projetsurv;
-
-
-DROP TABLE list_of_rule;
-DROP TABLE Rule;
-DROP TABLE Watcher;
-DROP TABLE niveau_rule;
-DROP TABLE Examen;
-DROP TABLE Utilisateur;
+DROP TABLE IF EXISTS list_of_rule;
+DROP TABLE IF EXISTS Rule;
+DROP TABLE IF EXISTS Watcher;
+DROP TABLE IF EXISTS niveau_rule;
+DROP TABLE IF EXISTS Examen;
+DROP TABLE IF EXISTS Utilisateur;
 
 CREATE TABLE Utilisateur
 ( id_user INTEGER NOT NULL AUTO_INCREMENT,
@@ -95,4 +75,3 @@ INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES ("prof
 INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES ("remplacant","genial",MD5("123456"),"profremp@univ","professeur");
 INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES ("prozengan","noob",MD5("azerty"),"proz@etud","eleve");
 INSERT INTO Utilisateur (prenom, nom_user, password, mail, groupe) VALUES ("erinyth","noob",MD5("qsdfgh"),"erinyth@etud","eleve");
-
