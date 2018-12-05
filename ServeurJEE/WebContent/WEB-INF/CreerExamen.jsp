@@ -46,7 +46,7 @@
 
 
 							<li><a tabindex="-1" href="logout"> <i
-									class="si si-logout pull-right"></i>Log out
+									class="si si-logout pull-right"></i>Déconnexion
 							</a></li>
 						</ul>
 					</div>

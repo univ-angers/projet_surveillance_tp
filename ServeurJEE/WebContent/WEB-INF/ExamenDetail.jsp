@@ -114,7 +114,7 @@
                                     <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
                                 </li>
                             </ul>
-                            <h3 class="block-title">Video content</h3>
+                            <h3 class="block-title">Détails</h3>
                         </div>
                         <div class="block-content">
                         <p> Date de création: 01/01/2019</p>

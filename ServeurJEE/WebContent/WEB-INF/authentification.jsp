@@ -71,13 +71,13 @@
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary floating">
                                             <input class="form-control" type="password" id="login-password" name="login-password">
-                                            <label for="login-password">Password</label>
+                                            <label for="login-password">Mot de passe</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-md-4">
-                                        <button class="btn btn-block btn-primary" type="submit"><i class="si si-login pull-right"></i> Log in</button>
+                                        <button class="btn btn-block btn-primary" type="submit"><i class="si si-login pull-right"></i> s'authentifier</button>
                                     </div>
                                 </div>
                             </form>

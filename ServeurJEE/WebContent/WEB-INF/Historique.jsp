@@ -40,7 +40,7 @@
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li>
                                     <a tabindex="-1" href="logout">
-                                        <i class="si si-logout pull-right"></i>Log out
+                                        <i class="si si-logout pull-right"></i>Déconnexion
                                     </a>
                                 </li>
                             </ul>

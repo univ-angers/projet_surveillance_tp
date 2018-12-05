@@ -44,20 +44,20 @@ var BasePagesRegister = function() {
             },
             messages: {
                 'register-username': {
-                    required: 'Please enter a username',
-                    minlength: 'Your username must consist of at least 3 characters'
+                    required: 'Entrer un mail svp',
+                    minlength: 'Votre mail doit contenir au minimum 3 caractères'
                 },
-                'register-email': 'Please enter a valid email address',
+                'register-email': 'Entrer une adresse mail valide svp',
                 'register-password': {
-                    required: 'Please provide a password',
-                    minlength: 'Your password must be at least 5 characters long'
+                    required: 'Entrer un mot de passe svp',
+                    minlength: 'Votre mot de passe doit contenir au minimum 5 caractères'
                 },
                 'register-password2': {
-                    required: 'Please provide a password',
-                    minlength: 'Your password must be at least 5 characters long',
-                    equalTo: 'Please enter the same password as above'
+                    required: 'Entrer un mot de passe svp',
+                    minlength: 'Votre mot de passe doit contenir au minimum 5 caractères',
+                    equalTo: 'Entrer le meme mot de passe svp'
                 },
-                'register-terms': 'You must agree to the service terms!'
+                'register-terms': 'Il faut accepter les conditions'
             }
         });
     };

@@ -44,7 +44,7 @@
                                 
                                 <li>
                                     <a tabindex="-1" href="logout">
-                                        <i class="si si-logout pull-right"></i>Log out
+                                        <i class="si si-logout pull-right"></i>Déconnexion
                                     </a>
                                 </li>
                             </ul>
@@ -133,7 +133,7 @@
                                         	<th>Prénom</th>
                                         	<th>Alerte</th>
                                         	<th>Critique</th>
-                                        	<th>Streaming</th>
+                                        	<th>Détails</th>
                                         	</tr>                                        
                                              <%ArrayList<EtudiantExamen> util=(ArrayList<EtudiantExamen>)request.getAttribute("utilisateurs")	;
                                              for(EtudiantExamen u:util){
