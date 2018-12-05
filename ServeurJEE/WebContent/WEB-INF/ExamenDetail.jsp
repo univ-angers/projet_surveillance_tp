@@ -114,22 +114,30 @@
                                     <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
                                 </li>
                             </ul>
-                            <h3 class="block-title">Détails</h3>
+                            <h3 class="block-title">Video content</h3>
                         </div>
                         <div class="block-content">
-                        <p> Date de création: 01/01/2019</p>
-                        <p>Auteur: Nom</p>
-                        <p>Description: preuve de triche d'un étudiant au cours de la session d'examen n°1</p>
+                       
+                        
+                        <p> Date de création: <%=request.getAttribute("date_exam") %></p>
+                        <p>Auteur: <%=session.getAttribute("nomUtilisateur")%> <%=session.getAttribute("prenomUtilisateur") %></p>
+                        <p>Description: preuve de triche d'un étudiant au cours de la session d'examen </p>
                         
                         
                        <video autoplay="" loop="" muted="" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%); visibility: visible; opacity: 1; width: 300px; height: auto;">
-                        <source src="assets/img/videos/hero_tech.mp4" type="video/mp4"><source src="assets/img/videos/hero_tech.webm" type="video/webm"><source src="assets/img/videos/hero_tech.ogv" type="video/ogg"></video>
+                        <source src="assets/img/videos/output.mp4" type="video/mp4"><source src="assets/img/videos/hero_tech.webm" type="video/webm"><source src="<%=request.getAttribute("video") %>" type="video/ogg"></video>
                         </div>
                         
                     </div>
                      <div class="modal-footer">
                        
-						<a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" href="Video.jsp">
+						<a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft" 
+							<% if (request.getAttribute("id_examen") == null) {%>
+								href=<%="\"video?id_etud=" +request.getAttribute("id_etud") + "\""%>
+							<% } else {%>
+								href=<%="\"video?id_etud=" +request.getAttribute("id_etud") + "&id_examen=" + request.getAttribute("id_examen") + "\""%>
+							<% }%>
+						>
                                         <i class="si si-control-play"></i>
                                     </a>                        
                     </div>

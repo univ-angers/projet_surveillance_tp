@@ -197,18 +197,18 @@ var BaseFormValidation = function() {
             },
             messages: {
                 'val-username2': {
-                    required: 'Entrer un mail svp',
-                    minlength: 'Votre mail doit contenir au minimum 3 caractères'
+                    required: 'Please enter a username',
+                    minlength: 'Your username must consist of at least 3 characters'
                 },
-                'val-email2': 'Entrer un email valide',
+                'val-email2': 'Please enter a valid email address',
                 'val-password2': {
-                    required: 'Entrer un mot de passe svp',
-                    minlength: 'Votre mot de passe doit contenir au minimum 5 caractères'
+                    required: 'Please provide a password',
+                    minlength: 'Your password must be at least 5 characters long'
                 },
                 'val-confirm-password2': {
-                    required: 'Entrer un mot de passe svp',
-                    minlength: 'Votre mot de passe doit contenir au minimum 5 caractères',
-                    equalTo: 'Entrer le meme mot de passe svp'
+                    required: 'Please provide a password',
+                    minlength: 'Your password must be at least 5 characters long',
+                    equalTo: 'Please enter the same password as above'
                 },
                 'val-select22': 'Please select a value!',
                 'val-select2-multiple2': 'Please select at least 2 values!',

@@ -252,10 +252,16 @@ public class receptionJSON extends HttpServlet {
 			{
 				long tempsRestant = examTimer.tempsRestant(exam);
 
-				Date fin = new Date(tempsRestant);
-				DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
-				formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-				String temps = formatter.format(fin);
+				String temps = "";
+				if (tempsRestant > 0)
+				{
+					Date fin = new Date(tempsRestant);
+					DateFormat formatter = new SimpleDateFormat("HH:mm:ss.SSS");
+					formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+					temps = formatter.format(fin);
+				}
+				else
+					temps = "Examen terminé";
 
 				JSONObject jsObj = new JSONObject();
 				jsObj.put("type", "rep_temps");

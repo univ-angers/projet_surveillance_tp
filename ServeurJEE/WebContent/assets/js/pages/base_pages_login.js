@@ -33,12 +33,12 @@ var BasePagesLogin = function() {
             },
             messages: {
                 'login-username': {
-                    required: 'Entrer un mail svp',
-                    minlength: 'Votre mail doit contenir au minimum 3 caractères'
+                    required: 'Please enter a username',
+                    minlength: 'Your username must consist of at least 3 characters'
                 },
                 'login-password': {
-                    required: 'Entrer un mot de passe svp',
-                    minlength: 'Votre mot de passe doit contenir au minimum 5 caractères'
+                    required: 'Please provide a password',
+                    minlength: 'Your password must be at least 5 characters long'
                 }
             }
         });

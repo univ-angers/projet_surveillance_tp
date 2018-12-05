@@ -42,17 +42,19 @@ public class detailExam extends HttpServlet {
 		{
 			String idE=request.getParameter("id_etudiant");
 			String idExamSt = request.getParameter("id_examen");
-			System.out.println("DEBUG = " + idExamSt);
 			int id_etudiant=Integer.parseInt(idE);
+			
 			Examen examen;
 			//On veut accéder à un dossier archivé
 			if (idExamSt != null)
 			{
 				int idExam = Integer.valueOf(idExamSt);
 				examen=daoExamen.trouver(idExam);
+				request.setAttribute("id_examen", examen.getIdExam());
 			}
 			else
 				examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
+			
 			String log="";
 			String logBody="\"body";
 
@@ -63,7 +65,8 @@ public class detailExam extends HttpServlet {
 				logBody+=test1[1];			
 			}
 
-			request.setAttribute("log2", "hello");
+			request.setAttribute("date_exam",String.valueOf(examen.getHeureDebut()));
+			request.setAttribute("id_etud",String.valueOf(id_etudiant));
 			request.setAttribute("log", logBody);
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/ExamenDetail.jsp" ).forward( request, response );   
 		}
