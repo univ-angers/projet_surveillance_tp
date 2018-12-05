@@ -21,21 +21,16 @@
         <!-- END Stylesheets -->
     </head>
     <body class="bg-image" style="background-image: url('assets/img/photos/photo17@2x.jpg');">
-     
-        <div class="content overflow-hidden">
-        <div class="bg-video"data-vide-bg="assets/img/videos/hero_tech" data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;"><div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; background-size: cover; background-color: transparent; background-repeat: no-repeat; background-position: 50% 75%; background-image: none;"><video autoplay="" loop="" muted="" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%); visibility: visible; opacity: 1; width: 900px; height:900px;"><source src="assets/img/videos/hero_tech.mp4" type="video/mp4"><source src="assets/img/videos/hero_tech.webm" type="video/webm"><source src="assets/img/videos/hero_tech.ogv" type="video/ogg"></video></div>>
-        
-        
-        
-        
-        
-        
-        </div>
-            
-                    
-                    
-      
-        </div>
+     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+     <input type="file" accept="video/*"/>
+      <video id="video"  controls
+					style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%); visibility: visible; opacity: 1; width: 1833px; height: auto;">
+					<source src="assets/img/videos/output.mp4"></source>
+				</video>
+				
+				
+				
+				<p><%=request.getAttribute("video") %></p>
         
 
       

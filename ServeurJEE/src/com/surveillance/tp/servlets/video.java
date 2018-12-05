@@ -1,5 +1,6 @@
 package com.surveillance.tp.servlets;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,14 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.surveillance.tp.beans.Examen;
+import com.surveillance.tp.dao.DAOExamen;
+import com.surveillance.tp.dao.DAOFactory;
+import com.surveillance.tp.utilitaire.ConversionVideo;
+import com.surveillance.tp.utilitaire.directoryManager;
+
 public class video extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
-	//private DAOUtilisateur daoUtilisateur;
+	private DAOExamen daoExamen;
 
 	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Utilisateur */
-		//this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
+		/* Récupération d'une instance de notre DAO Examen */
+		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,11 +38,35 @@ public class video extends HttpServlet {
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
 			response.sendRedirect("/ServeurJEE/monCompte");
 		else
-			this.getServletContext().getRequestDispatcher( "/WEB-INF/Viedo.jsp" ).forward( request, response );        
-	}
+		{
+			String idExamSt = request.getParameter("id_examen");
+			String idEtudSt = request.getParameter("id_etud");
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			int idExamAChercher;
 
-		//this.getServletContext().getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
+			//Si pas d'examen en paramètre on accède à notre examen courant
+			if (idExamSt == null)
+			{
+				int idEtud=Integer.parseInt(idEtudSt);
+				Examen examen;
+				examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
+				idExamAChercher = examen.getIdExam();
+			}
+			else
+				idExamAChercher = Integer.parseInt(idExamSt);
+
+			String cheminExam = directoryManager.idDbToString(idExamAChercher);
+			cheminExam = cheminExam + "/" + idEtudSt + "/" + idEtudSt + ".surv";
+			System.out.println("DEBUG chemin vidéo = " + cheminExam);
+
+			String cheminVideo = this.getServletContext().getRealPath("");
+			System.out.println("DEBUG2 = " + cheminVideo);
+			
+			ConversionVideo vid = new ConversionVideo(cheminExam, cheminVideo);
+			vid.run();
+		}
+
+		this.getServletContext().getRequestDispatcher( "/WEB-INF/Video.jsp" ).forward( request, response );        
 	}
 }
+

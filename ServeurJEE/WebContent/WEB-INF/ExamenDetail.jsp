@@ -88,7 +88,7 @@
                         </div>
                         <div class="block-content" style="overflow:scroll;">
                         
-                        <%if(request.getAttribute("log2")!=null){ %>
+                        <%if(request.getAttribute("log")!=null){ %>
                             <p><%=request.getAttribute("log") %></p>
                             <%} %>
                             
