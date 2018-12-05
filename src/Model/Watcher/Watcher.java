@@ -15,8 +15,6 @@ public abstract class Watcher extends Thread {
 	protected String type;
 	private long tempsDemarrage;
 
-	// CONSTRUCTOR
-
 	public Watcher(String type) {
 		this.type = type;
 		this.tempsDemarrage = System.currentTimeMillis();

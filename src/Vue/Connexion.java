@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.net.URL;
 
 import javax.swing.*;
 
@@ -14,7 +15,9 @@ import Model.EtudiantExamenInfoSingleton;
 
 public class Connexion extends JFrame
 {
-	public static final ImageIcon image = new ImageIcon("Ressources/o.png");
+	private final URL cheminImage = Connexion.class.getResource(
+            "/Ressources/o.png");
+	private ImageIcon image;
 
 	private Connexion instance = this;
 	private ConnexionController controller;
@@ -32,7 +35,8 @@ public class Connexion extends JFrame
 	{
 		super();
 		controller = new ConnexionController(this);
-
+		image = new ImageIcon(cheminImage);
+		
 		// Initialisation de la fenêtre
 		build();
 	}

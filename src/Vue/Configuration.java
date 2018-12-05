@@ -10,6 +10,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.swing.*;
 
@@ -33,13 +37,16 @@ public class Configuration extends JDialog
 	private JPasswordField tf_mdp;
 	private JTextField tf_adrServ;
 	
-	private File adrServ = new File("Ressources/adrServ");
+	private final URL cheminImage = Connexion.class.getResource(
+            "/Ressources/o.png");
+	private ImageIcon image;
 	
 	public Configuration() throws FileNotFoundException
 	{
 		super();
 		controller = new ConfigController(this);
-
+		image = new ImageIcon(cheminImage);
+		
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 
 		// Initialisation de la fenêtre
@@ -63,7 +70,7 @@ public class Configuration extends JDialog
 		c = new GridBagConstraints();
 
 
-		b_option = new JButton(Connexion.image);
+		b_option = new JButton(image);
 		b_option.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -101,15 +108,14 @@ public class Configuration extends JDialog
 		c.insets = new Insets(0, 0, 20, 20);
 		panel.add(tf_adrServ, c);
 		
-		BufferedReader br;
-		try {
-			br = new BufferedReader(new FileReader(adrServ));
 		
-		String line;
-		while ((line = br.readLine()) != null) {
-			tf_adrServ.setText(line);
-		}
-		br.close();
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(Configuration.class.getResourceAsStream("/Ressources/adrServ"))))
+		{		
+			String line;
+			while ((line = br.readLine()) != null) {
+				tf_adrServ.setText(line);
+			}
+			br.close();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
