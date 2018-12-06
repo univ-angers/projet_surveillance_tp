@@ -18,10 +18,11 @@ public class ConversionVideo implements Runnable{
 	public void run() {
 		try {			
 			File f = new File(cheminDest + "assets/img/videos/output.mp4");
-			f.delete();
+			if (f.exists())
+				f.delete();
 			
-			String cmd = "ffmpeg -i " + cheminSource + " -c:v libx264 -c:a copy -bsf:a aac_adtstoasc " + cheminDest + "assets/img/videos/output.mp4";
-			
+			String cmd  = "ffmpeg -i " + cheminSource + " -c:v libx264 -c:a copy -bsf:a aac_adtstoasc " + cheminDest + "assets/img/videos/output.mp4";				
+	
 			//Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF = new ProcessBuilder(cmd.split("\\s+"));
 

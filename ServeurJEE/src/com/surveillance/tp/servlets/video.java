@@ -57,15 +57,14 @@ public class video extends HttpServlet {
 
 			String cheminExam = directoryManager.idDbToString(idExamAChercher);
 			cheminExam = cheminExam + "/" + idEtudSt + "/" + idEtudSt + ".surv";
-			System.out.println("DEBUG chemin vidéo = " + cheminExam);
 
 			String cheminVideo = this.getServletContext().getRealPath("");
-			System.out.println("DEBUG2 = " + cheminVideo);
-			
-			ConversionVideo vid = new ConversionVideo(cheminExam, cheminVideo);
+
+			ConversionVideo vid = new ConversionVideo(cheminExam, cheminVideo);			
+
 			vid.run();
 		}
-
+		
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/Video.jsp" ).forward( request, response );        
 	}
 }

@@ -3,6 +3,7 @@ package com.surveillance.tp.servlets;
 import java.io.IOException;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
+import com.surveillance.tp.utilitaire.directoryManager;
 
 public class detailExam extends HttpServlet {
 
@@ -58,12 +60,19 @@ public class detailExam extends HttpServlet {
 			String log="";
 			String logBody="\"body";
 
+			String chemin = directoryManager.idDbToString(examen.getIdExam());
 			if(examen!=null) {
 
-				log=usingBufferedReader(examen.getIdExam(),id_etudiant);
+				log=usingBufferedReader(chemin,id_etudiant);
 				String[] test1 = log.split("body");
 				logBody+=test1[1];			
 			}
+			
+			//Vérification qu'un fichier vidéo existe
+			System.out.println("TEST IMPORTANT = " + chemin+"/"+id_etudiant+"/"+id_etudiant+".surv");
+			File f = new File(chemin+"/"+id_etudiant+"/"+id_etudiant+".surv");
+			if (f.exists())
+				request.setAttribute("video", "oui");
 
 			request.setAttribute("date_exam",String.valueOf(examen.getHeureDebut()));
 			request.setAttribute("id_etud",String.valueOf(id_etudiant));
@@ -72,27 +81,12 @@ public class detailExam extends HttpServlet {
 		}
 	}
 
-	public String readLog(int id_exam,int id_etudiant)
-	{
-		String content = "";
-		try
-		{
-			content = new String ( Files.readAllBytes( Paths.get("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_exam+"/"+id_etudiant+"/"+id_etudiant+"/"+".log") ) );
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return content;
-	}
-
-
-	private static String usingBufferedReader(int id_ex,int id_etud)
-	{
+	private static String usingBufferedReader(String chemin,int id_etud)
+	{		
 		StringBuilder contentBuilder = new StringBuilder();
-		System.out.println("ID Ex : "+ id_ex);
+		System.out.println("Chemin exam : "+ chemin);
 		System.out.println("ID Etu : "+ id_etud);
-		try (BufferedReader br = new BufferedReader(new FileReader("/opt/data_dir/0/0/0/0/0/0/0/0/0/"+id_ex+"/"+id_etud+"/"+id_etud+".lg")))
+		try (BufferedReader br = new BufferedReader(new FileReader(chemin+"/"+id_etud+"/"+id_etud+".lg")))
 		{
 
 			String sCurrentLine;
