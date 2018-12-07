@@ -8,7 +8,10 @@ import java.util.Date;
 
 import org.json.simple.JSONObject;
 
-
+/**
+ * Classe permettant l'envoi des alertes capturées au serveur
+ * par le biais du ServerLink
+ */
 public abstract class Watcher extends Thread {
 	
 	// Le nom du type du Watcher
@@ -29,11 +32,34 @@ public abstract class Watcher extends Thread {
 	}
 
 	/**
-	 * Méthode qui sera défini dans les classes filles pour traiter et construire l'objet JSON qui sera envoyé
-	 * La transformation du long en string provient de : http://www.java2s.com/Code/Java/Development-Class/Takesatimeinmillisecondsandreturnsanhoursminutesandsecondsrepresentation.htm
+	 * Création d'un JSON à partir des informations de l'alerte
+	 * @param typ
+	 * @param information
 	 */
 	@SuppressWarnings("unchecked")
 	protected  void createDataBeforeSendEvent(String typ, String information)
+	{
+		String horodatage = heureRelative();
+		
+		// Niveau d'alerte à ajouter et autres infos si besoin
+		JSONObject datas = new JSONObject();
+		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
+		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+		datas.put("horodatage", horodatage);
+		datas.put("type", typ);
+		datas.put("info", information);
+		
+		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();
+		this.sendEvent(SLS, datas);
+	}
+	
+	/**
+	 * Renvoie une chaine affichant l'heure relative par rapport au lancement de la surveillance
+	 * côté client
+	 * La transformation du long en string provient de : http://www.java2s.com/Code/Java/Development-Class/Takesatimeinmillisecondsandreturnsanhoursminutesandsecondsrepresentation.htm
+	 * @return
+	 */
+	private String heureRelative()
 	{
 		long tempsEnvoi = System.currentTimeMillis();
 		long delai = tempsEnvoi - tempsDemarrage;
@@ -58,17 +84,8 @@ public abstract class Watcher extends Thread {
         else if (min > 0)
         	horodatage = "00:" + min + ":" + secsString;
         else horodatage = "00:00:" + secsString;
-		
-		// Niveau d'alerte à ajouter et autres infos si besoin
-		JSONObject datas = new JSONObject();
-		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
-		datas.put("horodatage", horodatage);
-		datas.put("type", typ);
-		datas.put("info", information);
-		
-		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();
-		this.sendEvent(SLS, datas);
+        
+        return horodatage;
 	}
 
 }

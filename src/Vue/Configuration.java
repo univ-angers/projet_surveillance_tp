@@ -20,6 +20,9 @@ import javax.swing.*;
 import Controller.ConfigController;
 import Model.EtudiantExamenInfoSingleton;
 
+/**
+ * Fenetre où l'utilisateur peut entrer ses identifiants ainsi que, si nécessaire, l'adresse du serveur
+ */
 public class Configuration extends JDialog
 {
 	private Configuration instance = this;

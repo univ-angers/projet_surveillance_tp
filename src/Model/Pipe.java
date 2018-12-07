@@ -10,14 +10,18 @@ import java.net.InetAddress;
 
 import Model.Watcher.VideoWatcher;
 
-
+/**
+ * Créer le fichier pipe qui va recevoir les informations de la vidéo
+ * et les envoie en continu vers le serveur UDP, qui est chargé d'enregistrer
+ * et stocker les vidéos
+ */
 public class Pipe extends Thread {
 
 	private final int taillePaquet = 2048;
 	private final int portVideo;
 	private Process pPipe;
 	private boolean pipePret;
-	EtudiantExamenInfoSingleton etudiant;
+	private EtudiantExamenInfoSingleton etudiant;
 
 	public Pipe(int port)
 	{
@@ -25,7 +29,13 @@ public class Pipe extends Thread {
 		portVideo = port;
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 	}
-	
+
+	/**
+	 * Envoie les données au serveur vidéo
+	 * @param donnees
+	 * @param taillePaquet
+	 * @throws IOException
+	 */
 	public void envoiPaquet(byte[] donnees, int taillePaquet) throws IOException
 	{
 		//On initialise la connexion côté client
@@ -40,17 +50,21 @@ public class Pipe extends Thread {
 
 		//On envoie au serveur
 		client.send(packet);		
-		
+
 		client.close();
 	}
-	
+
+	/**
+	 * Envoie le paquet annonçant que le client a terminé d'enregistrer, permettant la fermeture du socket
+	 * qui lui est réservé côté serveur
+	 * @throws IOException
+	 */
 	public void envoiPaquetFinClient() throws IOException
 	{
-		//System.out.println("DEBUG: Envoi paquet pour terminer.");
 		String fin = "FIN:"+ VideoWatcher.port;
 		byte[] donnees = fin.getBytes();		
 		int taillePaquet = donnees.length;
-				
+
 		//On initialise la connexion côté client
 		DatagramSocket client = new DatagramSocket();
 
@@ -63,15 +77,19 @@ public class Pipe extends Thread {
 
 		//On envoie au serveur
 		client.send(packet);		
-		
+
 		client.close();
 	}
 
+	/**
+	 * Créé le fichier pipe de reception, et enclenche un envoi de données dès qu'il y
+	 * a suffisament à envoyer
+	 */
 	@Override
 	public void run() {
 		//Chaine de commande pour créer le pipe
 		String cmdCreationPipe = "mkfifo /tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT;
-		
+
 		ProcessBuilder pbPipe = new ProcessBuilder(cmdCreationPipe.split("\\s+"));
 		try {
 			pPipe = pbPipe.start();
@@ -101,14 +119,14 @@ public class Pipe extends Thread {
 						{	
 							byte[] donneesVideo = new byte[taillePaquet];
 							recuPipe.read(donneesVideo, 0, taillePaquet);
-														
+
 							envoiPaquet(donneesVideo,taillePaquet);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-				
+
 				try {
 					if (recuPipe.available() != 0)
 					{
@@ -118,8 +136,8 @@ public class Pipe extends Thread {
 						envoiPaquet(donneesVideo, sizeData);
 					}
 				} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					e1.printStackTrace();
+				}
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
@@ -132,7 +150,6 @@ public class Pipe extends Thread {
 				//qu'on peut supprimer ce client
 				try {
 					envoiPaquetFinClient();
-					//System.out.println("DEBUG: Fin d'activité du client.");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

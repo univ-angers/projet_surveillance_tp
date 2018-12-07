@@ -2,9 +2,13 @@ package Model;
 
 import java.util.ArrayList;
 
+/**
+ * Contient les informations de l'étudiant ainsi que les informations
+ * de l'examen auquel il se connecte 
+ */
 public class EtudiantExamenInfoSingleton {
 
-	// l'identifiant du singleton étudiant correspond au mail étudiant
+	// L'identifiant du singleton étudiant correspond au mail étudiant
 	private String identifiant;
 	private String motDePasse;
 	private String adrServeur;
@@ -16,8 +20,6 @@ public class EtudiantExamenInfoSingleton {
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
 	private String numeroExamen;
 
-	boolean toutesLesInfos;
-
 	// L'instance unique de la classe
 	static EtudiantExamenInfoSingleton instance = null;
 
@@ -28,9 +30,6 @@ public class EtudiantExamenInfoSingleton {
 		adrServeur = adrServ;
 		listeWatchers = new ArrayList<>();
 		siteASurveiller = new ArrayList<>();
-
-		//Il manque le numero d'examen
-		toutesLesInfos = false;
 	}
 
 	static public EtudiantExamenInfoSingleton getInstance(String id, String mdp, String adrServ) {
@@ -40,6 +39,10 @@ public class EtudiantExamenInfoSingleton {
 		return instance;
 	}
 
+	/**
+	 * Retourne l'instance existante. N'est appelée qu'après qu'elle ait été créée
+	 * @return
+	 */
 	static public EtudiantExamenInfoSingleton getInstanceExistante() {
 		return instance;
 	}
@@ -69,9 +72,6 @@ public class EtudiantExamenInfoSingleton {
 	public String getNumeroExamen() {
 		return numeroExamen;
 	}
-	public boolean getToutesLesInfosEtud() {
-		return toutesLesInfos;
-	}
 	
 	public void setIdBDD(String idbdd)
 	{
@@ -80,13 +80,6 @@ public class EtudiantExamenInfoSingleton {
 	public String getIdBDD()
 	{
 		return this.idBDD;
-	}
-	
-	public void setToutesLesInfosEtud()	{
-		if (!(identifiant.isEmpty() && motDePasse.length() == 0 && adrServeur.isEmpty() && numeroExamen.isEmpty()))
-			toutesLesInfos = true;
-		else
-			System.out.println("TOUT N'EST PAS COMPLET");
 	}
 
 	public ArrayList<Integer> getListeWatchers() {

@@ -13,6 +13,9 @@ import javax.swing.*;
 import Controller.ConnexionController;
 import Model.EtudiantExamenInfoSingleton;
 
+/**
+ * Fenêtre où l'utilisateur peut entrer le numéro de l'examen, et lancer la surveillance
+ */
 public class Connexion extends JFrame
 {
 	private final URL cheminImage = Connexion.class.getResource(

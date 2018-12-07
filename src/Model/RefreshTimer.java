@@ -4,6 +4,9 @@ import java.util.TimerTask;
 
 import org.json.simple.JSONObject;
 
+/**
+ * Thread qui envoie la demande de refresh du timer de l'étudiant
+ */
 public class RefreshTimer extends TimerTask{
 
 	@Override

@@ -17,7 +17,7 @@ import Model.Watcher.VideoWatcher;
 import Vue.Connexion;
 
 /**
- * Controlleur qui gère la fenêtre de connexion
+ * Controleur qui gère la fenêtre de connexion
  * Va vérifier les valeurs entrées, et permettre la connexion si celles ci sont valides
  * Va ensuite lancer les watchers en fonction de l'examen
  * @author erinyth
@@ -25,18 +25,21 @@ import Vue.Connexion;
  */
 public class ConnexionController 
 {
-	Connexion fenConnexion;
-	EtudiantExamenInfoSingleton etudiant;
+	private Connexion fenConnexion;
+	private EtudiantExamenInfoSingleton etudiant;
 
 	public ConnexionController(Connexion fenetre)
 	{
 		fenConnexion = fenetre;
 	}
 
+	/**
+	 * Ajoute l'id de l'examen au singleton d'étudiant examen en cours
+	 * @param idExam
+	 */
 	public void receptionIdExamen(String idExam) 
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
-
 		etudiant.setNumeroExamen(idExam);
 	}
 
@@ -64,23 +67,18 @@ public class ConnexionController
 			{
 			case 1:
 				lanceUSB = true;
-				System.out.println(">>>> WATCHER USB ACTIVE");
 				break;
 			case 2:
 				lanceFichier = true;
-				System.out.println(">>>> WATCHER FICHIER ACTIVE");
 				break;
 			case 3:
 				lanceVideo = true;
-				System.out.println(">>>> WATCHER VIDEO ACTIVE");
 				break;
 			case 4:
 				lanceNet = true;
-				System.out.println(">>>> WATCHER NET ACTIVE");
 				break;
 			case 5:
 				lanceKey = true;
-				System.out.println(">>>> WATCHER CLAVIER ACTIVE");
 				break;
 			}
 		}
@@ -99,7 +97,6 @@ public class ConnexionController
 				// On démarre le thread du FileWatcher
 				fileWatcher.start();
 			} catch (IOException e) {
-				System.out.println("Impossible de créer le FileWatcher");
 				e.printStackTrace();
 			}
 		}
@@ -125,8 +122,8 @@ public class ConnexionController
 
 	@SuppressWarnings("unchecked")
 	/**
-	 * Envoi les données au serveur afin de vérifier si celles ci sont connues
-	 * @return
+	 * Envoi les données de connexion au serveur afin de vérifier si celles ci sont connues
+	 * @return Vrai si la connexion est possible
 	 */
 	public boolean logIn() 
 	{

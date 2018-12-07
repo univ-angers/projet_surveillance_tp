@@ -14,6 +14,8 @@ public class Main
 	public static void main(String[] args){
 				
 		surveillanceEnCours = false;
+		
+		//Surveille si un arrêt s'effectue, qu'il soit normal ou mal intentionné (kill)
 		DetectionArret da = new DetectionArret();
 		
 		// On créer la fenêtre

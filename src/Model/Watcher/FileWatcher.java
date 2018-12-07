@@ -20,21 +20,17 @@ import Controller.Main;
 
 
 /**
- * A FAIRE
- * -- Corriger les bugs sur la récurisivité: les fichiers ne sont pas toujours détectés
- * @author Riad et Bastien
- *
+ * Permet de détecter des créations, modifications et suppressions de fichier
+ * sur l'ensemble de l'ordinateur
  */
 public class FileWatcher extends Watcher {
 
 	static String TYPE = "FILE";
     private final WatchService watcher;
-   // private final Map<WatchKey,Path> keys;
 
 	public FileWatcher(Path cheminInitial) throws IOException {
 		super(TYPE);
 		this.watcher = FileSystems.getDefault().newWatchService();
-        //this.keys = new HashMap<WatchKey,Path>();
         registerAll(cheminInitial);
 	}
 
@@ -63,6 +59,11 @@ public class FileWatcher extends Watcher {
 	    });
 	}
 	
+	/**
+	 * Va ajouter à la surveillance tous les fichiers et sous-dossiers à partir
+	 * du chemin initial
+	 * Envoie une alerte dès qu'un élément change
+	 */
 	@Override
 	public void run() {
 		while (Main.surveillanceEnCours) {        
@@ -71,23 +72,20 @@ public class FileWatcher extends Watcher {
 				List<WatchEvent<?>> events = watckKey.pollEvents();
 				for (WatchEvent event : events) {
 					if (event.kind() == ENTRY_CREATE) {
-						//System.out.println("DEBUG: Créé: " + event.context().toString());
 						String information = event.context().toString();
 						createDataBeforeSendEvent("creation_fichier", information);
 					}
 					if (event.kind() == ENTRY_DELETE) {
-						//System.out.println("DEBUG: Supprimé: " + event.context().toString());
 						String information = event.context().toString();
 						createDataBeforeSendEvent("suppression_fichier", information);
 					}
 					if (event.kind() == ENTRY_MODIFY) {
-						//System.out.println("DEBUG: Modifié: " + event.context().toString());
 						String information = event.context().toString();
 						createDataBeforeSendEvent("modification_fichier", information);
 					}
 				}          
 			} catch (Exception e) {
-				System.out.println("Error: " + e.toString());
+				e.printStackTrace();
 			}
 		}
 	}

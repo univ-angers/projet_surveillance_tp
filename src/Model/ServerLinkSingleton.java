@@ -12,7 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
- * A VOIR AU NIVEAU DE L'IP
+ * Classe qui fait le lien entre le client et le serveur
+ * Les différentes demandes et récupérations de données se font par elle
  */
 public class ServerLinkSingleton {
 
@@ -22,6 +23,12 @@ public class ServerLinkSingleton {
 	// L'ip du serveur auquel va communiquer l'objet
 	private String ip;
 
+	/**
+	 * Gère l'envoi de données et la récupération des réponses
+	 * Retourne vrai si une requête a abouti au résultat attendu
+	 * @param datas
+	 * @return
+	 */
 	public boolean send(JSONObject datas) {
 
 		URL url;
@@ -53,6 +60,12 @@ public class ServerLinkSingleton {
 		}
 	}
 
+	/**
+	 * Gère les différentes réponses. Retourne vrai ou faux suivant le résultat
+	 * du traitement
+	 * @param connection
+	 * @return
+	 */
 	private boolean traitementDonnees(HttpURLConnection connection) {
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));

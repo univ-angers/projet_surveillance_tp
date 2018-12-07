@@ -5,13 +5,11 @@ import Vue.Configuration;
 
 /**
  * Controleur qui gère la fenêtre de configuration du nom et mot de passe
- * @author erinyth
- *
  */
 public class ConfigController 
 {
-	Configuration fenConfig;
-	EtudiantExamenInfoSingleton etudiant;
+	private Configuration fenConfig;
+	private EtudiantExamenInfoSingleton etudiant;
 
 	public ConfigController(Configuration fenetre)
 	{

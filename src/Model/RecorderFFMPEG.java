@@ -7,7 +7,9 @@ import java.io.UnsupportedEncodingException;
 
 import Model.Watcher.VideoWatcher;
 
-
+/**
+ * Classe qui va se charger de lancer ffmpeg qui va créer la vidéo *
+ */
 public class RecorderFFMPEG extends Thread{
 	private Process ffmpeg;		
 	public static boolean running;
@@ -22,7 +24,6 @@ public class RecorderFFMPEG extends Thread{
 
 	/**
 	 * Fonction se chargeant de lancer la commande ffmpeg depuis l'appli Java puis de l'envoie dans le Pipe
-	 * @author Bastien et Anaïs
 	 */
 	public void run()
 	{				
@@ -51,7 +52,6 @@ public class RecorderFFMPEG extends Thread{
 
 	/**
 	 * Envoie la lettre q au processus afin d'ordonner l'arrêt de ffmpeg par l'utilisateur
-	 * @author Anaïs
 	 */
 	public void stopRecord()
 	{

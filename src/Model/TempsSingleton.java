@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import Vue.Observer;
 
+/**
+ * Classe récupérant le temps restant à l'examen et mettant à jour
+ * l'interface graphique de l'étudiant
+ */
 public class TempsSingleton implements Sujet{
 
-	String tempsRestantExamen;
-	ArrayList<Observer> listObs;
+	private String tempsRestantExamen;
+	private ArrayList<Observer> listObs;
 	static TempsSingleton instance = null;
 
 	private TempsSingleton()

@@ -14,12 +14,7 @@ import Model.RecorderFFMPEG;
 
 /**
  * Cette classe permet d'envoyer via le protocole UDP le record de l'écran du PC client
- * 
- * A FAIRE: 
- * -- ENVOYER LE BON TYPE DE DONNEES POUR LA RECONNAISSANCE PAR LE SERVEUR
- * 
- * @author Base: Anaïs & Bastien
- *
+ * en utilisant les classes du pipe et du recorder
  */
 public class VideoWatcher extends Watcher{
 
@@ -41,7 +36,11 @@ public class VideoWatcher extends Watcher{
 	//Permet d'avoir un pipe unique
 	public static String IDENTIFIANT;	
 
-
+	/**
+	 * Permet de récupérer un port réservé au client, afin de communiquer
+	 * avec le serveur UDP sur ce port.
+	 * @throws IOException
+	 */
 	public static void envoiServ() throws IOException
 	{
 		//On initialise la connexion côté client
@@ -81,6 +80,10 @@ public class VideoWatcher extends Watcher{
 		client.close();
 	}
 
+	/**
+	 * Récupère un port sur lequel communiquer, puis démarre le record et l'envoi par le biais
+	 * du pipe
+	 */
 	@Override
 	public void run(){
 		EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
@@ -94,7 +97,6 @@ public class VideoWatcher extends Watcher{
 			try {
 				envoiServ();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

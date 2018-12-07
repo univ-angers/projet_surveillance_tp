@@ -10,6 +10,10 @@ import javax.swing.*;
 
 import Controller.Main;
 
+/**
+ * Fenêtre indiquant à l'utilisateur qu'il ne pourra pas revenir en arrière
+ * avant de quitter définitivement la surveillance
+ */
 public class Quitter extends JDialog
 {
 	private Quitter instance = this;

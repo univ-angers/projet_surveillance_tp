@@ -4,12 +4,18 @@ import java.util.Date;
 
 import org.json.simple.JSONObject;
 
-/*
+/**
  * Sert à détecter les arrêts de l'application dûs à une commande du terminal
  * Source : http://journal.thobe.org/2013/02/jvms-and-kill-signals.html
  */
 public class DetectionArret 
 {
+	/**
+	 * Envoie une alerte au serveur en cas d'arrêt du client, de manière normale ou non
+	 * Envoie l'heure réelle de déconnexion, et pas le temps depuis le lancement
+	 * de la surveillance
+	 * @throws Exception
+	 */
 	public void detAr() throws Exception 
 	{
 		Runtime.getRuntime().addShutdownHook(new Thread()

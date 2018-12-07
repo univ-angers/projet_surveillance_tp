@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import Model.RefreshTimer;
 import Model.TempsSingleton;
 
+/**
+ * Fenêtre affichant le temps restant pour l'examen
+ */
 public class Examen extends JFrame implements Observer
 {
 	private JPanel panel;

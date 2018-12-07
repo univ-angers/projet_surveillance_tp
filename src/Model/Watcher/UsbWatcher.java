@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 
 import Controller.Main;
 
+/**
+ * Envoie une alerte si un périphérique usb est connecté ou déconnecté
+ */
 public class UsbWatcher extends Watcher {
 
 	static String TYPE = "USB";
@@ -42,12 +45,10 @@ public class UsbWatcher extends Watcher {
 				} else {
 					if (n_usb < result)
 					{
-						System.out.println("Connexion d'une clé USB");
 						String information = "nom_usb_todo";
 						createDataBeforeSendEvent("connexion_usb", information);						
 					} else if (n_usb > result) 
 					{
-						System.out.println("Deconnexion d'une clé USB");
 						String information = "nom_usb_todo";
 						createDataBeforeSendEvent("deconnexion_usb", information);	
 					}
