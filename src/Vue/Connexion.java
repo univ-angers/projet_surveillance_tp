@@ -74,7 +74,6 @@ public class Connexion extends JFrame
 						fenetre.setModal(true);
 						fenetre.setVisible(true);
 					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}

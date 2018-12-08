@@ -96,11 +96,9 @@ public class Pipe extends Thread {
 			pPipe.waitFor();
 			pipePret = true;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			pipePret = false;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			pipePret = false;
 		}
@@ -144,14 +142,13 @@ public class Pipe extends Thread {
 			finally
 			{
 				//Suppresion du fichier
-				File f = new File("/tmp/pipeReception"+VideoWatcher.name.toUpperCase());
+				File f = new File("/tmp/pipeReception" + VideoWatcher.name + VideoWatcher.IDENTIFIANT);
 				f.delete();
 				//Toutes les actions du client sont terminées, on envoie un message au serveur pour lui dire
 				//qu'on peut supprimer ce client
 				try {
 					envoiPaquetFinClient();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 			}

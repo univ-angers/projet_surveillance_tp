@@ -56,7 +56,7 @@ public class NetworkWatcher extends Watcher{
 	public void run()
 	{		
 		try {			
-			String tcpdumpCmd = "sudo /usr/sbin/tcpdump -s 0 -i any -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'";	//Ce qu'on veut
+			String tcpdumpCmd = "sudo /usr/sbin/tcpdump -s 0 -i any -A 'tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x47455420'";
 			ProcessBuilder PB = null;
 
 			PB = new ProcessBuilder("/bin/bash", "-c", tcpdumpCmd);
