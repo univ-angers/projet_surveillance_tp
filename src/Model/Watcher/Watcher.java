@@ -3,9 +3,6 @@ package Model.Watcher;
 import Model.EtudiantExamenInfoSingleton;
 import Model.ServerLinkSingleton;
 
-import java.sql.Time;
-import java.util.Date;
-
 import org.json.simple.JSONObject;
 
 /**
