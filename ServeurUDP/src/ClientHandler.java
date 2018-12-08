@@ -35,8 +35,6 @@ public class ClientHandler extends Thread{
 	{
 		// Socket du serveur
 		try {
-			System.out.println( "Le serveur écoute le client " + nomClient + " sur le port " + port + "." ) ;
-
 			socketSpecialClient = new DatagramSocket( port ) ;
 			byte[] receptionVideo = new byte[2048];
 
@@ -48,7 +46,8 @@ public class ClientHandler extends Thread{
 				ajoutElementVideo(paquetVideo);
 			}
 		} catch (SocketException e) {
-			System.out.println("Fin de vidéo non récupérable");
+			//On aura cette erreur quand un signal de fin de vidéo arrive alors
+			//qu'il restait quelques paquets à envoyer
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -74,7 +73,6 @@ public class ClientHandler extends Thread{
 	 * Ferme le socket serveur
 	 */
 	public void stopSocket(){
-		System.out.println("Fermeture du client " + nomClient);
 		receptionActive = false;
 		socketSpecialClient.close();
 	}

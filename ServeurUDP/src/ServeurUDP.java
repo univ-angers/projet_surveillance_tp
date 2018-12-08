@@ -25,8 +25,6 @@ public class ServeurUDP {
 					// Socket du serveur
 					DatagramSocket socketServeur = new DatagramSocket( port ) ;
 
-					System.out.println( "Le serveur est prêt." ) ;
-
 					while(true)
 					{
 						byte[] donneesRecues = new byte[4096];
@@ -36,14 +34,14 @@ public class ServeurUDP {
 						socketServeur.receive( paquetReception );
 
 						String donnees = new String(paquetReception.getData());
-						//System.out.println("DEBUG: Données recues = " + donnees);
+						
+						//Deux types de données
 						//NOUVEAU:name:session si nouveau client
-						//FIN:name
+						//FIN:name pour la fermeture d'un client existant
 						String[] resultat = donnees.split(":");
 
 						if (resultat[0].trim().equals("NOUVEAU"))
 						{
-							//System.out.println("DEBUG: Un nouveau client s'est connecté");
 							int portPropose = 1024 + (int)(Math.random() * (20000-1024));
 
 							int cle;
@@ -83,7 +81,6 @@ public class ServeurUDP {
 						}
 						if (resultat[0].trim().equals("FIN"))
 						{
-							//System.out.println("DEBUG: Un client s'est terminé.");
 							int portArret = Integer.parseInt(resultat[1].trim());
 
 							//On supprime le client au port indiqué
