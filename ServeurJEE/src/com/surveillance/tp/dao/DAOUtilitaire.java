@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-//Class provenant du tutoriel DAO d'openclassroom
-//https://openclassrooms.com/fr/courses/626954-creez-votre-application-web-avec-java-ee/624784-le-modele-dao
-
+/**
+ * Classe gérant la fermeture de la connection avec la DAO
+ */
 public class DAOUtilitaire {
 
     /*

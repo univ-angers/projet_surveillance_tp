@@ -6,6 +6,9 @@ import javax.servlet.ServletContextListener;
 
 import com.surveillance.tp.dao.DAOFactory;
 
+/**
+ * Création de la DAO Factory au lancement de l'application
+ */
 public class InitialisationDAOFactory implements ServletContextListener {
 
 	private static final String ATT_DAO_FACTORY = "daofactory";
@@ -24,6 +27,5 @@ public class InitialisationDAOFactory implements ServletContextListener {
 
     @Override
     public void contextDestroyed( ServletContextEvent event ) {
-        /* Rien à réaliser lors de la fermeture de l'application... */
     }
 }

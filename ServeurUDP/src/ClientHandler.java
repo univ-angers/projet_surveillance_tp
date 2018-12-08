@@ -8,8 +8,6 @@ import java.net.SocketException;
 /**
  * Classe qui correspond à la connexion à un client
  * Chaque client va communiquer avec le serveur par un port précis qui lui est attribué
- * @author etudiant
- * 
  */
 public class ClientHandler extends Thread{
 

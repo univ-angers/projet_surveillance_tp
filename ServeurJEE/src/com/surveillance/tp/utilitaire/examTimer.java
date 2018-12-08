@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 
 import com.surveillance.tp.beans.Examen;
 
+/**
+ * Classe contenant diverses méthodes concernant le temps d'examen
+ */
 public class examTimer {
 
 	public static boolean examenTermine(Examen exam)

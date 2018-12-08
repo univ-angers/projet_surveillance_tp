@@ -1,9 +1,11 @@
 package com.surveillance.tp.beans;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+/**
+ * Contient les données d'un examen
+ */
 public class Examen {
 	
 	private int idExam;		//PRIMARY KEY

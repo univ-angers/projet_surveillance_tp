@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * DAO Factory permettant de créer toutes nos DAO
+ * Basé sur le tutoriel openclassroom: https://openclassrooms.com/fr/courses/626954-creez-votre-application-web-avec-java-ee/624784-le-modele-dao
+ */
 public class DAOFactory {
 
 	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/ressources/dao.properties";
@@ -37,7 +41,7 @@ public class DAOFactory {
 		String motDePasse;
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		//EN ATTENDANT LE DEBUG DU CHARGEMENT DE FICHIER
+
 		InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
 
 		if ( fichierProperties == null ) {
@@ -64,12 +68,14 @@ public class DAOFactory {
 		return instance;
 	}
 
-	/* Méthode chargée de fournir une connexion à la base de données */
-	/* package */ Connection getConnection() throws SQLException {
+	/**
+	 *  Méthode chargée de fournir une connexion à la base de données 
+	 */
+	Connection getConnection() throws SQLException {
 		return DriverManager.getConnection( url, username, password );
 	}
 
-	/*
+	/**
 	 * Méthodes de récupération de l'implémentation des différents DAO
 	 */
 	public DAOUtilisateur getUtilisateurDao() {

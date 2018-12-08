@@ -1,5 +1,8 @@
 package com.surveillance.tp.dao;
 
+/**
+ * Exception spécifique à nos DAO
+ */
 public class DAOException extends RuntimeException {
 
 	/*

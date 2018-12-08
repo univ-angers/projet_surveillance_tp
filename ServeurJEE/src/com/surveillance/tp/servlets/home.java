@@ -8,15 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Servlet affichant l'écran d'acceuil du site
+ */
 public class home extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
-	//private DAOUtilisateur daoUtilisateur;
-
-	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Utilisateur */
-		//this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -27,10 +24,5 @@ public class home extends HttpServlet {
 			request.setAttribute("affiche_auth", "oui");
 		
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );        
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//this.getServletContext().getRequestDispatcher("/WEB-INF/MonCompte.jsp").forward(request, response);
 	}
 }

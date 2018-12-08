@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.surveillance.tp.beans.Examen;
-import com.surveillance.tp.beans.Utilisateur;
 
+/**
+ * Implémentation des méthodes de recherche et mise à jour dans la table Examen
+ */
 public class DAOExamenImpl implements DAOExamen {
 
 	private DAOFactory daoFactory;
@@ -20,7 +22,7 @@ public class DAOExamenImpl implements DAOExamen {
 
 	/*
 	 * Simple méthode utilitaire permettant de faire la correspondance (le
-	 * mapping) entre une ligne issue de la table des utilisateurs (un
+	 * mapping) entre une ligne issue de la table des examens (un
 	 * ResultSet) et un bean Examen.
 	 */
 	private static Examen map( ResultSet resultSet ) throws SQLException {

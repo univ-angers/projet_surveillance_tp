@@ -16,7 +16,9 @@ import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
-
+/**
+ * Servlet permettant à l'utilisateur de modifier ses informations
+ */
 public class monCompte extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -96,10 +98,6 @@ public class monCompte extends HttpServlet {
 					}
 					String mdpHash = sb.toString();
 
-					System.out.println("Ancien MDP = " + ancienMDP);
-					System.out.println("Ancien MDP hash = " + mdpHash);
-					System.out.println("MDP dans base = " + util.getPassword());
-
 					if (mdpHash.equals(util.getPassword()))
 					{
 						util.setPassword(nouvMDP);
@@ -116,6 +114,9 @@ public class monCompte extends HttpServlet {
 			else
 				request.setAttribute("mdp_fail", "oui");
 		}
+		
+		 if (session.getAttribute("groupeUtilisateur").equals("eleve"))
+			request.setAttribute("eleve", "oui");
 
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/MonCompte.jsp" ).forward( request, response );
 	}

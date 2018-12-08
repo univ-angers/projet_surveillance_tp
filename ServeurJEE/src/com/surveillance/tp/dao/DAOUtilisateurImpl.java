@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import com.surveillance.tp.beans.Utilisateur;
 
+/**
+ * Implémentation des méthodes de recherche et mise à jour dans la table Utilisateur
+ */
 public class DAOUtilisateurImpl implements DAOUtilisateur {
 
 	private DAOFactory daoFactory;

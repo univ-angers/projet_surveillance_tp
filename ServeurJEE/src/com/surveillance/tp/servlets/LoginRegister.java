@@ -13,7 +13,7 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
 /**
- * Servlet implementation class LoginRegister
+ * Servlet affichant la page de connexion
  */
 @WebServlet("/LoginRegister")
 public class LoginRegister extends HttpServlet {
@@ -27,9 +27,6 @@ public class LoginRegister extends HttpServlet {
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -40,9 +37,6 @@ public class LoginRegister extends HttpServlet {
 			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userMail=request.getParameter("login-mail");
 		String password=request.getParameter("login-password");

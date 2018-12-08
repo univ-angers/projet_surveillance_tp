@@ -11,8 +11,10 @@ import javax.servlet.http.HttpSession;
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
-import com.surveillance.tp.utilitaire.examTimer;
 
+/**
+ * Servlet passant un examen en attente à démarré
+ */
 public class DemarrageExamen extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -47,8 +49,5 @@ public class DemarrageExamen extends HttpServlet {
 			else
 				response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 }

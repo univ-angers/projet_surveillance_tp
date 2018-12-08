@@ -3,6 +3,10 @@ package com.surveillance.tp.utilitaire;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe récupération la vidéo au format MPEG-TS et la convertit en MP4 en l'envoyant
+ * vers le dossier du serveur Web, permettant son affichage
+ */
 public class ConversionVideo implements Runnable{
 
 	private String cheminSource;
@@ -21,6 +25,7 @@ public class ConversionVideo implements Runnable{
 			if (f.exists())
 				f.delete();
 			
+			//Conversion en mp4 + envoi vers le serveur web
 			String cmd  = "ffmpeg -i " + cheminSource + " -c:v libx264 -c:a copy -bsf:a aac_adtstoasc " + cheminDest + "assets/img/videos/output.mp4";				
 	
 			//Permet de lancer la commande depuis l'application Java
@@ -33,7 +38,6 @@ public class ConversionVideo implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 		}

@@ -2,18 +2,16 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.Map.Entry;
 
 /**
- * -- Creer un arrêt propore, à voir avec la reception de paquet qui bloque le while
- * @author Base: Anais & Bastien
+ * Classe recevant les demandes de connexion au serveur vidéo, qui va indiquer
+ * au client quel port spécifique utiliser pour communiquer
  */
 public class ServeurUDP {
 	public final static int port = 2345;
 	private static HashMap<Integer,ClientHandler> listeClient;	
-	private Scanner saisieInfo = new Scanner(System.in);
-
+	
 	public static void main( String args[] )
 	{				
 		listeClient = new HashMap<Integer, ClientHandler>();

@@ -1,7 +1,8 @@
 package com.surveillance.tp.beans;
 
-import org.json.simple.JSONObject;
-
+/**
+ * Contient les données d'une règle
+ */
 public class Regle {
 
 	private int idRegle;

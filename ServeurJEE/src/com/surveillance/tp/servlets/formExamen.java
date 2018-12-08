@@ -20,6 +20,9 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAORegleExamen;
 import com.surveillance.tp.utilitaire.directoryManager;
 
+/**
+ * Servlet affichant le formulaire permettant la création d'un examen
+ */
 public class formExamen extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -28,7 +31,7 @@ public class formExamen extends HttpServlet {
 	private DAORegleExamen daoRegleExamen;
 
 	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Utilisateur */
+		/* Récupération d'une instance de nos DAO */
 		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
 		this.daoRegleExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getRegleExamDao();
 	}
@@ -40,7 +43,7 @@ public class formExamen extends HttpServlet {
 		//Aucun utilisateur connecté
 		if (session.getAttribute("id_user") == null)
 			response.sendRedirect("/ServeurJEE/LoginRegister");
-		
+
 		//L'utilisateur est un élève, donc pas le droit d'accès
 		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
 			response.sendRedirect("/ServeurJEE/monCompte");
@@ -167,7 +170,5 @@ public class formExamen extends HttpServlet {
 
 		examDir = new File(pathDir);
 		examDir.mkdirs();
-	}    
-
-
+	}   
 }

@@ -12,6 +12,9 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 import com.surveillance.tp.utilitaire.mailUtil;
 
+/**
+ * Servlet permettant d'indiquer un mail pour récupérer un mot de passe perdu
+ */
 public class recupPass extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -31,12 +34,15 @@ public class recupPass extends HttpServlet {
 		String destination = (String) request.getParameter("reminder-email");
 		Utilisateur util = daoUtilisateur.trouver(destination);
 		
+		//On envoie un mail que si le mail correspond à un utilisateur
 		if (util != null)
 		{
 			String token = mailUtil.creationChaine30();
 			daoUtilisateur.miseAJourReset(util,token);
 			
-			mailUtil.envoyerReset(destination,token);
+			String nom = util.getNom();
+			String prenom = util.getPrenom();
+			mailUtil.envoyerReset(destination,token,nom,prenom);
 			request.setAttribute("util_trouve", "oui");
 		}
 		else

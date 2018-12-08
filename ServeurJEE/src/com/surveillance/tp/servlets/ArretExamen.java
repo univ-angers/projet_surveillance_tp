@@ -12,6 +12,9 @@ import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 
+/**
+ * Servlet passant un examen en cours à arrêté
+ */
 public class ArretExamen extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -43,8 +46,5 @@ public class ArretExamen extends HttpServlet {
 
 			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 		}
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 }

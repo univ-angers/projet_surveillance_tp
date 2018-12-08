@@ -1,5 +1,8 @@
 package com.surveillance.tp.beans;
 
+/**
+ * Contient les informations d'un utilisateur
+ */
 public class Utilisateur {
 	private int id;
 	private String prenom;

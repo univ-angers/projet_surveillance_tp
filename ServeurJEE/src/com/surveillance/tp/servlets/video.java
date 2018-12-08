@@ -1,6 +1,5 @@
 package com.surveillance.tp.servlets;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -15,6 +14,9 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.utilitaire.ConversionVideo;
 import com.surveillance.tp.utilitaire.directoryManager;
 
+/**
+ * Servlet affichant la vidéo de l'utilisateur pour un examen précis
+ */
 public class video extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";

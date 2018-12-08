@@ -14,6 +14,9 @@ import org.json.simple.parser.ParseException;
 
 import com.surveillance.tp.beans.EtudiantExamen;
 
+/**
+ * Classe contenant diverses méthodes concernant l'accès aux dossiers d'examens
+ */
 public class directoryManager {
 
 	/**

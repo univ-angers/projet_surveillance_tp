@@ -1,5 +1,8 @@
 package com.surveillance.tp.beans;
 
+/**
+ * Contient les informations d'une règle liée à un examen spécifique
+ */
 public class RegleExam {
 
 	private int idRegle;

@@ -9,8 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.surveillance.tp.beans.Regle;
-import com.surveillance.tp.beans.Utilisateur;
 
+/**
+ * Implémentation des méthodes de recherche et mise à jour dans la table Rule
+ */
 public class DAORegleImpl implements DAORegle{
 
 	private DAOFactory daoFactory;
@@ -21,8 +23,8 @@ public class DAORegleImpl implements DAORegle{
 	
 	/*
 	 * Simple méthode utilitaire permettant de faire la correspondance (le
-	 * mapping) entre une ligne issue de la table des utilisateurs (un
-	 * ResultSet) et un bean Utilisateur.
+	 * mapping) entre une ligne issue de la table des Rule (un
+	 * ResultSet) et un bean Regle.
 	 */
 	private static Regle map( ResultSet resultSet ) throws SQLException {
 		Regle regle = new Regle();
@@ -35,6 +37,7 @@ public class DAORegleImpl implements DAORegle{
 		return regle;
 	}
 	
+	//Insertion d'une règle
 	private static final String SQL_INSERT_REGLE = "INSERT INTO Rule (description, id_niveau, id_watcher) VALUES (?, ?, ?)";
 	
 	@Override
@@ -66,6 +69,7 @@ public class DAORegleImpl implements DAORegle{
 		}		
 	}
 	
+	//Recherche d'une règle par rapport à sa description
 	private static final String SQL_SELECT_REGLE_TYPE = "SELECT id_rule, description, id_niveau, id_watcher FROM Rule WHERE description = ?";
 
 	@Override
@@ -92,6 +96,7 @@ public class DAORegleImpl implements DAORegle{
 		return regle;
 	}
 	
+	//Recherche d'une règle par rapport à son ID
 	private static final String SQL_SELECT_REGLE_ID = "SELECT id_rule, description, id_niveau, id_watcher FROM Rule WHERE id_rule = ?";
 
 	@Override
@@ -118,6 +123,7 @@ public class DAORegleImpl implements DAORegle{
 		return regle;
 	}
 
+	//Suppression d'une règle par rapport à son ID
 	private static final String SQL_DELETE_REGLE = "DELETE FROM Rule WHERE id_rule  = ?";
 
 	@Override
@@ -137,6 +143,7 @@ public class DAORegleImpl implements DAORegle{
 		}
 	}
 
+	//Mise à jour d'une règle par rapport à son ID
 	private static final String SQL_UPDATE_REGLE = "UPDATE Rule SET description = ?, id_niveau = ?, id_watcher = ? WHERE id_rule = ?";
 
 	@Override

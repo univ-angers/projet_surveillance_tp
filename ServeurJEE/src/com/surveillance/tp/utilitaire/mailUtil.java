@@ -1,6 +1,5 @@
 package com.surveillance.tp.utilitaire;
 
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
@@ -8,6 +7,9 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * Classe contenant des méthodes concernant le reset du mot de passe
+ */
 public class mailUtil {
 
 	/**
@@ -33,7 +35,7 @@ public class mailUtil {
 	 * @param token
 	 * @return
 	 */
-	public static boolean envoyerReset(String destination, String token)
+	public static boolean envoyerReset(String destination, String token, String nom, String prenom)
 	{
 		//adresse mail = projetsurvtp@gmail.com
 		//mdp mail = projsurv2018
@@ -65,13 +67,12 @@ public class mailUtil {
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(destination));
 			message.setSubject("Récupératon mot de passe");
-			message.setText("Cliquez sur ce lien pour réinitialiser votre mot de passe \n" +
-					//A voir
+			message.setText("Bonjour " + prenom + " " + nom + "!\n"
+					+ "Cliquez sur ce lien pour réinitialiser votre mot de passe: \n" +
 					"http://" + IP_SERVEUR + ":8080/ServeurJEE/receptionReset?" + token );
 
 			Transport.send(message);
 
-			System.out.println("Mail envoyé");
 			result = true;
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

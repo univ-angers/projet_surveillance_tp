@@ -5,9 +5,6 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +16,9 @@ import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.utilitaire.directoryManager;
 
+/**
+ * Servlet affichant les détails d'un étudiant concernant un examen spécifique
+ */
 public class detailExam extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -69,7 +69,6 @@ public class detailExam extends HttpServlet {
 			}
 			
 			//Vérification qu'un fichier vidéo existe
-			System.out.println("TEST IMPORTANT = " + chemin+"/"+id_etudiant+"/"+id_etudiant+".surv");
 			File f = new File(chemin+"/"+id_etudiant+"/"+id_etudiant+".surv");
 			if (f.exists())
 				request.setAttribute("video", "oui");
@@ -84,8 +83,6 @@ public class detailExam extends HttpServlet {
 	private static String usingBufferedReader(String chemin,int id_etud)
 	{		
 		StringBuilder contentBuilder = new StringBuilder();
-		System.out.println("Chemin exam : "+ chemin);
-		System.out.println("ID Etu : "+ id_etud);
 		try (BufferedReader br = new BufferedReader(new FileReader(chemin+"/"+id_etud+"/"+id_etud+".lg")))
 		{
 
@@ -94,7 +91,6 @@ public class detailExam extends HttpServlet {
 			{
 				contentBuilder.append(sCurrentLine).append("\n");
 			}
-			System.out.println(contentBuilder.toString());
 		}
 		catch (IOException e)
 		{

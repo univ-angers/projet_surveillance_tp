@@ -18,25 +18,20 @@ import com.surveillance.tp.utilitaire.directoryManager;
 import com.surveillance.tp.utilitaire.examTimer;
 
 /**
- * Servlet implementation class ListeUtilisateurs
+ * Servlet affichant la liste des utilisateurs pour un examen
  */
 public class listeUtilisateurs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static final String CONF_DAO_FACTORY = "daofactory";
 	private DAOUtilisateur daoUtilisateur;
 	private DAOExamen daoExamen;
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
+
 	public void init() throws ServletException {
 		/* Récupération d'une instance de nos DAO */
 		this.daoUtilisateur = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUtilisateurDao();
 		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
@@ -82,7 +77,6 @@ public class listeUtilisateurs extends HttpServlet {
 				if (examEnCours != null) {
 					if (examTimer.examenTermine(examEnCours))
 					{
-						System.out.println("pouet");
 						response.sendRedirect("/ServeurJEE/arretExamen");
 					}
 					else
@@ -111,14 +105,4 @@ public class listeUtilisateurs extends HttpServlet {
 			}
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		this.getServletContext().getRequestDispatcher("/WEB-INF/listeUtilisateurs.jsp").forward(request, response);
-	}
-
-
 }

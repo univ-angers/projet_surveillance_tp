@@ -7,8 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +33,10 @@ import com.surveillance.tp.dao.DAOUtilisateur;
 import com.surveillance.tp.utilitaire.directoryManager;
 import com.surveillance.tp.utilitaire.examTimer;
 
+/**
+ * Classe communiquant avec les clients. Elle récupère les informations, les traites
+ * et répond aux différents clients
+ */
 public class receptionJSON extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -55,12 +57,8 @@ public class receptionJSON extends HttpServlet {
 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
-			StringBuilder sb = new StringBuilder();
 			BufferedReader br = request.getReader();
 			String str = null;
 			String resultat = "";
@@ -322,8 +320,6 @@ public class receptionJSON extends HttpServlet {
 		//Modification du header
 		JSONParser parser = new JSONParser();
 		try {
-			System.out.println("DEBUG: Alerte = " + alerte.toJSONString());
-
 			if (exam != null)
 			{
 
@@ -360,11 +356,8 @@ public class receptionJSON extends HttpServlet {
 				if (niveauRegle == 1)
 				{
 					//Ne pas envoyer l'alerte de l'étudiant qui quitte l'examen si le temps est écoulé
-					System.out.println("DEBUG: tempsRestant = " + examTimer.tempsRestant(exam));
 					if (reg.getIdRegle()==9 && examTimer.tempsRestant(exam) < 0)
-					{
-						System.out.println("On ajoute rien");
-					}
+					{/*On ajoute rien */}
 					//Pour tous les autres cas, on ajoute l'alerte
 					else
 					{}
@@ -436,7 +429,6 @@ public class receptionJSON extends HttpServlet {
 			out.flush();
 			out.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

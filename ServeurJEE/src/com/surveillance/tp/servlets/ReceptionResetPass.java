@@ -11,7 +11,9 @@ import com.surveillance.tp.beans.Utilisateur;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
-
+/**
+ * Servlet affichant l'écran de reset de mot de passe
+ */
 public class ReceptionResetPass extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
@@ -24,13 +26,14 @@ public class ReceptionResetPass extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Recupérer ID 
+		//Recupérer token du lien
 		String token = request.getQueryString();
 
 		if (token.length() == 30)
 		{
 			Utilisateur util = daoUtilisateur.trouverCleReset(token);
 
+			//Un utilisateur correspond à cette clé, on lui permet donc de reset son mot de passe
 			if (util != null)
 			{
 				request.setAttribute("id_util", util.getId());
@@ -41,11 +44,7 @@ public class ReceptionResetPass extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("BLBLBL");
 		String nouvMdp = (String) request.getParameter("nouv_mdp");
 		String verifMdp = (String) request.getParameter("mdp_conf");
 
@@ -53,17 +52,22 @@ public class ReceptionResetPass extends HttpServlet {
 		int idUtil = Integer.valueOf(idUtilSt);
 
 		Utilisateur util = daoUtilisateur.trouverID(idUtil);
+		//Si l'utilisateur existe bien
 		if (util != null)
 		{
+			//Les deux mots deux passe indiqués sont identiques
 			if (nouvMdp.equals(verifMdp))
 			{
 				util.setPassword(nouvMdp);
+				//On lui change son mot de passe
 				daoUtilisateur.miseAJour(util);
+				//Et son token de réinitialisation est passé à null
 				daoUtilisateur.miseAJourReset(util, null);
 
 				response.sendRedirect("/ServeurJEE/home");
 			}
 			else
+			//Les deux mots de passe indiqués sont différents
 			{
 				request.setAttribute("id_util", util.getId());
 				request.setAttribute("mdp_egaux", "non");

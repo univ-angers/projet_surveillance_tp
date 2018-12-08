@@ -20,6 +20,9 @@ import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAORegleExamen;
 import com.surveillance.tp.utilitaire.examTimer;
 
+/**
+ * Servlet affichant les paramètres d'un examen, permettant de démarrer ou modifier l'examen en cours
+ */
 public class paramExam extends HttpServlet {
 
 	public static final String CONF_DAO_FACTORY = "daofactory";

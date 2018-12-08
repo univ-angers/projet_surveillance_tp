@@ -2,9 +2,7 @@ package com.surveillance.tp.beans;
 
 /**
  * Contient les données stockées dans le header d'un log d'étudiant pour un examen précis
- *{"header":{"nbClavier":2019,"nbNet":0,"nbCrit":0,"nbFichier":0,"nbLog":0,"nbUSB":0,"nom":"noob","prenom":"prozengan"}
  */
-
 
 public class EtudiantExamen {
 	private String nomEt;

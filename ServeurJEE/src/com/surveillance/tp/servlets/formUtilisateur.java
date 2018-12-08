@@ -11,8 +11,10 @@ import com.surveillance.tp.beans.Utilisateur;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAOUtilisateur;
 
+/**
+ * Servlet affichant le formulaire de création de compte utilisateur
+ */
 public class formUtilisateur extends HttpServlet {
-
 
 	public static final String CONF_DAO_FACTORY = "daofactory";
 
