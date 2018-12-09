@@ -1,8 +1,12 @@
 package com.surveillance.tp.servlets;
 
 import java.io.IOException;
+import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.sql.Time;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +23,7 @@ import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAORegleExamen;
 import com.surveillance.tp.utilitaire.examTimer;
+import com.surveillance.tp.utilitaire.recuperationIP;
 
 /**
  * Servlet affichant les paramètres d'un examen, permettant de démarrer ou modifier l'examen en cours
@@ -60,7 +65,7 @@ public class paramExam extends HttpServlet {
 				{
 					request.setAttribute("IDexam", examEnCours.getIdExam());
 					request.setAttribute("Matiere", examEnCours.getMatiere());
-					request.setAttribute("IP", InetAddress.getLocalHost().getHostAddress());
+					request.setAttribute("IP", recuperationIP.getAdresseIPV4());
 					
 					//Savoir quel bouton on affiche entre démarrage et stop
 					if (examEnCours.getHeureDebut() == null)
