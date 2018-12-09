@@ -289,23 +289,26 @@ public class receptionJSON extends HttpServlet {
 		int idEx = Integer.valueOf(idExamen);
 		Examen examEnCours = daoExamen.trouverExamenIDEnCours(idEx);
 
-		//Si l'examen auquel on veut ajouter nos logs a bien commencé
-		if (examEnCours.getHeureDebut() != null)
+		if (examEnCours != null)
 		{
-			//Et qu'il n'est pas terminé
-			if (!examTimer.examenTermine(examEnCours))
+			//Si l'examen auquel on veut ajouter nos logs a bien commencé
+			if (examEnCours.getHeureDebut() != null)
 			{
-				//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
-				String mail = (String) alerte.get("mailEtudiant");
-				Utilisateur util = 	daoUtilisateur.trouver(mail);
-				int idEtud = util.getId();
+				//Et qu'il n'est pas terminé
+				if (!examTimer.examenTermine(examEnCours))
+				{
+					//Si on est ici, on a déjà un dossier + fichier log créé pour l'examen
+					String mail = (String) alerte.get("mailEtudiant");
+					Utilisateur util = 	daoUtilisateur.trouver(mail);
+					int idEtud = util.getId();
 
-				String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
+					String chemin = directoryManager.idDbToString(Integer.parseInt(idExamen));
 
-				//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
-				chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
+					//Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
+					chemin = chemin + "/" + idEtud + "/" + util.getId() + ".lg";
 
-				miseAJourLog(examEnCours, chemin, alerte);
+					miseAJourLog(examEnCours, chemin, alerte);
+				}
 			}
 		}
 	}

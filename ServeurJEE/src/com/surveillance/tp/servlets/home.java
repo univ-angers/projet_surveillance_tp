@@ -21,8 +21,11 @@ public class home extends HttpServlet {
 
 		//Aucun utilisateur connecté
 		if (session.getAttribute("id_user") == null)
+		{
 			request.setAttribute("affiche_auth", "oui");
-		
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );        
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/home.jsp" ).forward( request, response );
+		}
+		else
+			response.sendRedirect("/ServeurJEE/listeUtilisateurs");
 	}
 }

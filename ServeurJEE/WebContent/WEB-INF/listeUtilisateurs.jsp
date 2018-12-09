@@ -8,8 +8,9 @@
 <!--[if gt IE 9]><!--> <html class="no-focus" lang="en"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
+        <meta http-equiv="refresh" content="30" />
 
-        <title>Home</title>
+        <title>Liste d'étudiants</title>
 
         
 
@@ -111,7 +112,7 @@
                             <div class="content">
                                 <div class="block block-transparent block-themed text-center">
                                     <div class="block-content">
-                                        <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Users</h1>
+                                        <h1 class="h1 font-w700 text-white animated fadeInDown push-5">Etudiants</h1>
                                         
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@
                         <div class="block-header bg-primary">
                             <ul class="block-options">
                                 <li>
-                                    <a href="Authentification.jsp" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
+                                    <a href="LoginRegister" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
                                 </li>
                             </ul>
                             <h3 class="block-title">Recuperation mot de passe</h3>
