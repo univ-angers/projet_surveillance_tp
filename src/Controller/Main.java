@@ -3,7 +3,6 @@ package Controller;
 import javax.swing.SwingUtilities;
 
 import Model.DetectionArret;
-import Model.ServerLinkSingleton;
 import Vue.Connexion;
 
 

@@ -40,7 +40,7 @@ public class FileWatcher extends Watcher {
 	 * Source2: https://stackoverflow.com/questions/49803363/how-to-ignore-accessdeniedexceptions-when-using-files-walkfiletree
 	 */
 	private void registerAll(final Path start) throws IOException {
-	    // register directory and sub-directories
+	    // Enregistre tous les fichiers et sous dossiers à partir du start comme étant à surveiller
 	    Files.walkFileTree(start, new SimpleFileVisitor<Path>() {	
 	    	@Override
 	        public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {

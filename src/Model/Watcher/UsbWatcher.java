@@ -45,11 +45,11 @@ public class UsbWatcher extends Watcher {
 				} else {
 					if (n_usb < result)
 					{
-						String information = "nom_usb_todo";
+						String information = "nom_usb";
 						createDataBeforeSendEvent("connexion_usb", information);						
 					} else if (n_usb > result) 
 					{
-						String information = "nom_usb_todo";
+						String information = "nom_usb";
 						createDataBeforeSendEvent("deconnexion_usb", information);	
 					}
 					n_usb = result;

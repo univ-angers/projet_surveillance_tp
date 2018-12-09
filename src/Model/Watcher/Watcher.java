@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
  * par le biais du ServerLink
  */
 public abstract class Watcher extends Thread {
-	
+
 	// Le nom du type du Watcher
 	protected String type;
 	private long tempsDemarrage;
@@ -36,20 +36,21 @@ public abstract class Watcher extends Thread {
 	@SuppressWarnings("unchecked")
 	protected  void createDataBeforeSendEvent(String typ, String information)
 	{
+		EtudiantExamenInfoSingleton etud = EtudiantExamenInfoSingleton.getInstanceExistante();
 		String horodatage = heureRelative();
-		
-		// Niveau d'alerte à ajouter et autres infos si besoin
-		JSONObject datas = new JSONObject();
-		datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
-		datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
-		datas.put("horodatage", horodatage);
-		datas.put("type", typ);
-		datas.put("info", information);
-		
-		ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();
-		this.sendEvent(SLS, datas);
+
+			// Niveau d'alerte à ajouter et autres infos si besoin
+			JSONObject datas = new JSONObject();
+			datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
+			datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
+			datas.put("horodatage", horodatage);
+			datas.put("type", typ);
+			datas.put("info", information);
+
+			ServerLinkSingleton SLS = ServerLinkSingleton.getInstanceExistante();
+			this.sendEvent(SLS, datas);
 	}
-	
+
 	/**
 	 * Renvoie une chaine affichant l'heure relative par rapport au lancement de la surveillance
 	 * côté client
@@ -60,29 +61,29 @@ public abstract class Watcher extends Thread {
 	{
 		long tempsEnvoi = System.currentTimeMillis();
 		long delai = tempsEnvoi - tempsDemarrage;
-		
+
 		long tempsSeconde = delai/1000;
-        long heure = (tempsSeconde / 3600);
-        long min = (tempsSeconde / 60) % 60;
-        long sec = tempsSeconde % 60;
-        String horodatage;
-        String minsString = (min == 0)
-            ? "00"
-            : ((min < 10)
-               ? "0" + min
-               : "" + min);
-        String secsString = (sec == 0)
-            ? "00"
-            : ((sec < 10)
-               ? "0" + sec
-               : "" + sec);
-        if (heure > 0)
-            horodatage =  "" + heure + ":" + minsString + ":" + secsString;
-        else if (min > 0)
-        	horodatage = "00:" + min + ":" + secsString;
-        else horodatage = "00:00:" + secsString;
-        
-        return horodatage;
+		long heure = (tempsSeconde / 3600);
+		long min = (tempsSeconde / 60) % 60;
+		long sec = tempsSeconde % 60;
+		String horodatage;
+		String minsString = (min == 0)
+				? "00"
+						: ((min < 10)
+								? "0" + min
+										: "" + min);
+		String secsString = (sec == 0)
+				? "00"
+						: ((sec < 10)
+								? "0" + sec
+										: "" + sec);
+		if (heure > 0)
+			horodatage =  "" + heure + ":" + minsString + ":" + secsString;
+		else if (min > 0)
+			horodatage = "00:" + min + ":" + secsString;
+		else horodatage = "00:00:" + secsString;
+
+		return horodatage;
 	}
 
 }

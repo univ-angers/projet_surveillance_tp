@@ -37,7 +37,7 @@ public class NetworkWatcher extends Watcher{
 		liensSuspects = etudiant.getSiteASurveiller();
 	}
 	
-	public void verifierLien(String lien)
+	public boolean verifierLien(String lien)
 	{
 		for (int i = 0; i<liensSuspects.size(); i++)
 		{
@@ -45,8 +45,10 @@ public class NetworkWatcher extends Watcher{
 			{
 				String information = "Lien suspect: " + lien;
 				createDataBeforeSendEvent(TYPE, information);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -93,12 +95,17 @@ public class NetworkWatcher extends Watcher{
 										if (lignes[i].substring(0, 4).equals("Host"))
 										{
 											String lienACheck = lignes[i].substring(6);	
-											verifierLien(lienACheck);
+											boolean trouve = verifierLien(lienACheck);
+											//Pour n'avoir qu'une alerte pour une visite
+											if (trouve)
+											{
+												sleep(3500);
+											}
 										}
 									}
 								}
 							}
-						} catch (IOException e) {
+						} catch (IOException | InterruptedException e) {
 							e.printStackTrace();
 						} finally {
 							try {

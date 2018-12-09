@@ -18,8 +18,8 @@ public class EtudiantExamenInfoSingleton {
 	private ArrayList<Integer> listeWatchers;
 	private ArrayList<String> siteASurveiller;
 	// Sous la forme /a/b/c/d/e/f/g/h/i/j 
-	private String numeroExamen;
-
+	private String numeroExamen;	
+	
 	// L'instance unique de la classe
 	static EtudiantExamenInfoSingleton instance = null;
 
