@@ -1,7 +1,5 @@
 package com.surveillance.tp.utilitaire;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -45,7 +43,7 @@ public class mailUtil {
 		
 		try 
 		{
-			final String IP_SERVEUR = InetAddress.getLocalHost().getHostAddress();
+			final String IP_SERVEUR = recuperationIP.getAdresseIPV4();
 
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "smtp.gmail.com");
@@ -76,8 +74,6 @@ public class mailUtil {
 			result = true;
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
 		}
 
 		return result;
