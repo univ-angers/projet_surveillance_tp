@@ -41,7 +41,7 @@ Dans un terminal:
 >sudo apt install mysql-server
 
 Depuis le dossier BDD téléchargé, dans un terminal:
->mysql -u root -p < ./utilisateurSurv.sql
+>mysql -u root -p < ./utilisateurSurv.sql<br />
 >mysql -u root -p projetsurv < ./tablesSurv.sql
 
 
