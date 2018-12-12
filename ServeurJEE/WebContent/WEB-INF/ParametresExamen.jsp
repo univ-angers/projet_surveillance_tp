@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-success">
-                                            <input class="form-control" type="number" id="examen-id" name="examen-id" disabled="disabled" value="<%=request.getAttribute("IDexam")%>" placeholder="Saisir l'ID de l'examen">
+                                            <input class="form-control" type="text" id="examen-id" name="examen-id" disabled="disabled" value="<%=request.getAttribute("IDexam")%>" placeholder="Saisir l'ID de l'examen">
                                             <label for=examen-id>Id examen</label>
                                         </div>
                                     </div>
