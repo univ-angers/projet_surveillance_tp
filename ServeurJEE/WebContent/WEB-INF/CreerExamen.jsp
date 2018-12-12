@@ -156,8 +156,8 @@
 										<div class="form-material form-material-success">
 											<input class="form-control" type="text" id="white-list"
 												name="white-list"
-												placeholder="Saisir la liste des sites autorisés"> <label
-												for="white-list">La liste des sites autorisés</label>
+												placeholder="Saisir la liste des sites interdits"> <label
+												for="white-list">La liste des sites interdits</label>
 										</div>
 									</div>
 								</div>
