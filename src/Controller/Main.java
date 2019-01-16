@@ -6,17 +6,16 @@ import Model.DetectionArret;
 import Vue.Connexion;
 
 
-public class Main 
-{	
+public class Main
+{
 	public static boolean surveillanceEnCours;
-	
+
 	public static void main(String[] args){
-				
+
 		surveillanceEnCours = false;
-		
 		//Surveille si un arrêt s'effectue, qu'il soit normal ou mal intentionné (kill)
-		DetectionArret da = new DetectionArret();
-		
+		DetectionArret detectino_arret = new DetectionArret();
+
 		// On créer la fenêtre
 		SwingUtilities.invokeLater(new Runnable()
 		{
@@ -27,7 +26,7 @@ public class Main
 			}
 		});
 		try {
-			da.detAr();
+			detectino_arret.detection_arret();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

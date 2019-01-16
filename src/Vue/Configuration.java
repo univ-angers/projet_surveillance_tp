@@ -30,22 +30,16 @@ public class Configuration extends JDialog
 	private JLabel l_adrServ;
 	private JLabel l_mail;
 	private JLabel l_mdp;
-	private JButton b_option;
 	private JButton b_valider;
 	private JTextField tf_mail;
 	private JPasswordField tf_mdp;
 	private JTextField tf_adrServ;
-	
-	private final URL cheminImage = Connexion.class.getResource(
-            "/Ressources/o.png");
-	private ImageIcon image;
-	
+
 	public Configuration() throws FileNotFoundException
 	{
 		super();
 		controller = new ConfigController(this);
-		image = new ImageIcon(cheminImage);
-		
+
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 
 		// Initialisation de la fenêtre
@@ -69,24 +63,12 @@ public class Configuration extends JDialog
 		c = new GridBagConstraints();
 
 
-		b_option = new JButton(image);
-		b_option.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				if(e.getSource() == b_option)
-				{
-					instance.dispose();
-				}
-			}
-		});
-
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 1;
 		c.insets = new Insets(10, 10, 20, 10);
-		panel.add(b_option, c);
 
 
 		l_adrServ = new JLabel("Adresse serveur");
@@ -106,10 +88,10 @@ public class Configuration extends JDialog
 		c.gridwidth = 2;
 		c.insets = new Insets(0, 0, 20, 20);
 		panel.add(tf_adrServ, c);
-		
-		
+
+
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(Configuration.class.getResourceAsStream("/Ressources/adrServ"))))
-		{		
+		{
 			String line;
 			while ((line = br.readLine()) != null) {
 				tf_adrServ.setText(line);
@@ -163,7 +145,7 @@ public class Configuration extends JDialog
 
 		b_valider = new JButton("Valider");
 		b_valider.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+			public void actionPerformed(ActionEvent e)
 			{
 				if(e.getSource() == b_valider)
 				{
@@ -176,7 +158,7 @@ public class Configuration extends JDialog
 						controller.receptionEtudiant(identifiant, mdp, adrServ);
 						instance.dispose();
 					}
-					else 
+					else
 						JOptionPane.showMessageDialog(instance, "Veuillez renseigner tous les champs.");
 				}
 			}

@@ -39,7 +39,7 @@ public class Connexion extends JFrame
 		super();
 		controller = new ConnexionController(this);
 		image = new ImageIcon(cheminImage);
-		
+
 		// Initialisation de la fenêtre
 		build();
 	}
@@ -62,9 +62,9 @@ public class Connexion extends JFrame
 
 
 
-		b_option = new JButton(image); 
+		b_option = new JButton(image);
 		b_option.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+			public void actionPerformed(ActionEvent e)
 			{
 				if(e.getSource() == b_option)
 				{
@@ -112,13 +112,13 @@ public class Connexion extends JFrame
 
 		b_valider = new JButton("Ok");
 		b_valider.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+			public void actionPerformed(ActionEvent e)
 			{
 				if(e.getSource() == b_valider)
 				{
 					String idExam = tf_idExam.getText();
 					etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
-					try 
+					try
 					{
 						double id = Double.parseDouble(idExam);
 
@@ -137,10 +137,10 @@ public class Connexion extends JFrame
 							else
 								JOptionPane.showMessageDialog(instance, "Identifiants non connus ou serveur non joignable. Veuillez réessayer.");
 						}
-						else 
+						else
 							JOptionPane.showMessageDialog(instance, "Veuillez renseigner tous les champs correctement.\n\nN'oubliez pas de cliquer sur les petits rouages pour remplir\nvos informations personnelles.\n\nL'identifiant de l'examen doit être un nombre allant de\n0 à 9.999.999.999.");
 					}
-					catch (NumberFormatException f) 
+					catch (NumberFormatException f)
 					{
 						JOptionPane.showMessageDialog(instance, "Veuillez renseigner tous les champs correctement.\n\nN'oubliez pas de cliquer sur les petits rouages pour remplir\nvos informations personnelles.\n\nL'identifiant de l'examen doit être un nombre allant de\n0 à 9.999.999.999.");
 					}
