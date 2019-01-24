@@ -3,6 +3,7 @@ package com.surveillance.tp.servlets;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,39 +16,29 @@ import com.surveillance.tp.dao.DAOFactory;
 /**
  * Servlet passant un examen en attente à démarré
  */
+@WebServlet("/demarrageExamen")
 public class DemarrageExamen extends HttpServlet {
-
-	public static final String CONF_DAO_FACTORY = "daofactory";
+	public static final String CONF_DAO_FACTORY="daofactory";
 	private DAOExamen daoExamen;
 
 	public void init() throws ServletException {
-		/* Récupération d'une instance de notre DAO Examen */
-		this.daoExamen = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getExamenDao();
+		// Récupération d'une instance de notre DAO Examen
+		daoExamen=((DAOFactory)getServletContext().getAttribute(CONF_DAO_FACTORY)).getExamenDao();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//Aucun utilisateur connecté
-		if (session.getAttribute("id_user") == null)
-			response.sendRedirect("/ServeurJEE/LoginRegister");
-
-		//L'utilisateur est un élève, donc pas le droit d'accès
-		else if (session.getAttribute("groupeUtilisateur").equals("eleve"))
-			response.sendRedirect("/ServeurJEE/monCompte");
-
-		else
-		{
-			Integer idProf = (Integer)session.getAttribute("id_user");
-
-			Examen examEnCours = daoExamen.trouverExamenUtil(idProf);
-						
-			if (examEnCours != null)
-			{
-					daoExamen.updateExamenDemarrage(idProf);
-					response.sendRedirect("/ServeurJEE/listeUtilisateurs");
+		//A ucun utilisateur connecté
+		if(session.getAttribute("id_user")==null) response.sendRedirect(request.getContextPath()+"/logout");
+		else if (session.getAttribute("groupeUtilisateur").equals("professeur")) {
+			Integer idProf=(Integer)session.getAttribute("id_user");
+			Examen examEnCours=daoExamen.trouverExamenUtil(idProf);
+			if(examEnCours!=null) {
+				daoExamen.updateExamenDemarrage(idProf);
+				response.sendRedirect(request.getContextPath()+"/listeUtilisateurs");
 			}
-			else
-				response.sendRedirect("/ServeurJEE/listeUtilisateurs");
+			else response.sendRedirect(request.getContextPath()+"/listeUtilisateurs");
 		}
+		else response.sendRedirect(request.getContextPath()+"/monCompte"); //L'utilisateur est un élève, donc pas le droit d'accès
 	}
 }

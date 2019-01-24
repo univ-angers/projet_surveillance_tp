@@ -4,7 +4,6 @@ package com.surveillance.tp.dao;
  * Exception spécifique à nos DAO
  */
 public class DAOConfigurationException extends RuntimeException {
-
 	public DAOConfigurationException( String message ) {
 		super( message );
 	}

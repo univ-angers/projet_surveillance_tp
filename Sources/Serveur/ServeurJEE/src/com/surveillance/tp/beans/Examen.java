@@ -7,41 +7,44 @@ import java.sql.Timestamp;
  * Contient les données d'un examen
  */
 public class Examen {
-	
-	private int idExam;		//PRIMARY KEY
-	private int idProf;		//FOREIGN KEY
+	private int idExam; // PRIMARY KEY
+	private int idProf; // FOREIGN KEY
 	private String matiere;
 	private Time duree;
 	private Timestamp heureDebut;
-	
+
 	public int getIdExam() {
 		return idExam;
 	}
-	public void setIdExam(int idExam) {
-		this.idExam = idExam;
+	public void setIdExam(int i) {
+		idExam=i;
 	}
+
 	public int getIdProf() {
 		return idProf;
 	}
-	public void setIdProf(int idProf) {
-		this.idProf = idProf;
+	public void setIdProf(int i) {
+		idProf=i;
 	}
+
 	public String getMatiere() {
 		return matiere;
 	}
-	public void setMatiere(String matiere) {
-		this.matiere = matiere;
+	public void setMatiere(String m) {
+		matiere=m;
 	}
+
 	public Time getDuree() {
 		return duree;
 	}
-	public void setDuree(Time duree) {
-		this.duree = duree;
+	public void setDuree(Time d) {
+		duree=d;
 	}
+
 	public Timestamp getHeureDebut() {
 		return heureDebut;
 	}
-	public void setHeureDebut(Timestamp heureDebut) {
-		this.heureDebut = heureDebut;
+	public void setHeureDebut(Timestamp h) {
+		heureDebut=h;
 	}
 }

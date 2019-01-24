@@ -1,159 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>ServeurJEE</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-    
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/header.jsp</include-prelude>
+      <include-coda>/WEB-INF/footer.jsp</include-coda>
+    </jsp-property-group>
+  </jsp-config>
+
   <servlet>
-    <servlet-name>ArretExamen</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.ArretExamen</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ArretExamen</servlet-name>
-    <url-pattern>/arretExamen</url-pattern>
-  </servlet-mapping>  
-    
-  <servlet>
-    <servlet-name>DemarrageExamen</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.DemarrageExamen</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DemarrageExamen</servlet-name>
-    <url-pattern>/demarrageExamen</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>detailExam</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.detailExam</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>detailExam</servlet-name>
-    <url-pattern>/detailExamen</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>formExamen</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.formExamen</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>formExamen</servlet-name>
-    <url-pattern>/formExamen</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>formUtilisateur</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.formUtilisateur</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>formUtilisateur</servlet-name>
-    <url-pattern>/formUtilisateur</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>listeExams</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.listeExams</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>listeExams</servlet-name>
-    <url-pattern>/historique</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>home</servlet-name>
+    <servlet-name>Home</servlet-name>
     <servlet-class>com.surveillance.tp.servlets.home</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>home</servlet-name>
+    <servlet-name>Home</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>listeUtilisateurs</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.listeUtilisateurs</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>listeUtilisateurs</servlet-name>
-    <url-pattern>/listeUtilisateurs</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>LoginRegister</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.LoginRegister</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>LoginRegister</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>Logout</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.Logout</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Logout</servlet-name>
-    <url-pattern>/logout</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>monCompte</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.monCompte</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>monCompte</servlet-name>
-    <url-pattern>/monCompte</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>paramExam</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.paramExam</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>paramExam</servlet-name>
-    <url-pattern>/paramExam</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>receptionJSON</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.receptionJSON</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>receptionJSON</servlet-name>
-    <url-pattern>/receptionJSON</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>recupPass</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.recupPass</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>recupPass</servlet-name>
-    <url-pattern>/recupPass</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>receptionResetPass</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.ReceptionResetPass</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>receptionResetPass</servlet-name>
-    <url-pattern>/receptionReset</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>video</servlet-name>
-    <servlet-class>com.surveillance.tp.servlets.video</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>video</servlet-name>
-    <url-pattern>/video</url-pattern>
-  </servlet-mapping>  
-  
+
   <listener>
     <listener-class>com.surveillance.tp.config.InitialisationDAOFactory</listener-class>
   </listener>

@@ -14,59 +14,67 @@ public class EtudiantExamen {
 	private String nbAlertesFichier;
 	private String nbAlertesUSB;
 	private int id;
-	
+
 	public String getNomEt() {
 		return nomEt;
 	}
-	public void setNomEt(String nomEt) {
-		this.nomEt = nomEt;
+	public void setNomEt(String n) {
+		nomEt=n;
 	}
+
 	public String getPrenEt() {
 		return prenEt;
 	}
-	public void setPrenEt(String prenEt) {
-		this.prenEt = prenEt;
+	public void setPrenEt(String p) {
+		prenEt=p;
 	}
+
 	public String getNbAlertes() {
 		return nbAlertes;
 	}
-	public void setNbAlertes(String nbAlertes) {
-		this.nbAlertes = nbAlertes;
+	public void setNbAlertes(String n) {
+		nbAlertes=n;
 	}
+
 	public String getNbAlertesCritiques() {
 		return nbAlertesCritiques;
 	}
-	public void setNbAlertesCritiques(String nbAlertesCritiques) {
-		this.nbAlertesCritiques = nbAlertesCritiques;
+	public void setNbAlertesCritiques(String n) {
+		nbAlertesCritiques=n;
 	}
+
 	public String getNbAlertesClavier() {
 		return nbAlertesClavier;
 	}
-	public void setNbAlertesClavier(String nbAlertesClavier) {
-		this.nbAlertesClavier = nbAlertesClavier;
+	public void setNbAlertesClavier(String n) {
+		nbAlertesClavier=n;
 	}
+
 	public String getNbAlertesNet() {
 		return nbAlertesNet;
 	}
-	public void setNbAlertesNet(String nbAlertesNet) {
-		this.nbAlertesNet = nbAlertesNet;
+	public void setNbAlertesNet(String n) {
+		nbAlertesNet=n;
 	}
+
 	public String getNbAlertesFichier() {
 		return nbAlertesFichier;
 	}
-	public void setNbAlertesFichier(String nbAlertesFichier) {
-		this.nbAlertesFichier = nbAlertesFichier;
+	public void setNbAlertesFichier(String n) {
+		nbAlertesFichier=n;
 	}
+
 	public String getNbAlertesUSB() {
 		return nbAlertesUSB;
 	}
-	public void setNbAlertesUSB(String nbAlertesUSB) {
-		this.nbAlertesUSB = nbAlertesUSB;
+	public void setNbAlertesUSB(String n) {
+		nbAlertesUSB=n;
 	}
+
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int i) {
+		id=i;
 	}
 }
