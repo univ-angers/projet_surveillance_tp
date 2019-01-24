@@ -33,7 +33,7 @@ public class directoryManager {
 		char[] tmp=idExam.toCharArray();
 		idExam="";
 		for(int i=0; i<10; i++) idExam=idExam+"/"+tmp[i];
-		idExam="/opt/data_dir"+idExam;
+		idExam="/opt/data_dir/"+idExam;
 		return idExam;
 	}
 

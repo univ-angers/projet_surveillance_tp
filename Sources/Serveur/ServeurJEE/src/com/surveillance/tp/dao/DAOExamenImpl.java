@@ -14,7 +14,7 @@ import com.surveillance.tp.beans.Examen;
  */
 public class DAOExamenImpl implements DAOExamen {
 	private static final String SQL_INSERT_EXAM="INSERT INTO Examen (id_user, matiere, duree, heure_debut) VALUES (?, ?, ?, NULL)";
-	private static final String SQL_SELECT_EXAM="SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_examen = ?";
+	private static final String SQL_SELECT_EXAM="SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_examen=?";
 	private static final String SQL_SELECT_EXAM_UTIL="SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_user=? and etat='on'";
 	private static final String SQL_SELECT_EXAM_UTIL_HIST="SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_user=? and id_examen=?";
 	private static final String SQL_SELECT_EXAM_ON="SELECT id_examen, id_user, matiere, duree, heure_debut FROM Examen WHERE id_examen=? and etat='on'";

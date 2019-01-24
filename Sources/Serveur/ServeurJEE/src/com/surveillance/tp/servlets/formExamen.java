@@ -64,11 +64,12 @@ public class formExamen extends HttpServlet {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public Examen ajouterExamen(HttpServletRequest request) {
 		// Récupération des données du formulaire
 		// Recupération de la durée
 		String dureeH=request.getParameter("duree-heure");
-		dureeH="0"+dureeH; //Pour la mise en forme
+		dureeH="0"+dureeH; // Pour la mise en forme
 		String dureeM=request.getParameter("duree-minute");
 		String timeSt=dureeH + ":" + dureeM + ":00";
 		Time time=Time.valueOf(timeSt);
