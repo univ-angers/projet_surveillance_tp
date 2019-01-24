@@ -12,59 +12,50 @@ import java.util.Properties;
  * Basé sur le tutoriel openclassroom: https://openclassrooms.com/fr/courses/626954-creez-votre-application-web-avec-java-ee/624784-le-modele-dao
  */
 public class DAOFactory {
+	private static final String FICHIER_PROPERTIES			= "/com/surveillance/tp/ressources/dao.properties";
+	private static final String PROPERTY_URL				= "url";
+	private static final String PROPERTY_DRIVER				= "driver";
+	private static final String PROPERTY_NOM_UTILISATEUR	= "nomutilisateur";
+	private static final String PROPERTY_MOT_DE_PASSE		= "motdepasse";
+	private String url;
+	private String username;
+	private String password;
 
-	private static final String FICHIER_PROPERTIES       = "/com/surveillance/tp/ressources/dao.properties";
-	private static final String PROPERTY_URL             = "url";
-	private static final String PROPERTY_DRIVER          = "driver";
-	private static final String PROPERTY_NOM_UTILISATEUR = "nomutilisateur";
-	private static final String PROPERTY_MOT_DE_PASSE    = "motdepasse";
-
-	private String              url;
-	private String              username;
-	private String              password;
-
-	DAOFactory( String url, String username, String password ) {
-		this.url = url;
-		this.username = username;
-		this.password = password;
+	DAOFactory(String u, String us, String p) {
+		url=u;
+		username=us;
+		password=p;
 	}
 
-	/*
-	 * Méthode chargée de récupérer les informations de connexion à la base de
-	 * données, charger le driver JDBC et retourner une instance de la Factory
-	 */
+	// Méthode chargée de récupérer les informations de connexion à la base de données, charger le driver JDBC et retourner une instance de la Factory
 	public static DAOFactory getInstance() throws DAOConfigurationException {
-		Properties properties = new Properties();
+		Properties properties=new Properties();
 		String url;
 		String driver;
 		String nomUtilisateur;
 		String motDePasse;
+		ClassLoader classLoader=Thread.currentThread().getContextClassLoader();
+		InputStream fichierProperties=classLoader.getResourceAsStream(FICHIER_PROPERTIES);
 
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		if(fichierProperties==null) throw new DAOConfigurationException("Le fichier properties "+FICHIER_PROPERTIES+" est introuvable.");
 
-		InputStream fichierProperties = classLoader.getResourceAsStream( FICHIER_PROPERTIES );
-
-		if ( fichierProperties == null ) {
-			throw new DAOConfigurationException( "Le fichier properties " + FICHIER_PROPERTIES + " est introuvable." );
+		try {
+			properties.load(fichierProperties);
+			url=properties.getProperty(PROPERTY_URL);
+			driver=properties.getProperty(PROPERTY_DRIVER);
+			nomUtilisateur=properties.getProperty(PROPERTY_NOM_UTILISATEUR);
+			motDePasse=properties.getProperty(PROPERTY_MOT_DE_PASSE);
+		} catch (IOException e) {
+			throw new DAOConfigurationException("Impossible de charger le fichier properties "+FICHIER_PROPERTIES, e);
 		}
 
 		try {
-			properties.load( fichierProperties );
-			url = properties.getProperty( PROPERTY_URL );
-			driver = properties.getProperty( PROPERTY_DRIVER );
-			nomUtilisateur = properties.getProperty( PROPERTY_NOM_UTILISATEUR );
-			motDePasse = properties.getProperty( PROPERTY_MOT_DE_PASSE );
-		} catch ( IOException e ) {
-			throw new DAOConfigurationException( "Impossible de charger le fichier properties " + FICHIER_PROPERTIES, e );
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			throw new DAOConfigurationException("Le driver est introuvable dans le classpath.", e);
 		}
 
-		try {
-			Class.forName( driver );
-		} catch ( ClassNotFoundException e ) {
-			throw new DAOConfigurationException( "Le driver est introuvable dans le classpath.", e );
-		}
-
-		DAOFactory instance = new DAOFactory( url, nomUtilisateur, motDePasse );
+		DAOFactory instance=new DAOFactory(url, nomUtilisateur, motDePasse);
 		return instance;
 	}
 
@@ -72,25 +63,25 @@ public class DAOFactory {
 	 *  Méthode chargée de fournir une connexion à la base de données 
 	 */
 	Connection getConnection() throws SQLException {
-		return DriverManager.getConnection( url, username, password );
+		return DriverManager.getConnection(url, username, password);
 	}
 
 	/**
 	 * Méthodes de récupération de l'implémentation des différents DAO
 	 */
 	public DAOUtilisateur getUtilisateurDao() {
-		return new DAOUtilisateurImpl( this );
+		return new DAOUtilisateurImpl(this);
 	}
-	
+
 	public DAOExamen getExamenDao() {
-		return new DAOExamenImpl( this );
-	}	
-	
-	public DAORegleExamen getRegleExamDao() {
-		return new DAORegleExamenImpl( this );
+		return new DAOExamenImpl(this);
 	}
-	
+
+	public DAORegleExamen getRegleExamDao() {
+		return new DAORegleExamenImpl(this);
+	}
+
 	public DAORegle getRegleDao() {
-		return new DAORegleImpl (this);
+		return new DAORegleImpl(this);
 	}
 }
