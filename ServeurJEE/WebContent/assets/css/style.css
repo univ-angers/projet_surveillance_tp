@@ -60,7 +60,7 @@ footer {
 	text-align: center;
 }
 
-.recupPass, .recupReset, .videoWatching, .authentification, .inscription, .examenDetail {
+.recupPass, .recupReset, .authentification, .inscription, .examenDetail {
 	background-image: url('assets/img/photos/photo17@2x.jpg');
 }
 

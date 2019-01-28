@@ -102,14 +102,14 @@
 														href="detailExamen?id_etudiant=${u.id}"
 													</c:if>
 													<c:if test="${not empty id_examen}">
-														href="detailExamen?id_etudiant=${u.id}&&id_examen=${id_examen}"
+														href="detailExamen?id_etudiant=${u.id}&id_examen=${id_examen}"
 													</c:if>
 												>
 													<i class="si si-control-play"></i>
 												</a>
 											</td>
 										</tr>
-									</c:forEach>                                          
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
