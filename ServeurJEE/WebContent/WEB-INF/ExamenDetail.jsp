@@ -77,7 +77,7 @@
 					<div class="block-content">
 						<p>Date de création: ${date_exam}</p>
 						<p>Auteur: ${nomUtilisateur} ${prenomUtilisateur}</p>
-						<p>Description: preuve de triche d'un étudiant au cours de la session d'examen</p>
+						<p>Description: vidéo des actions réalisées par l'étudiant</p>
 						<video autoplay loop muted>
 							<source src="assets/img/videos/output.mp4" type="video/mp4">
 							<source src="assets/img/videos/hero_tech.webm" type="video/webm">
