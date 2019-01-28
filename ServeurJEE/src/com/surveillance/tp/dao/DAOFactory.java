@@ -12,7 +12,7 @@ import java.util.Properties;
  * Basé sur le tutoriel openclassroom: https://openclassrooms.com/fr/courses/626954-creez-votre-application-web-avec-java-ee/624784-le-modele-dao
  */
 public class DAOFactory {
-	private static final String FICHIER_PROPERTIES			= "/com/surveillance/tp/ressources/dao.properties";
+	private static final String FICHIER_PROPERTIES			= "dao.properties";
 	private static final String PROPERTY_URL				= "url";
 	private static final String PROPERTY_DRIVER				= "driver";
 	private static final String PROPERTY_NOM_UTILISATEUR	= "nomutilisateur";

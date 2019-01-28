@@ -25,7 +25,7 @@ public class directoryManager {
 	 */
 	public static String idDbToString(int id) {
 		String idExam=Integer.toString(id);
-
+		personnal_setting perso_set = new personnal_setting();
 		// On ajoute les 0 pour avoir une haine de 10 caractères
 		while(idExam.length()!=10) idExam="0"+idExam;
 
@@ -33,7 +33,7 @@ public class directoryManager {
 		char[] tmp=idExam.toCharArray();
 		idExam="";
 		for(int i=0; i<10; i++) idExam=idExam+"/"+tmp[i];
-		idExam="/opt/data_dir/"+idExam;
+		idExam=perso_set.getData_dir()+idExam;
 		return idExam;
 	}
 
