@@ -44,7 +44,7 @@
 									</div>
 								</div>
 							</div>                                    
-							<input id="id_util" name="id_util" type="hidden" value="<%=request.getAttribute("id_util")%>">                            
+							<input id="id_util" name="id_util" type="hidden" value="${id_util}">                            
 							<div class="form-group">
 								<div class="col-xs-12 col-sm-6 col-md-4">
 									<button class="btn btn-block btn-primary" type="submit"><i class="si si-login pull-right"></i> Comfirmer</button>

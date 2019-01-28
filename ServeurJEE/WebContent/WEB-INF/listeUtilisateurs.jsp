@@ -98,7 +98,12 @@
 											<td>${u.nbAlertesCritiques}</td>
 											<td>
 												<a class="btn btn-rounded btn-noborder btn-lg btn-success push-10-r push-5 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft"
-													<c:out value="${empty id_examen ? 'href=\"/detailExamen?id_etudiant=${u.id}\"' : 'href=\"/detailExamen?id_etudiant=${u.id}&id_examen=${id_examen}\"'}"/>
+													<c:if test="${empty id_examen}">
+														href="detailExamen?id_etudiant=${u.id}"
+													</c:if>
+													<c:if test="${not empty id_examen}">
+														href="detailExamen?id_etudiant=${u.id}&&id_examen=${id_examen}"
+													</c:if>
 												>
 													<i class="si si-control-play"></i>
 												</a>
