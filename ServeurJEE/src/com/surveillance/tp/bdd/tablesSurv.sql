@@ -10,7 +10,7 @@ id_user INTEGER NOT NULL AUTO_INCREMENT,
 prenom VARCHAR(50),
 nom_user VARCHAR(50),
 password VARCHAR(255),
-mail VARCHAR(100),
+mail VARCHAR(100) UNIQUE,
 groupe VARCHAR(50),
 cle_reset_mail VARCHAR(30),
 PRIMARY KEY (id_user)
