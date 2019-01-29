@@ -71,7 +71,7 @@ public class detailExam extends HttpServlet {
 
 	private static String usingBufferedReader(String chemin, int id_etud) {
 		StringBuilder contentBuilder=new StringBuilder();
-		try (BufferedReader br=new BufferedReader(new FileReader(chemin+"/"+id_etud+"/"+id_etud+".lg"))) {
+		try (BufferedReader br=new BufferedReader(new FileReader(chemin+"/"+id_etud+"/"+id_etud+".log"))) {
 			String sCurrentLine;
 			while((sCurrentLine=br.readLine())!=null) contentBuilder.append(sCurrentLine).append(System.lineSeparator());
 		} catch (IOException e) {

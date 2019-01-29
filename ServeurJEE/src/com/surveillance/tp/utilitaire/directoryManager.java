@@ -66,7 +66,7 @@ public class directoryManager {
 		StringBuilder sb=new StringBuilder();
 		char stop='}';
 		try {
-			InputStream ips=new FileInputStream(cheminEt+"/"+idEtud+".lg");
+			InputStream ips=new FileInputStream(cheminEt+idEtud+".log");
 			BufferedReader buffer=new BufferedReader(new InputStreamReader(ips));
 			int r;
 			while((r=buffer.read())!=-1) {
@@ -75,9 +75,10 @@ public class directoryManager {
 				if(c==stop) break;
 			}
 			buffer.close();
-		} catch(IOException e) {}
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 		String headerSt=sb.toString()+"}"; // On ajoute un } pour avec un JSON correctement formé
-
 		// Conversion de la chaine en JSON
 		JSONParser parser=new JSONParser();
 		JSONObject jObj;

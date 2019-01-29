@@ -98,7 +98,7 @@ public class receptionJSON extends HttpServlet {
 			int idEtud=util.getId();
 			String chemin=directoryManager.idDbToString(idEx);
 
-			// Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
+			// Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.log
 			chemin=chemin+"/"+idEtud+"/";
 
 			// Créer le dossier de l'étudiant
@@ -106,7 +106,7 @@ public class receptionJSON extends HttpServlet {
 			dossierEt.mkdir();
 
 			// Créer le log de l'étudiant et son header
-			String cheminLog=chemin+util.getId()+".lg";
+			String cheminLog=chemin+util.getId()+".log";
 			File fichierLog=new File(cheminLog);
 			// Dans le cas ou le fichier existe déjà (un étudiant qui quitte l'application et revient), on ne recréé pas de header
 			if(!fichierLog.exists()) {
@@ -251,6 +251,7 @@ public class receptionJSON extends HttpServlet {
 	 * @param obj Alerte reçue
 	 */
 	public void ajoutLog(JSONObject alerte) {
+		System.out.println("test");
 		String idExamen=(String)alerte.get("IDexamen");	
 		int idEx=Integer.valueOf(idExamen);
 		Examen examEnCours=daoExamen.trouverExamenIDEnCours(idEx);
@@ -266,8 +267,8 @@ public class receptionJSON extends HttpServlet {
 					int idEtud=util.getId();
 					String chemin=directoryManager.idDbToString(Integer.parseInt(idExamen));
 
-					// Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.lg
-					chemin=chemin+"/"+idEtud+"/"+util.getId()+".lg";
+					// Exemple chemin: /opt/data_dir/0/0/0/0/0/0/0/1/4/7/247/idEtud.log
+					chemin=chemin+"/"+idEtud+"/"+util.getId()+".log";
 					miseAJourLog(examEnCours, chemin, alerte);
 				}
 			}
@@ -283,6 +284,7 @@ public class receptionJSON extends HttpServlet {
 	void miseAJourLog(Examen exam, String chemin, JSONObject alerte) {
 		// Modification du header
 		JSONParser parser=new JSONParser();
+		System.out.println("eee");
 		try {
 			if(exam!=null) {
 				FileReader lecture=new FileReader(chemin);

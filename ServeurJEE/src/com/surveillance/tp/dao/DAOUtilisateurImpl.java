@@ -16,7 +16,7 @@ import com.surveillance.tp.beans.Utilisateur;
  */
 public class DAOUtilisateurImpl implements DAOUtilisateur {
 	private static final String SQL_INSERT_ETUD="INSERT INTO Utilisateur(prenom, nom_user, password, mail, groupe) VALUES (?, ?, MD5(?), ?, ?)";
-	private static final String SQL_SELECT_UTILISATEUR_MDP="SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE mail=? AND password=MD5(?)";
+	private static final String SQL_SELECT_UTILISATEUR_MDP="SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE mail=? AND password=?";
 	private static final String SQL_SELECT_UTILISATEUR_CLE_RESET="SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE cle_reset_mail=?";
 	private static final String SQL_SELECT_UTILISATEUR_ID="SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur WHERE id_user=?";
 	private static final String SQL_SELECT_LISTE_UTILISATEUR="SELECT id_user, prenom, nom_user, password, mail, groupe, cle_reset_mail FROM Utilisateur";
@@ -138,8 +138,7 @@ public class DAOUtilisateurImpl implements DAOUtilisateur {
 	}
 
 	@Override
-	public 
-	ArrayList<Utilisateur>recupererUtilisateurs() throws DAOException{
+	public ArrayList<Utilisateur>recupererUtilisateurs() throws DAOException{
 		Connection connexion=null;
 		PreparedStatement preparedStatement=null;
 		ResultSet resultSet=null;
