@@ -52,7 +52,8 @@ public class paramExam extends HttpServlet {
 					request.setAttribute("IDexam", examEnCours.getIdExam());
 					request.setAttribute("Matiere", examEnCours.getMatiere());
 					request.setAttribute("IP", recuperationIP.getAdresseIPV4());
-
+					request.setAttribute("nb_heure", examEnCours.get_nb_hours());
+					request.setAttribute("nb_minute", examEnCours.get_nb_minute());
 					// Savoir quel bouton on affiche entre démarrage et stop
 					if(examEnCours.getHeureDebut()==null) request.setAttribute("Demarre", "non");
 					getServletContext().getRequestDispatcher("/WEB-INF/ParametresExamen.jsp").forward(request, response);

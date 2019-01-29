@@ -37,6 +37,12 @@ public class Examen {
 	public Time getDuree() {
 		return duree;
 	}
+	public int get_nb_hours() {
+		return this.duree.getHours();
+	}
+	public int get_nb_minute() {
+		return this.duree.getMinutes();
+	}
 	public void setDuree(Time d) {
 		duree=d;
 	}

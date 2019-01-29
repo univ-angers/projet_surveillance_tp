@@ -133,19 +133,25 @@
 											<div class="form-material form-material-success">
 												<label>Temps d'examen</label> Heure:
 												<select id="duree-heure" name="duree-heure">
-													<option value="0">0</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-												</select> Minute <select id="duree-minute" name="duree-minute">
-													<option value="0">00</option>
-													<option value="10">10</option>
-													<option value="20">20</option>
-													<option value="30">30</option>
-													<option value="40">40</option>
-													<option value="50">50</option>
+													<c:forEach var = "i" begin = "0" end = "5">
+														<c:if test="${i eq nb_heure}">
+															<option value="${i}" selected="selected"><c:out value="${i}"></c:out></option>
+														</c:if>
+														<c:if test="${i ne nb_heure}">
+															<option value="${i}"><c:out value="${i}"></c:out></option>
+														</c:if>
+													</c:forEach>
+												</select>
+												Minute
+												<select id="duree-minute" name="duree-minute">
+													<c:forEach var = "j" begin = "00" end = "50" step="10">
+														<c:if test="${j eq nb_minute}">
+															<option value="${j}" selected="selected"><c:out value="${j}"></c:out></option>
+														</c:if>
+														<c:if test="${j ne nb_minute}">
+															<option value="${j}"><c:out value="${j}"></c:out></option>
+														</c:if>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -153,7 +159,7 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class="form-material form-material-success">
-												<input class="form-control" type="text" id="matiere" name="matiere" placeholder="Entrer une matiere">
+												<input class="form-control" type="text" id="matiere" name="matiere" value="${Matiere}">
 												<label for="matiere">Matiere</label>
 											</div>
 										</div>
