@@ -10,7 +10,6 @@ import java.net.URL;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
 /**
  * Classe qui fait le lien entre le client et le serveur
  * Les différentes demandes et récupérations de données se font par elle
@@ -19,6 +18,7 @@ public class ServerLinkSingleton {
 
 	// L'instance unique de la classe
 	static ServerLinkSingleton instance;
+
 
 	// L'ip du serveur auquel va communiquer l'objet
 	private String ip;
@@ -42,7 +42,7 @@ public class ServerLinkSingleton {
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
-			
+
 			//Envoi
 			OutputStream os = connection.getOutputStream();
 			OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
@@ -89,24 +89,24 @@ public class ServerLinkSingleton {
 					EtudiantExamenInfoSingleton etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 					String idBDDEtud = (String) jObj.get("idbdd");
 					etudiant.setIdBDD(idBDDEtud);
-					
+
 					boolean checkSiteActif = false;	//Ce boolean permet de savoir si on vérifie les sites internets
-					
+
 					JSONArray idWatchers = (JSONArray) jObj.get("list_watcher");
 					for (int i = 0; i < idWatchers.size(); ++i) {
 						JSONObject wat = (JSONObject) idWatchers.get(i);
 
 						String s = "W" + String.valueOf(i+1);
 						long idWatcherLong = (long) wat.get(s);
-						
+
 						int idWatcherInt = (int) idWatcherLong;
-						
+
 						if (idWatcherInt == 4)
 							checkSiteActif = true;
-						
+
 						etudiant.getListeWatchers().add(idWatcherInt);
 					}
-					
+
 					if (checkSiteActif)
 					{
 						JSONArray siteSurv = (JSONArray) jObj.get("site_surveillance");
@@ -115,18 +115,18 @@ public class ServerLinkSingleton {
 
 							String s = String.valueOf(i);
 							String site = (String) wat.get(s);
-														
+
 							etudiant.getSiteASurveiller().add(site);
 						}
 					}
-					
+
 					return true;
 				}
-				
+
 				//Connexion de l'étudiant non réussie, mauvais ID
 				if ( type.equals("rep_co_neg"))
 					return false;
-				
+
 				//Refresh de l'interface de l'étudiant
 				if ( type.equals("rep_temps"))
 				{

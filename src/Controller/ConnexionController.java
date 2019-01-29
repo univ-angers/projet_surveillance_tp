@@ -3,7 +3,11 @@ package Controller;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.json.simple.JSONObject;
 
@@ -23,7 +27,7 @@ import Vue.Connexion;
  * @author erinyth
  *
  */
-public class ConnexionController 
+public class ConnexionController
 {
 	private Connexion fenConnexion;
 	private EtudiantExamenInfoSingleton etudiant;
@@ -37,7 +41,7 @@ public class ConnexionController
 	 * Ajoute l'id de l'examen au singleton d'étudiant examen en cours
 	 * @param idExam
 	 */
-	public void receptionIdExamen(String idExam) 
+	public void receptionIdExamen(String idExam)
 	{
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		etudiant.setNumeroExamen(idExam);
@@ -46,7 +50,7 @@ public class ConnexionController
 	/**
 	 * Lance les watchers en fonction de la demande du serveur
 	 */
-	public void lancementSurveillance() 
+	public void lancementSurveillance()
 	{
 		//Variable qui permet de faire boucler les Watchers
 		Main.surveillanceEnCours = true;
@@ -57,11 +61,11 @@ public class ConnexionController
 		boolean lanceVideo = false;
 		boolean lanceNet = false;
 		boolean lanceKey = false;
-		
+
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
 		ArrayList<Integer> list = new ArrayList<>();
 		list = etudiant.getListeWatchers();
-		
+
 		for (int w : list) {
 			switch (w)
 			{
@@ -88,7 +92,7 @@ public class ConnexionController
 			UsbWatcher usbWatcher = new UsbWatcher();
 			usbWatcher.start();
 		}
-		
+
 		if (lanceFichier)
 		{
 			Path p = Paths.get(System.getProperty("user.home"));
@@ -100,19 +104,19 @@ public class ConnexionController
 				e.printStackTrace();
 			}
 		}
-		
+
 		if (lanceVideo)
 		{
 			VideoWatcher vidWatcher = new VideoWatcher();
 			vidWatcher.start();
 		}
-		
+
 		if (lanceNet)
 		{
 			NetworkWatcher netWatcher = new NetworkWatcher();
 			netWatcher.start();
 		}
-		
+
 		if (lanceKey)
 		{
 			KeyListenerWatcher klWatcher = new KeyListenerWatcher();
@@ -125,10 +129,20 @@ public class ConnexionController
 	 * Envoi les données de connexion au serveur afin de vérifier si celles ci sont connues
 	 * @return Vrai si la connexion est possible
 	 */
-	public boolean logIn() 
+	public boolean logIn()
 	{
+		String md5_pass = null;
+		try {
+			String mdp = etudiant.getMotDePasse();
+			MessageDigest md = MessageDigest.getInstance("MD5");md.update(mdp.getBytes());
+		    byte[] digest = md.digest();
+		    md5_pass = DatatypeConverter.printHexBinary(digest).toLowerCase();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		etudiant = EtudiantExamenInfoSingleton.getInstanceExistante();
-		
+
 		//On créer un lien vers le server
 		ServerLinkSingleton serverLink = ServerLinkSingleton.getInstance(etudiant.getAdresseServeur());
 
@@ -136,9 +150,8 @@ public class ConnexionController
 		JSONObject datas = new JSONObject();
 		datas.put("IDexamen", etudiant.getNumeroExamen());
 		datas.put("mailEtudiant", etudiant.getIdentifiant());
-		datas.put("mdp", etudiant.getMotDePasse());
+		datas.put("mdp", md5_pass);
 		datas.put("type", "connexion_etudiant");
-
 		boolean reussi = serverLink.send(datas);
 
 		return reussi;
