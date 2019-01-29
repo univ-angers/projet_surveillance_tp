@@ -104,6 +104,9 @@
 													<c:if test="${not empty id_examen}">
 														href="detailExamen?id_etudiant=${u.id}&id_examen=${id_examen}"
 													</c:if>
+													<c:if test="${not empty idExamEnCours}">
+														href="detailExamen?id_etudiant=${u.id}&id_examen=${idExamEnCours}"
+													</c:if>
 												>
 													<i class="si si-control-play"></i>
 												</a>

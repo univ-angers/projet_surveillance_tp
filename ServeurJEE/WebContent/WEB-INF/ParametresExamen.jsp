@@ -40,7 +40,7 @@
 			<div class="content-mini content-boxed">
 				<ul class="nav nav-pills nav-sub-header push">
 					<li >
-						<a href="listeUtilisateurs">
+						<a href="listeUtilisateurs?id_examen=${idExamEnCours}">
 							<i class="fa fa-users push-5-r"></i>Liste des utilisateurs
 						</a>
 					</li>

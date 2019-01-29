@@ -251,7 +251,6 @@ public class receptionJSON extends HttpServlet {
 	 * @param obj Alerte reçue
 	 */
 	public void ajoutLog(JSONObject alerte) {
-		System.out.println("test");
 		String idExamen=(String)alerte.get("IDexamen");	
 		int idEx=Integer.valueOf(idExamen);
 		Examen examEnCours=daoExamen.trouverExamenIDEnCours(idEx);
@@ -284,7 +283,6 @@ public class receptionJSON extends HttpServlet {
 	void miseAJourLog(Examen exam, String chemin, JSONObject alerte) {
 		// Modification du header
 		JSONParser parser=new JSONParser();
-		System.out.println("eee");
 		try {
 			if(exam!=null) {
 				FileReader lecture=new FileReader(chemin);
