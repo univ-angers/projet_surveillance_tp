@@ -100,7 +100,7 @@
 								<div class="form-group">
 									<div class="col-xs-12">
 										<div class="form-material form-material-success">
-											<input class="form-control" type="text" id="examen-id" name="examen-id" disabled="disabled" value="<%=request.getAttribute("IDexam")%>" placeholder="Saisir l'ID de l'examen">
+											<input class="form-control" type="text" id="examen-id" name="examen-id" disabled value="${IDexam}">
 											<label for=examen-id>Id examen</label>
 										</div>
 									</div>
@@ -108,7 +108,7 @@
 								<div class="form-group">
 									<div class="col-xs-12">
 										<div class="form-material form-material-success">
-											<input class="form-control" type="text" id="server" name="server" disabled="disabled" value="<%=request.getAttribute("IP")%>" placeholder="Saisir l'adresse du serveur">
+											<input class="form-control" type="text" id="server" name="server" disabled value="${IP}">
 											<label for="server2">Adresse du serveur</label>
 										</div>
 									</div>
@@ -159,7 +159,7 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class="form-material form-material-success">
-												<input class="form-control" type="text" id="matiere" name="matiere" value="${Matiere}">
+												<input class="form-control" type="text" id="matiere" name="matiere" value="${Matiere}" required>
 												<label for="matiere">Matiere</label>
 											</div>
 										</div>

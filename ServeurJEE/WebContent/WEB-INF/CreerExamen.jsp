@@ -99,7 +99,7 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class="form-material form-material-success">
-												<input class="form-control" type="text" id="matiere" name="matiere" placeholder="Entrer une matiere">
+												<input class="form-control" type="text" id="matiere" name="matiere" placeholder="Entrer une matiere" required>
 												<label for="matiere">Matiere</label>
 											</div>
 										</div>
