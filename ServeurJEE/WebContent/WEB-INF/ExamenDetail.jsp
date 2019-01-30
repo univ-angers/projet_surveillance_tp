@@ -1,5 +1,7 @@
 	<meta http-equiv="Content-Type" content="text/html">
 	<title>Détail de l'examen</title>
+	<link rel="stylesheet" type="text/css" href="assets/DataTables/datatables.min.css"/>
+	<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
 </head>
 <body>
 	<div id="page-container" class="sidebar-l side-scroll header-navbar-fixed">
@@ -95,7 +97,7 @@
 
 		<!--Text content -->
 		<div class="modal fade" id="modal-terms" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-popout">
+			<div class="modal-dialog modal-dialog-popout modal-lg">
 				<div class="modal-content">
 					<div class="block block-themed block-transparent remove-margin-b">
 						<div class="block-header bg-primary-dark">
@@ -110,7 +112,7 @@
 						</div>
 						<div class="block-content examenDetail_log">
 							<c:if test="${not empty log}">
-								<p>${log}</p>
+								<table id="logTable" class="display"></table>
 							</c:if>
 						</div>
 					</div>
@@ -151,8 +153,8 @@
 							<c:if test="${not empty id_examen}">
 								href="video?id_etud=${id_etud}&id_examen=${id_examen}"
 							</c:if>
-							<c:if test="${not empty id_examen}">
-								href="video?id_etud=${id_etud}&id_examen=${id_examen}"
+							<c:if test="${empty id_examen}">
+								href="video?id_etud=${id_etud}"
 							</c:if>
 						>
 							<i class="si si-control-play"></i>
@@ -169,3 +171,24 @@
 
 	<!-- Page JS Code -->
 	<script src="assets/js/pages/base_pages_login.js"></script>
+	
+	<script type="text/javascript">
+		$(window).on("load", function() {
+			$('#logTable').DataTable({
+				data: ${log},
+				columns: [
+					{title:"horodatage", data:"horodatage"},
+					{title:"mailEtudiant", data:"mailEtudiant"},
+					{title:"IDexamen", data:"IDexamen"},
+					{title:"type", data:"type"},
+					{title:"info", data:"info"}
+				],
+				"columnDefs": [{
+					"render": function(data, type, row) {
+						return '<a <c:if test="${not empty id_examen}">href="video?id_etud=${id_etud}&id_examen=${id_examen}&timecode='+data+'"</c:if><c:if test="${empty id_examen}">href="video?id_etud=${id_etud}&timecode='+data+'"</c:if>>'+data+'</a>';
+					},
+					"targets": 0
+				}]
+			});
+		})
+	</script>
