@@ -66,7 +66,8 @@ public class listeUtilisateurs extends HttpServlet {
 
 						// Permet de savoir quel onglet afficher
 						request.setAttribute("afficheParam", 1);				
-						request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);				
+						request.setAttribute("utilisateurs", listeUtilisateurExamenCourant);
+						if(session.getAttribute("idExamEnCours")==null) session.setAttribute("idExamEnCours", examEnCours.getIdExam());
 						getServletContext().getRequestDispatcher("/WEB-INF/listeUtilisateurs.jsp").forward(request, response);
 					}
 				}

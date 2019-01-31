@@ -40,8 +40,15 @@
 				<div class="content-mini content-boxed">
 					<ul class="nav nav-pills nav-sub-header push">
 						<li class="active">
-							<a href="listeUtilisateurs?id_examen=${id_examen}"><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
-						</li>                            
+							<a 
+								<c:if test="${empty idExamEnCours}">
+									href="listeUtilisateurs?id_examen=${id_examen}">
+								</c:if>
+								<c:if test="${not empty idExamEnCours}">
+									href="listeUtilisateurs?id_examen=${idExamEnCours}">
+								</c:if>
+							><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
+						</li>
 						<c:if test="${empty afficheParam}">
 							<li>
 								<a href="formExamen"><i class="fa fa-wrench push-5-r"></i>Créer un examen</a>
@@ -112,7 +119,7 @@
 						</div>
 						<div class="block-content examenDetail_log">
 							<c:if test="${not empty log}">
-								<table id="logTable" class="display"></table>
+								<table id="logTable"></table>
 							</c:if>
 						</div>
 					</div>
@@ -182,13 +189,17 @@
 					{title:"IDexamen", data:"IDexamen"},
 					{title:"type", data:"type"},
 					{title:"info", data:"info"}
-				],
+				]<c:if test="${not empty video}">,
 				"columnDefs": [{
 					"render": function(data, type, row) {
-						return '<a <c:if test="${not empty id_examen}">href="video?id_etud=${id_etud}&id_examen=${id_examen}&timecode='+data+'"</c:if><c:if test="${empty id_examen}">href="video?id_etud=${id_etud}&timecode='+data+'"</c:if>>'+data+'</a>';
+						var id_examen="";
+						<c:if test="${not empty id_examen}">
+							id_examen="&id_examen=${id_examen}";
+						</c:if>
+						return '<a href="video?id_etud=${id_etud}'+id_examen+'&timecode='+data+'">'+data+'</a>';
 					},
 					"targets": 0
-				}]
+				}]</c:if>
 			});
 		})
 	</script>

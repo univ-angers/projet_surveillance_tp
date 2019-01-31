@@ -119,14 +119,12 @@ public class formExamen extends HttpServlet {
 		if(ListeExamens.length()>0) {
 			re.setIdRegle(7);
 			// Recupération de chaque site dans le tableau
-			ListeExamens = ListeExamens.trim().replace(" +"," ");
 			String[] tabSite=ListeExamens.split(" ");
-			
 			// Tableau JSON qui sera mis dans la table
 			JSONArray jsTab=new JSONArray();
 			for(int i=0; i<tabSite.length; i++) {
 				JSONObject obj=new JSONObject();
-				obj.put("url",tabSite[i]);
+				obj.put(String.valueOf(i),tabSite[i]);
 				jsTab.add(obj);
 			}
 

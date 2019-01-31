@@ -150,7 +150,7 @@ public class receptionJSON extends HttpServlet {
 			ArrayList<RegleExam> listeReglesAppliquees=new ArrayList<>();
 			ArrayList<Integer> listeIdWatcher=new ArrayList<>();
 			listeReglesAppliquees=daoRegleExam.trouver(exam.getIdExam());
-			JSONArray jsLienSurv=new JSONArray();	// Contient les liens à surveiller
+			JSONArray jsLienSurv=new JSONArray(); // Contient les liens à surveiller
 
 			for(RegleExam re: listeReglesAppliquees) {
 				Regle r=daoRegle.trouver(re.getIdRegle());
@@ -286,8 +286,7 @@ public class receptionJSON extends HttpServlet {
 		try {
 			if(exam!=null) {
 				FileReader lecture=new FileReader(chemin);
-				Object logExistant=parser.parse(lecture);
-				JSONObject jsonLog=(JSONObject)logExistant;
+				JSONObject jsonLog=(JSONObject)parser.parse(lecture);
 				JSONObject header=(JSONObject)jsonLog .get("header");
 				JSONArray body=(JSONArray)jsonLog.get("body");
 
@@ -313,7 +312,7 @@ public class receptionJSON extends HttpServlet {
 				header.put("nbLog", nbLog);
 				// On modifie le nombre de règle critiques si nécessaire
 				int niveauRegle=reg.getNiveauRegle();
-				if (niveauRegle==1) {
+				if(niveauRegle==1) {
 					// Ne pas envoyer l'alerte de l'étudiant qui quitte l'examen si le temps est écoulé
 					if(reg.getIdRegle()==9 && examTimer.tempsRestant(exam)<0) {/*On ajoute rien */}
 					//Pour tous les autres cas, on ajoute l'alerte

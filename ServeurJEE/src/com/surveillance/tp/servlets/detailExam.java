@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
@@ -48,14 +53,15 @@ public class detailExam extends HttpServlet {
 			}
 			else examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
 
-			String log="";
-			String logBody="\"body";
+			String logBody="";
 			String chemin=directoryManager.idDbToString(examen.getIdExam());
-
 			if(examen!=null) {
-				log=usingBufferedReader(chemin,id_etudiant);
-				String[] test1=log.split("body");
-				logBody+=test1[1];			
+				JSONParser parser=new JSONParser();
+				try {
+					logBody+=((JSONObject)parser.parse(new FileReader(chemin+"/"+id_etudiant+"/"+id_etudiant+".log"))).get("body");
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}			
 			}
 
 			// Vérification qu'un fichier vidéo existe
@@ -67,16 +73,5 @@ public class detailExam extends HttpServlet {
 			getServletContext().getRequestDispatcher("/WEB-INF/ExamenDetail.jsp").forward(request, response);
 		}
 		else response.sendRedirect(request.getContextPath()+"/monCompte"); // L'utilisateur est un élève, donc pas le droit d'accès
-	}
-
-	private static String usingBufferedReader(String chemin, int id_etud) {
-		StringBuilder contentBuilder=new StringBuilder();
-		try (BufferedReader br=new BufferedReader(new FileReader(chemin+"/"+id_etud+"/"+id_etud+".log"))) {
-			String sCurrentLine;
-			while((sCurrentLine=br.readLine())!=null) contentBuilder.append(sCurrentLine).append(System.lineSeparator());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return contentBuilder.toString();
 	}
 }

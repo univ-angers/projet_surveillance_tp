@@ -2,8 +2,6 @@ package com.surveillance.tp.servlets;
 
 import java.io.IOException;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import com.mysql.cj.xdevapi.JsonArray;
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.beans.RegleExam;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
 import com.surveillance.tp.dao.DAORegleExamen;
-import com.surveillance.tp.dao.DAORegleExamenImpl;
 import com.surveillance.tp.utilitaire.examTimer;
 import com.surveillance.tp.utilitaire.recuperationIP;
 
@@ -44,50 +38,12 @@ public class paramExam extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
+
 		// Aucun utilisateur connecté
 		if(session.getAttribute("id_user")==null) response.sendRedirect(request.getContextPath()+"/logout");
 		else if(session.getAttribute("groupeUtilisateur").equals("professeur")) {
 			int idProf=(int)session.getAttribute("id_user");
 			Examen examEnCours=daoExamen.trouverExamenUtil(idProf);
-			ArrayList<RegleExam> listRegle=new ArrayList<RegleExam>();
-			listRegle = daoRegleExamen.trouver(examEnCours.getIdExam());
-			String attr_network = null;
-			for(RegleExam regle : listRegle) {		
-				if(regle.getIdRegle() == 1 || regle.getIdRegle() == 2) {
-					request.setAttribute("watcher_usb", true);
-				}
-				if(regle.getIdRegle() == 3 || regle.getIdRegle() == 4 || regle.getIdRegle() == 5) {
-					request.setAttribute("watcher_fichier", true);
-				}
-				if(regle.getIdRegle() == 6) {
-					request.setAttribute("watcher_video", true);
-				}
-				if(regle.getIdRegle() == 7) {
-					String addresse_site = "";
-					attr_network = regle.getAttributs();
-					JSONParser parser = new JSONParser();
-					JSONArray json = null;
-					try {
-						json = (JSONArray) parser.parse(attr_network);
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Iterator<JSONObject> iterator = json.iterator();
-					while (iterator.hasNext()) {
-						JSONObject newob = new JSONObject();
-						newob = iterator.next();
-						if(newob.get("url")!=null) {
-							addresse_site += " "+newob.get("url");
-						}
-					}
-					request.setAttribute("liste_site", addresse_site);
-				}
-				if(regle.getIdRegle() == 8) {
-					request.setAttribute("watcher_clavier", true);
-				}
-		
-			}
 
 			// Vérification que le temps d'examen n'est pas terminé
 			if(examEnCours!=null) {
@@ -169,13 +125,12 @@ public class paramExam extends HttpServlet {
 		if(ListeExamens.length()>0) {
 			re.setIdRegle(7);
 			// Récupération de chaque site dans le tableau
-			ListeExamens = ListeExamens.trim().replace(" +"," ");
 			String[] tabSite=ListeExamens.split(" ");
 			// Tableau JSON qui sera mis dans la table
 			JSONArray jsTab=new JSONArray();
 			for(int i=0; i<tabSite.length; i++) {
 				JSONObject obj=new JSONObject();
-				obj.put("url", tabSite[i]);
+				obj.put(String.valueOf(i), tabSite[i]);
 				jsTab.add(obj);
 			}
 
