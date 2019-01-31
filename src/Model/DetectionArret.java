@@ -39,6 +39,7 @@ public class DetectionArret
 				datas.put("IDexamen", EtudiantExamenInfoSingleton.getInstanceExistante().getNumeroExamen());
 				datas.put("mailEtudiant", EtudiantExamenInfoSingleton.getInstanceExistante().getIdentifiant());
 				datas.put("horodatage", hour+":"+minute+":"+sec);
+				datas.put("info", "");
 
 				server.send(datas);
 			}
