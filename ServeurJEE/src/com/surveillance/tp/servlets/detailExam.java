@@ -1,7 +1,7 @@
 package com.surveillance.tp.servlets;
 
 import java.io.IOException;
-
+import java.util.Iterator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import com.surveillance.tp.beans.Examen;
 import com.surveillance.tp.dao.DAOExamen;
 import com.surveillance.tp.dao.DAOFactory;
+import com.surveillance.tp.dao.DAORegle;
 import com.surveillance.tp.utilitaire.directoryManager;
 
 /**
@@ -29,12 +30,15 @@ import com.surveillance.tp.utilitaire.directoryManager;
 public class detailExam extends HttpServlet {
 	public static final String CONF_DAO_FACTORY="daofactory";
 	private DAOExamen daoExamen;
+	private DAORegle daoRegle;
 
 	public void init() throws ServletException {
 		// Récupération d'une instance de notre DAO Examen
-		daoExamen=((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getExamenDao();
+		daoExamen=((DAOFactory)getServletContext().getAttribute(CONF_DAO_FACTORY)).getExamenDao();
+		daoRegle=((DAOFactory)getServletContext().getAttribute(CONF_DAO_FACTORY)).getRegleDao();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession();
 		// Aucun utilisateur connecté
@@ -53,12 +57,17 @@ public class detailExam extends HttpServlet {
 			}
 			else examen=daoExamen.trouverExamenUtil((int)session.getAttribute("id_user"));
 
-			String logBody="";
+			JSONArray logBody=null;
 			String chemin=directoryManager.idDbToString(examen.getIdExam());
 			if(examen!=null) {
 				JSONParser parser=new JSONParser();
 				try {
-					logBody+=((JSONObject)parser.parse(new FileReader(chemin+"/"+id_etudiant+"/"+id_etudiant+".log"))).get("body");
+					logBody=(JSONArray)((JSONObject)parser.parse(new FileReader(chemin+"/"+id_etudiant+"/"+id_etudiant+".log"))).get("body");
+					Iterator<JSONObject> iterator=logBody.iterator();
+					while(iterator.hasNext()) {
+						JSONObject temp=iterator.next();
+						temp.put("type", daoRegle.trouver(Integer.parseInt((String)temp.get("type"))).getDescription());
+					}
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}			
