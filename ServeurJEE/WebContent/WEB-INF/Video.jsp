@@ -81,3 +81,11 @@
 
 	<!-- Page JS Code -->
 	<script src="assets/js/pages/base_pages_login.js"></script>
+
+	<c:if test="${not empty param.timecode}">
+	<script type="text/javascript">
+		$(window).on("load", function() {
+			document.getElementById("video").currentTime=${timcode};
+		});
+	</script>
+	</c:if>

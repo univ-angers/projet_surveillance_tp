@@ -184,11 +184,11 @@
 			$('#logTable').DataTable({
 				data: ${log},
 				columns: [
-					{title:"horodatage", data:"horodatage"},
-					{title:"mailEtudiant", data:"mailEtudiant"},
-					{title:"IDexamen", data:"IDexamen"},
-					{title:"type", data:"type"},
-					{title:"info", data:"info"}
+					{title:"Horodatage", data:"horodatage"},
+					{title:"Mail de l'étudiant", data:"mailEtudiant"},
+					{title:"Id de l'examen", data:"IDexamen"},
+					{title:"Type d'alerte", data:"type"},
+					{title:"Détails", data:"info"}
 				]<c:if test="${not empty video}">,
 				"columnDefs": [{
 					"render": function(data, type, row) {
@@ -201,5 +201,5 @@
 					"targets": 0
 				}]</c:if>
 			});
-		})
+		});
 	</script>
