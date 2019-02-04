@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install -y ffmpeg default-jre git
+sudo apt-get install -y ffmpeg default-jre git tcpdump
 echo "setup java path"
 if ! grep -q "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" "/etc/environment"; then
   echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> /etc/environment
@@ -20,7 +20,10 @@ fi
 git clone https://github.com/univ-angers/projet_surveillance_tp.git
 cd /opt/tmp/projet_surveillance_tp/Programme
 mv ClientEtudiant.jar /opt/client_surveillance/
-ln -s /opt/client_surveillance/ClientEtudiant.jar /home/etudiant/Bureau/ClientEtudiant.jar
+echo "#!/bin/bash" > /opt/client_surveillance/startup.sh
+echo "sudo java -jar /opt/client_surveillance/ClientEtudiant.jar" >> /opt/client_surveillance/startup.sh
+ln -s /opt/client_surveillance/startup.sh /home/etudiant/Bureau/startup.sh
+sudo chmod +x /opt/client_surveillance/startup.sh
 if ! grep -q "%users ALL=(ALL) NOPASSWD: /opt/client_surveillance/ClientEtudiant.jar" "/etc/sudoers"; then
   echo "%users ALL=(ALL) NOPASSWD: /opt/client_surveillance/ClientEtudiant.jar" >> /etc/sudoers
 fi

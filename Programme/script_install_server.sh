@@ -2,7 +2,7 @@
 
 echo "installing required package..."
 sudo apt-get update
-sudo apt-get install -y ffmpeg default-jre curl wget git mysql-server
+sudo apt-get install -y ffmpeg default-jre curl wget git mysql-server screen
 echo "setup java path"
 if ! grep -q "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" "/etc/environment"; then
   echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> /etc/environment
@@ -14,7 +14,15 @@ echo "installing tomcat 9..."
 sudo groupadd tomcat
 sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
 cd /tmp
+if [ -d "/opt/tmp/projet_surveillance_tp" ]; then
+  echo "suppression du dossier git existant..."
+  sudo rm -rf /opt/tmp/projet_surveillance_tp/
+fi
 sudo curl -O http://mirror.cc.columbia.edu/pub/software/apache/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz
+if [ -d "/opt/tomcat" ]; then
+  echo "suppression du dossier tomcat existant..."
+  sudo rm -rf /opt/tomcat
+fi
 sudo mkdir /opt/tomcat
 sudo mv apache-tomcat-9*tar.gz apache-tomcat-9*tar
 sudo tar xvf apache-tomcat-9*tar -C /opt/tomcat --strip-components=1
@@ -56,6 +64,10 @@ sudo systemctl daemon-reload
 sudo systemctl start tomcat
 sudo ufw allow 8080
 sudo systemctl enable tomcat
+if [ -d "/opt/data_dir" ]; then
+  echo "suppression du dossier git existant..."
+  sudo rm -rf /opt/data_dir
+fi
 sudo mkdir /opt/data_dir
 sudo chgrp -R tomcat /opt/data_dir
 sudo chown -R tomcat /opt/data_dir
@@ -66,12 +78,21 @@ mkdir /opt/server_udp
 mv ServeurVideo.jar /opt/server_udp
 sudo chgrp -R tomcat /opt/server_udp
 sudo chown -R tomcat /opt/server_udp
-if ! grep -q "java -jar /opt/server_udp/ServeurVideo.jar" "/opt/tomcat/bin/startup.sh"; then
-  echo "java -jar /opt/server_udp/ServeurVideo.jar" >> /opt/tomcat/bin/startup.sh
-fi
+#if ! grep -q "java -jar /opt/server_udp/ServeurVideo.jar" "/opt/tomcat/bin/startup.sh"; then
+#  sed '$ i\java -jar /opt/server_udp/ServeurVideo.jar &' /opt/tomcat/bin/startup.sh
+#fi
 sudo systemctl restart tomcat
 cd /opt/tmp/projet_surveillance_tp/Programme/BDD/
 echo "#################################################"
 echo "restore database, enter root password if needed...."
 mysql -u root -p < ./utilisateurSurv.sql
 mysql -u root -p projetsurv < ./tablesSurv.sql
+
+echo "creating the script for launching the server..."
+
+echo "#!/bin/bash">/opt/start_surveillance_tp.sh
+echo "#script for launching the tomcat server and video server">>/opt/start_surveillance_tp.sh
+echo "sudo systemctl start tomcat.service">>/opt/start_surveillance_tp.sh
+echo "sudo screen java -jar /opt/server_udp/ServeurVideo.jar &">>/opt/start_surveillance_tp.sh
+sudo chmod +x /opt/start_surveillance_tp.sh
+sudo chmod +x /opt/server_udp/ServeurVideo.jar
