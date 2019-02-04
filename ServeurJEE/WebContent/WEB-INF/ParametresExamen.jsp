@@ -1,3 +1,4 @@
+
 	<meta http-equiv="Content-Type" content="text/html">
 	<title>Paramètres</title>
 </head>
@@ -100,7 +101,7 @@
 								<div class="form-group">
 									<div class="col-xs-12">
 										<div class="form-material form-material-success">
-											<input class="form-control" type="text" id="examen-id" name="examen-id" disabled value="${IDexam}">
+										 	<input class="form-control" type="text" id="examen-id" name="examen-id" disabled value="${IDexam}">
 											<label for=examen-id>Id examen</label>
 										</div>
 									</div>
@@ -108,8 +109,8 @@
 								<div class="form-group">
 									<div class="col-xs-12">
 										<div class="form-material form-material-success">
-											<input class="form-control" type="text" id="server" name="server" disabled value="${IP}">
-											<label for="server2">Adresse du serveur</label>
+ 											<input class="form-control" type="text" id="server" name="server" disabled value="${IP}">
+ 											<label for="server2">Adresse du serveur</label>
 										</div>
 									</div>
 								</div>
@@ -167,7 +168,7 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<div class="form-material form-material-success">
-												<input class="form-control" type="text" id="white-list" name="white-list" placeholder="Saisir la liste des sites autorisés">
+												<input class="form-control" type="text" id="white-list" name="white-list" value="${liste_site}" placeholder="Saisir la liste des sites autorisés">
 												<label for="white-list">La liste des sites autorisés</label>
 											</div>
 										</div>
@@ -175,28 +176,49 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<label class="css-input switch switch-sm switch-success">
-									        	<input type="checkbox" id="bouton_fichier" name="bouton_fichier"><span></span>Opération de fichier surveillé 
+												<c:if test="${watcher_fichier}">
+									        		<input type="checkbox" id="bouton_fichier" name="bouton_fichier" checked="checked"><span></span>Opération de fichier surveillé 
+									        	</c:if>
+									        	<c:if test="${not watcher_fichier}">
+									        		<input type="checkbox" id="bouton_fichier" name="bouton_fichier"><span></span>Opération de fichier surveillé 
+									        	</c:if>
 											</label>
 										</div>
 									</div>
 									 <div class="form-group">
 										<div class="col-xs-12">
 											<label class="css-input switch switch-sm switch-success">
-												<input type="checkbox" id="bouton_clavier" name="bouton_clavier"><span></span>Frappe de clavier surveillé 
+												<c:if test="${watcher_clavier}">
+													<input type="checkbox" id="bouton_clavier" name="bouton_clavier" checked="checked"><span></span>Frappe de clavier surveillé 
+									        	</c:if>
+									        	<c:if test="${not watcher_clavier}">
+									        		<input type="checkbox" id="bouton_clavier" name="bouton_clavier"><span></span>Frappe de clavier surveillé 
+									        	</c:if>
+												
 											</label>
 										</div>
 									</div>
 									 <div class="form-group">
 										<div class="col-xs-12">
 											<label class="css-input switch switch-sm switch-success">
-												<input type="checkbox" id="bouton_usb" name="bouton_usb"><span></span>Montage de dossier/USB surveillé
+												<c:if test="${watcher_usb}">
+													<input type="checkbox" id="bouton_usb" name="bouton_usb" checked="checked"><span></span>Montage de dossier/USB surveillé
+									        	</c:if>
+									        	<c:if test="${not watcher_usb}">
+									        		<input type="checkbox" id="bouton_usb" name="bouton_usb" ><span></span>Montage de dossier/USB surveillé
+									        	</c:if>
 											</label>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-xs-12">
 											<label class="css-input switch switch-sm switch-success">
-												<input type="checkbox" id="bouton_video" name="bouton_video"><span></span>Surveillance vidéo
+												<c:if test="${watcher_video}">
+													<input type="checkbox" id="bouton_video" name="bouton_video" checked="checked"><span></span>Surveillance vidéo
+									        	</c:if>
+									        	<c:if test="${not watcher_video}">
+									        		<input type="checkbox" id="bouton_video" name="bouton_video"><span></span>Surveillance vidéo
+									        	</c:if>
 											</label>
 										</div>
 									</div>
@@ -219,4 +241,4 @@
 		</div>
 		 <!-- END Main Container -->
 	</div>
-	<!-- END Page Container -->
+<!-- END Page Container -->

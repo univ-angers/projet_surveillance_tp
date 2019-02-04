@@ -119,18 +119,20 @@ public class formExamen extends HttpServlet {
 		if(ListeExamens.length()>0) {
 			re.setIdRegle(7);
 			// Recupération de chaque site dans le tableau
+			ListeExamens = ListeExamens.trim().replace(" +"," ");
 			String[] tabSite=ListeExamens.split(" ");
+			
 			// Tableau JSON qui sera mis dans la table
 			JSONArray jsTab=new JSONArray();
 			for(int i=0; i<tabSite.length; i++) {
 				JSONObject obj=new JSONObject();
-				obj.put(String.valueOf(i),tabSite[i]);
+				obj.put("url",tabSite[i]);
 				jsTab.add(obj);
 			}
 
 			String jsString=jsTab.toJSONString();
 			daoRegleExamen.creerAttribut(re, jsString);
-		}
+}
 
 		if(cocheClavier!=null) {
 			re.setIdRegle(8); // Touche appuyée
