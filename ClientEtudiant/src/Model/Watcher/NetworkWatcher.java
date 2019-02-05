@@ -17,9 +17,9 @@ import Controller.Main;
  * Watcher qui va envoyer une alerte si une requête HTTP contient un host suspect / non toléré
  *
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * OBLIGATION DE LANCER EN SUDO 
+ * OBLIGATION DE LANCER EN SUDO
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * 
+ *
  * Basé sur le tutoriel: https://crunchify.com/how-to-execute-tcpdump-linux-command-using-java-process-class-and-capture-tcpip-packets/
  */
 public class NetworkWatcher extends Watcher {
@@ -73,7 +73,7 @@ public class NetworkWatcher extends Watcher {
 							for(int i=0; i<lignes.length; i++) {
 								if(lignes[i].length()>8) { // On cherche au moins Host: a.b, soit 9 caractères
 									if(lignes[i].substring(0, 4).equals("Host")) {
-										String lienACheck=lignes[i].substring(6);	
+										String lienACheck=lignes[i].substring(6);
 										boolean trouve=verifierLien(lienACheck);
 										// Pour n'avoir qu'une alerte pour une visite
 										if(trouve) sleep(3500);

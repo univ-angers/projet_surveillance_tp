@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -91,13 +92,18 @@ public class ServerLinkSingleton {
 						etudiant.getListeWatchers().add(idWatcherInt);
 					}
 
-					if(checkSiteActif) {
-						JSONArray siteSurv=(JSONArray)jObj.get("site_surveillance");
-						for (int i=0; i<siteSurv.size(); ++i) {
-							JSONObject wat=(JSONObject)siteSurv.get(i);
-							String s=String.valueOf(i);
-							String site=(String)wat.get(s);
-							etudiant.getSiteASurveiller().add(site);
+					if (checkSiteActif)
+					{
+						JSONArray json = null;
+						json = (JSONArray) jObj.get("site_surveillance");
+						Iterator<JSONObject> iterator = json.iterator();
+						while (iterator.hasNext()) {
+							JSONObject newob = new JSONObject();
+							newob = iterator.next();
+							if(newob.get("url")!=null) {
+								String site = (String)newob.get("url");
+								etudiant.getSiteASurveiller().add(site);
+							}
 						}
 					}
 					return true;
