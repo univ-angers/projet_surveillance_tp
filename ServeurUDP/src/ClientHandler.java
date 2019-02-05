@@ -26,7 +26,7 @@ public class ClientHandler extends Thread{
 		port = P;
 		chemin = idVersChemin();
 		receptionActive = true;
-		sortieVideo = new FileOutputStream(chemin + nomClient + ".surv",true);
+		sortieVideo = new FileOutputStream(chemin + nomClient + ".ts",true);
 	}
 
 	public void run()
