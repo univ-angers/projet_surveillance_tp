@@ -53,7 +53,7 @@ public class video extends HttpServlet {
 			else idExamAChercher=Integer.parseInt(idExamSt);
 
 			String cheminExam=directoryManager.idDbToString(idExamAChercher);
-			cheminExam=cheminExam+"/"+idEtudSt+"/"+idEtudSt+".surv";
+			cheminExam=cheminExam+"/"+idEtudSt+"/"+idEtudSt+".ts";
 			String cheminVideo=getServletContext().getRealPath("");
 			ConversionVideo vid=new ConversionVideo(cheminExam, cheminVideo);
 			vid.run();

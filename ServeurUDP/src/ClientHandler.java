@@ -36,7 +36,7 @@ public class ClientHandler extends Thread{
 			socketSpecialClient = new DatagramSocket( port ) ;
 			byte[] receptionVideo = new byte[2048];
 
-			while(receptionActive){                 				
+			while(receptionActive){
 				DatagramPacket paquetVideo = new DatagramPacket(receptionVideo, receptionVideo.length);
 
 				socketSpecialClient.receive(paquetVideo);
@@ -48,7 +48,7 @@ public class ClientHandler extends Thread{
 			//qu'il restait quelques paquets à envoyer
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class ClientHandler extends Thread{
 		receptionActive = false;
 		socketSpecialClient.close();
 	}
-	
+
 	public String idVersChemin()
 	{
 		chemin = IDexam.toString();

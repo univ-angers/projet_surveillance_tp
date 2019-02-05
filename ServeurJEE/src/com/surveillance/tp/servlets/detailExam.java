@@ -74,7 +74,7 @@ public class detailExam extends HttpServlet {
 			}
 
 			// Vérification qu'un fichier vidéo existe
-			File f=new File(chemin+"/"+id_etudiant+"/"+id_etudiant+".surv");
+			File f=new File(chemin+"/"+id_etudiant+"/"+id_etudiant+".ts");
 			if(f.exists()) request.setAttribute("video", "oui");
 			request.setAttribute("date_exam", String.valueOf(examen.getHeureDebut()));
 			request.setAttribute("id_etud", String.valueOf(id_etudiant));
