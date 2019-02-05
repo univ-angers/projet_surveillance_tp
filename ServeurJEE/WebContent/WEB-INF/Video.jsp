@@ -38,7 +38,7 @@
 				<div class="content-mini content-boxed">
 					<ul class="nav nav-pills nav-sub-header push">
 						<li class="active">
-							<a href="listeUtilisateurs?id_etudiant=${param.id_etud}&id_examen=${param.id_examen}"><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
+							<a href="listeUtilisateurs?id_examen=${param.id_examen}"><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
 						</li>
 						<c:if test="${empty afficheParam}">
 							<li>
