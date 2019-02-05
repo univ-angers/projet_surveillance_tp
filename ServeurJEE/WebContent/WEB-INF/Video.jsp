@@ -38,8 +38,8 @@
 				<div class="content-mini content-boxed">
 					<ul class="nav nav-pills nav-sub-header push">
 						<li class="active">
-							<a href="listeUtilisateurs?id_etudiant=${id_etud}&id_examen=${id_examen}"><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
-						</li>                            
+							<a href="listeUtilisateurs?id_etudiant=${param.id_etud}&id_examen=${param.id_examen}"><i class="fa fa-users push-5-r"></i>Liste des utilisateurs</a>
+						</li>
 						<c:if test="${empty afficheParam}">
 							<li>
 								<a href="formExamen"><i class="fa fa-wrench push-5-r"></i>Créer un examen</a>
