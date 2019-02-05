@@ -16,6 +16,8 @@ Pour le serveur :
 >chmod +x script_install_server.sh<br/>
 >sudo ./script_install_server.sh<br/>
 
+pour lancer le serveur sudo ./opt/start_surveillance_tp.sh
+
 Pour plus de détail voici un guide d'installation manuel
 # Serveur
 
