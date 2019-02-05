@@ -22,7 +22,7 @@ public class ConversionVideo implements Runnable {
 			File f=new File(cheminDest+"assets/img/videos/output.mp4");
 			if(f.exists()) f.delete();
 			// Conversion en mp4+envoi vers le serveur web
-			String cmd="ffmpeg -i "+cheminSource+" -c:v libx264 -c:a copy -bsf:a aac_adtstoasc "+cheminDest+"assets/img/videos/output.mp4";				
+			String cmd="ffmpeg -i "+cheminSource+" -c:v libx264 -c:a copy -bsf:a aac_adtstoasc "+cheminDest+"assets/img/videos/output.mp4";								
 			// Permet de lancer la commande depuis l'application Java
 			ProcessBuilder procFF=new ProcessBuilder(cmd.split("\\s+"));
 			Process ffmpeg;	
