@@ -1,6 +1,5 @@
 # Projet de surveillance de TP sur machine
-
-Bonjour! Ce programme permet la surveillance de multiples postes client à partir d'une interface web. Il est constitué d'une partir serveur et d'une partie client.
+Ce programme permet la surveillance de multiples postes client à partir d'une interface web. Il est constitué d'une partir serveur et d'une partie client.
 
 Si vous voulez lancer une installation automatique
 dans le dossier Programme il y a deux script, script_install_client.sh, script_install_server.sh.
@@ -94,6 +93,12 @@ Le **sudo** **est** **obligatoire** dans le cas d'une surveillance internet7
 vous pourrez vous connectez via l'adresse 127.0.0.1:8080/ServeurJEE/home
 
 les identifiants enseignant sont prof@univ/987654
+### troubleshooting 
+Pour savoir si le serveur UDP fonctionne bien :
+
+>netstat -aun
+
+vous devriez voir une ligne avec le port 2345, c'est le serveur UDP 
 
 ### Source complémentaire
 https://www.digitalocean.com/community/tutorials/install-tomcat-9-ubuntu-1804
