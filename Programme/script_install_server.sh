@@ -18,7 +18,7 @@ if [ -d "/opt/tmp/projet_surveillance_tp" ]; then
   echo "suppression du dossier git existant..."
   sudo rm -rf /opt/tmp/projet_surveillance_tp/
 fi
-sudo curl -O http://mirror.cc.columbia.edu/pub/software/apache/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz
+sudo curl -O http://mirror.cc.columbia.edu/pub/software/apache/tomcat/tomcat-9/v9.0.16/bin/apache-tomcat-9.0.16.tar.gz
 if [ -d "/opt/tomcat" ]; then
   echo "suppression du dossier tomcat existant..."
   sudo rm -rf /opt/tomcat
