@@ -85,7 +85,7 @@
 	<c:if test="${not empty param.timecode}">
 	<script type="text/javascript">
 		$(window).on("load", function() {
-			document.getElementById("video").currentTime=${timcode};
+			document.getElementById("video").currentTime=${param.timecode};
 		});
 	</script>
 	</c:if>
