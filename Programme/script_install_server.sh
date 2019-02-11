@@ -24,8 +24,9 @@ if [ -d "/opt/tomcat" ]; then
   sudo rm -rf /opt/tomcat
 fi
 sudo mkdir /opt/tomcat
-sudo mv apache-tomcat-9*tar.gz apache-tomcat-9*tar
-sudo tar xvf apache-tomcat-9*tar -C /opt/tomcat --strip-components=1
+
+sudo gzip -d apache-tomcat-9.0.16.tar.gz
+sudo tar xvf apache-tomcat-9.0.16.tar -C /opt/tomcat --strip-components=1
 #cloning git
 echo "getting the war file ..."
 sudo mkdir /opt/tmp
