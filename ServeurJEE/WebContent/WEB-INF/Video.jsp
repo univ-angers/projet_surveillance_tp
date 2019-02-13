@@ -85,7 +85,9 @@
 	<c:if test="${not empty param.timecode}">
 	<script type="text/javascript">
 		$(window).on("load", function() {
-			document.getElementById("video").currentTime=${param.timecode};
+			var temp=${param.timecode}.split(':') // split it at the colons
+			// minutes are worth 60 seconds. Hours are worth 60 minutes.
+			document.getElementById("video").currentTime=(+temp[0])*60*60+(+temp[1])*60+(+temp[2]);
 		});
 	</script>
 	</c:if>
